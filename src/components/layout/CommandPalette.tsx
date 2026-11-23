@@ -32,6 +32,7 @@ export function CommandPalette() {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedTerm, setDebouncedTerm] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isNavigatingList, setIsNavigatingList] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
@@ -101,6 +102,7 @@ export function CommandPalette() {
     setSearchTerm("");
     setDebouncedTerm("");
     setSelectedIndex(0);
+    setIsNavigatingList(false);
   }, []);
 
   const handleSelect = useCallback(
@@ -169,15 +171,17 @@ export function CommandPalette() {
   const handleInputKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowDown") {
       e.preventDefault();
+      setIsNavigatingList(true);
       setSelectedIndex((prev) => (prev + 1 < flatItems.length ? prev + 1 : 0));
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
+      setIsNavigatingList(true);
       setSelectedIndex((prev) => (prev - 1 >= 0 ? prev - 1 : flatItems.length - 1));
     } else if (e.key === "Enter") {
       e.preventDefault();
       const current = flatItems[selectedIndex];
       if (current) handleSelect(current);
-    } else if (e.key.toLowerCase() === "c" && !e.metaKey && !e.ctrlKey) {
+    } else if ((e.key === "C" || (isNavigatingList && e.key.toLowerCase() === "c")) && !e.metaKey && !e.ctrlKey) {
       // Toggle compare if active item is a model
       const current = flatItems[selectedIndex];
       if (current && current.type === "model") {
@@ -192,6 +196,8 @@ export function CommandPalette() {
           contextWindow: 128000,
         });
       }
+    } else {
+      setIsNavigatingList(false);
     }
   };
 

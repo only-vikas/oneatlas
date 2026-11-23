@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -21,6 +21,8 @@ export function DirectoryClient() {
 
   // Track expanded lab/provider IDs for inline inspection (max 2 pinned)
   const [expandedIds, setExpandedIds] = useState<string[]>([]);
+  const [pinnedIds, setPinnedIds] = useState<string[]>([]);
+  const [searchFilter, setSearchFilter] = useState("");
 
   // Sync state to URL
   useEffect(() => {
@@ -41,15 +43,46 @@ export function DirectoryClient() {
   const toggleExpand = useCallback((id: string) => {
     setExpandedIds((prev) => {
       if (prev.includes(id)) {
+        setPinnedIds((p) => p.filter((item) => item !== id));
         return prev.filter((i) => i !== id);
       }
-      // Keep at most 2 pinned open
+      // If 2 items are already open, replace the unpinned slot
       if (prev.length >= 2) {
-        return [prev[prev.length - 1], id];
+        const unpinned = prev.find((item) => !pinnedIds.includes(item));
+        if (unpinned) {
+          return [...prev.filter((item) => item !== unpinned), id];
+        }
+        return [prev[1], id];
+      }
+      return [...prev, id];
+    });
+  }, [pinnedIds]);
+
+  const togglePin = useCallback((id: string) => {
+    setPinnedIds((prev) => {
+      if (prev.includes(id)) {
+        return prev.filter((item) => item !== id);
+      }
+      if (prev.length >= 2) {
+        return [prev[1], id];
       }
       return [...prev, id];
     });
   }, []);
+
+  // Filter items in real time by name, slug, or locations
+  const filteredItems = useMemo(() => {
+    if (!data?.items) return [];
+    if (!searchFilter.trim()) return data.items;
+    const q = searchFilter.toLowerCase().trim();
+    return (data.items as any[]).filter((item) => {
+      const matchName = item.name.toLowerCase().includes(q);
+      const matchSlug = item.slug.toLowerCase().includes(q);
+      const matchHq = "headquarters" in item && item.headquarters?.toLowerCase().includes(q);
+      const matchRegions = "regions" in item && Array.isArray(item.regions) && item.regions.some((r: string) => r.toLowerCase().includes(q));
+      return matchName || matchSlug || matchHq || matchRegions;
+    });
+  }, [data, searchFilter]);
 
   return (
     <div className="w-full min-h-screen bg-surface-canvas text-text-primary flex flex-col">
@@ -74,47 +107,66 @@ export function DirectoryClient() {
             </p>
           </div>
 
-          {/* Segmented Control with Framer Motion sliding pill */}
-          <div className="flex items-center p-1 bg-surface-canvas border border-hairline-strong rounded self-start md:self-auto">
-            <button
-              type="button"
-              onClick={() => {
-                setActiveTab("lab");
-                setExpandedIds([]);
-              }}
-              className="relative px-4 py-1.5 text-xs font-mono uppercase tracking-wider transition-colors z-10"
-            >
-              {activeTab === "lab" && (
-                <motion.div
-                  layoutId="directory-tab-pill"
-                  className="absolute inset-0 bg-surface-raised border border-hairline-strong rounded -z-10 shadow-sm"
-                  transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                />
-              )}
-              <span className={activeTab === "lab" ? "text-signal-amber font-semibold" : "text-text-secondary hover:text-text-primary"}>
-                Research Labs
+          {/* Controls: Search + Segmented Control */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 self-start md:self-auto">
+            {/* Inline Search Input */}
+            <div className="relative w-full sm:w-60">
+              <span className="material-symbols-outlined text-[16px] text-text-tertiary absolute left-2.5 top-2">
+                search
               </span>
-            </button>
+              <input
+                type="text"
+                value={searchFilter}
+                onChange={(e) => setSearchFilter(e.target.value)}
+                placeholder={activeTab === "lab" ? "Filter labs…" : "Filter providers…"}
+                className="w-full pl-8 pr-3 py-1 bg-surface-canvas border border-hairline focus:border-signal-amber rounded text-xs font-mono text-text-primary placeholder:text-text-tertiary outline-none"
+              />
+            </div>
 
-            <button
-              type="button"
-              onClick={() => {
-                setActiveTab("provider");
-                setExpandedIds([]);
-              }}
-              className="relative px-4 py-1.5 text-xs font-mono uppercase tracking-wider transition-colors z-10"
-            >
-              {activeTab === "provider" && (
-                <motion.div
-                  layoutId="directory-tab-pill"
-                  className="absolute inset-0 bg-surface-raised border border-hairline-strong rounded -z-10 shadow-sm"
-                  transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                />
-              )}
-              <span className={activeTab === "provider" ? "text-signal-amber font-semibold" : "text-text-secondary hover:text-text-primary"}>
-                Inference Providers
-              </span>
-            </button>
+            {/* Segmented Control with Framer Motion sliding pill */}
+            <div className="flex items-center p-1 bg-surface-canvas border border-hairline-strong rounded">
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveTab("lab");
+                  setExpandedIds([]);
+                  setPinnedIds([]);
+                }}
+                className="relative px-4 py-1.5 text-xs font-mono uppercase tracking-wider transition-colors z-10"
+              >
+                {activeTab === "lab" && (
+                  <motion.div
+                    layoutId="directory-tab-pill"
+                    className="absolute inset-0 bg-surface-raised border border-hairline-strong rounded -z-10 shadow-sm"
+                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                  />
+                )}
+                <span className={activeTab === "lab" ? "text-signal-amber font-semibold" : "text-text-secondary hover:text-text-primary"}>
+                  Research Labs
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveTab("provider");
+                  setExpandedIds([]);
+                  setPinnedIds([]);
+                }}
+                className="relative px-4 py-1.5 text-xs font-mono uppercase tracking-wider transition-colors z-10"
+              >
+                {activeTab === "provider" && (
+                  <motion.div
+                    layoutId="directory-tab-pill"
+                    className="absolute inset-0 bg-surface-raised border border-hairline-strong rounded -z-10 shadow-sm"
+                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                  />
+                )}
+                <span className={activeTab === "provider" ? "text-signal-amber font-semibold" : "text-text-secondary hover:text-text-primary"}>
+                  Inference Providers
+                </span>
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -158,8 +210,9 @@ export function DirectoryClient() {
             {/* Entity Rows */}
             <div className="divide-y divide-hairline">
               {data.type === "lab" &&
-                data.items.map((lab: DirectoryLabItem) => {
+                (filteredItems as DirectoryLabItem[]).map((lab: DirectoryLabItem) => {
                   const isExpanded = expandedIds.includes(lab.id);
+                  const isPinned = pinnedIds.includes(lab.id);
 
                   return (
                     <div key={lab.id} className="flex flex-col">
@@ -181,6 +234,11 @@ export function DirectoryClient() {
                               {lab.verified && (
                                 <span className="text-[10px] text-signal-mint font-mono" title="Verified Lab">
                                   ✓
+                                </span>
+                              )}
+                              {isPinned && (
+                                <span className="text-[9px] font-mono text-signal-amber px-1 rounded bg-signal-amber/10 border border-signal-amber/30">
+                                  PINNED
                                 </span>
                               )}
                             </div>
@@ -236,7 +294,20 @@ export function DirectoryClient() {
                           >
                             <div className="px-6 py-3 flex flex-col gap-2">
                               <div className="flex items-center justify-between text-[10px] font-mono uppercase text-text-tertiary tracking-wider border-b border-hairline pb-1">
-                                <span>TOP REGISTERED MODELS FROM {lab.name.toUpperCase()}</span>
+                                <div className="flex items-center gap-3">
+                                  <span>TOP REGISTERED MODELS FROM {lab.name.toUpperCase()}</span>
+                                  <button
+                                    type="button"
+                                    onClick={() => togglePin(lab.id)}
+                                    className={`px-1.5 py-0.5 rounded text-[9px] font-mono uppercase border transition-colors ${
+                                      isPinned
+                                        ? "bg-signal-amber text-surface-canvas border-signal-amber font-semibold"
+                                        : "bg-surface-raised border-hairline text-text-tertiary hover:text-text-primary"
+                                    }`}
+                                  >
+                                    {isPinned ? "★ PINNED (MAX 2)" : "☆ PIN OPEN"}
+                                  </button>
+                                </div>
                                 <Link
                                   href={`/directory/${lab.slug}`}
                                   className="text-signal-amber hover:underline flex items-center gap-1"
@@ -286,8 +357,9 @@ export function DirectoryClient() {
                 })}
 
               {data.type === "provider" &&
-                data.items.map((prov: DirectoryProviderItem) => {
+                (filteredItems as DirectoryProviderItem[]).map((prov: DirectoryProviderItem) => {
                   const isExpanded = expandedIds.includes(prov.id);
+                  const isPinned = pinnedIds.includes(prov.id);
 
                   return (
                     <div key={prov.id} className="flex flex-col">
@@ -309,6 +381,11 @@ export function DirectoryClient() {
                               <SignalBadge variant="sky" size="xs">
                                 {prov.type === "FIRST_PARTY" ? "1ST PARTY" : "CLOUD"}
                               </SignalBadge>
+                              {isPinned && (
+                                <span className="text-[9px] font-mono text-signal-amber px-1 rounded bg-signal-amber/10 border border-signal-amber/30">
+                                  PINNED
+                                </span>
+                              )}
                             </div>
                             <span className="font-mono text-[10px] text-text-tertiary truncate">
                               {prov.regions.join(", ")}
@@ -365,7 +442,20 @@ export function DirectoryClient() {
                           >
                             <div className="px-6 py-3 flex flex-col gap-2">
                               <div className="flex items-center justify-between text-[10px] font-mono uppercase text-text-tertiary tracking-wider border-b border-hairline pb-1">
-                                <span>HOSTED MODEL ENDPOINTS ON {prov.name.toUpperCase()}</span>
+                                <div className="flex items-center gap-3">
+                                  <span>HOSTED MODEL ENDPOINTS ON {prov.name.toUpperCase()}</span>
+                                  <button
+                                    type="button"
+                                    onClick={() => togglePin(prov.id)}
+                                    className={`px-1.5 py-0.5 rounded text-[9px] font-mono uppercase border transition-colors ${
+                                      isPinned
+                                        ? "bg-signal-amber text-surface-canvas border-signal-amber font-semibold"
+                                        : "bg-surface-raised border-hairline text-text-tertiary hover:text-text-primary"
+                                    }`}
+                                  >
+                                    {isPinned ? "★ PINNED (MAX 2)" : "☆ PIN OPEN"}
+                                  </button>
+                                </div>
                                 <Link
                                   href={`/directory/${prov.slug}`}
                                   className="text-signal-sky hover:underline flex items-center gap-1"

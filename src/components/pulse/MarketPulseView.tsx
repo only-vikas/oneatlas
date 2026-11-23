@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import gsap from "gsap";
 import { Search, ArrowRight, Activity, Clock, Award, Terminal } from "lucide-react";
 import { SignalBadge } from "@/components/ui/SignalBadge";
-import { formatPricePer1M } from "@/lib/formatters";
+import { formatPricePer1M, cn } from "@/lib/formatters";
 import { MarketPulseResponse } from "@/lib/types/api";
 
 export function MarketPulseView() {
@@ -145,7 +145,16 @@ export function MarketPulseView() {
                     </div>
 
                     <div className="shrink-0 text-right">
-                      <span className="font-mono text-xs text-signal-mint font-medium tabular-nums">
+                      <span
+                        className={cn(
+                          "font-mono text-xs font-medium tabular-nums",
+                          model.usageDelta7d < 0
+                            ? "text-signal-coral"
+                            : model.usageDelta7d > 0
+                            ? "text-signal-mint"
+                            : "text-text-tertiary"
+                        )}
+                      >
                         {model.usageDelta7d > 0 ? `+${model.usageDelta7d}%` : `${model.usageDelta7d}%`}
                       </span>
                     </div>

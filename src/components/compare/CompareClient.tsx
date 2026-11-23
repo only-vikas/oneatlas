@@ -27,7 +27,14 @@ export function CompareClient() {
   const urlSlugsParam = searchParams.get("slugs");
   const [activeSlugs, setActiveSlugs] = useState<string[]>(() => {
     if (urlSlugsParam) {
-      const parsed = urlSlugsParam.split(",").map((s) => s.trim()).filter(Boolean);
+      const parsed = Array.from(
+        new Set(
+          urlSlugsParam
+            .split(",")
+            .map((s) => s.trim().toLowerCase())
+            .filter(Boolean)
+        )
+      );
       if (parsed.length > 0) return parsed.slice(0, 4);
     }
     return DEFAULT_SLUGS;
@@ -272,7 +279,7 @@ export function CompareClient() {
                 {/* -------------------------------------------------------- */}
                 {/* STICKY HEADER ROW */}
                 {/* -------------------------------------------------------- */}
-                <div className="sticky top-0 z-20 bg-surface-raised border-b border-hairline p-4 flex flex-col justify-end">
+                <div className="sticky top-0 left-0 z-30 bg-surface-raised border-b border-hairline p-4 flex flex-col justify-end shadow-[1px_0_0_0_rgba(255,255,255,0.07)]">
                   <span className="font-mono text-[10px] text-text-tertiary uppercase tracking-wider">
                     SPECIFICATION / DIMENSION
                   </span>
@@ -749,8 +756,8 @@ interface MatrixRowProps {
 function MatrixRow({ label, sublabel, models, renderValue }: MatrixRowProps) {
   return (
     <div className="contents group">
-      {/* Attribute label cell (sticky column) */}
-      <div className="bg-surface-well group-hover:bg-surface-raised/40 border-b border-hairline p-4 flex flex-col justify-center transition-colors">
+      {/* Attribute label cell (sticky left column for mobile & desktop) */}
+      <div className="sticky left-0 z-10 bg-surface-well group-hover:bg-surface-raised/90 border-b border-hairline p-4 flex flex-col justify-center transition-colors shadow-[1px_0_0_0_rgba(255,255,255,0.07)]">
         <span className="text-xs font-semibold text-text-primary tracking-tight">{label}</span>
         <span className="text-[10px] text-text-tertiary font-mono">{sublabel}</span>
       </div>

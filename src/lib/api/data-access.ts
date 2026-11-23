@@ -424,7 +424,8 @@ export async function fetchModelBenchmarks(slug: string) {
 export async function fetchCompareModels(slugs: string[]) {
   type ModelDetail = NonNullable<Awaited<ReturnType<typeof fetchModelBySlug>>>;
   const models: ModelDetail[] = [];
-  for (const slug of slugs) {
+  const uniqueSlugs = Array.from(new Set(slugs.map((s) => s.trim().toLowerCase())));
+  for (const slug of uniqueSlugs) {
     const m = await fetchModelBySlug(slug);
     if (m) models.push(m);
   }

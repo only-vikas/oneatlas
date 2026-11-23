@@ -30,7 +30,7 @@ export function ParetoQuadrant({ category }: ParetoQuadrantProps) {
   // X: Logarithmic from $0.10 to $30.00 (x: 50 to 760)
   // Y: Linear from 50 to 100 (y: 160 down to 20)
   const mapCoordinates = useMemo(() => {
-    const xMin = Math.log10(0.1);
+    const xMin = Math.log10(0.01);
     const xMax = Math.log10(30.0);
     const xRange = xMax - xMin;
 
@@ -39,7 +39,7 @@ export function ParetoQuadrant({ category }: ParetoQuadrantProps) {
     const yRange = yMax - yMin;
 
     return (cost: number, score: number) => {
-      const safeCost = Math.max(0.1, Math.min(30.0, cost));
+      const safeCost = Math.max(0.01, Math.min(30.0, cost));
       const logCost = Math.log10(safeCost);
       const normX = (logCost - xMin) / xRange;
       const x = 50 + normX * 710;

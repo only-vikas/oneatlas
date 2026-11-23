@@ -57,6 +57,13 @@ export function WorkloadCostSimulator({
   const [outputTokens, setOutputTokens] = useState<number>(800);
   const [cachingEnabled, setCachingEnabled] = useState<boolean>(true);
 
+  // Check if any provider endpoint supports prompt caching
+  const hasCachingSupport = useMemo(() => {
+    return endpoints.some(
+      (ep) => ep.cacheInputPricePer1M !== null && ep.cacheInputPricePer1M !== undefined
+    );
+  }, [endpoints]);
+
   // Odometer animated value ref
   const spendRef = useRef<HTMLSpanElement>(null);
   const tweenObj = useRef({ value: 0 });
@@ -94,11 +101,13 @@ export function WorkloadCostSimulator({
         30;
 
       // Caching applies 70% cache-hit rate if supported
-      const effectiveIn = cachingEnabled ? 0.3 * standardIn + 0.7 * cacheIn : standardIn;
-      const monthly =
+      const isCacheActive = cachingEnabled && hasCachingSupport;
+      const effectiveIn = isCacheActive ? 0.3 * standardIn + 0.7 * cacheIn : standardIn;
+      const rawMonthly =
         (((dailyRequests * inputTokens) / 1_000_000) * effectiveIn +
           ((dailyRequests * outputTokens) / 1_000_000) * standardOut) *
         30;
+      const monthly = isNaN(rawMonthly) || rawMonthly < 0 ? 0 : rawMonthly;
 
       const monthlySavings = Math.max(0, uncachedMonthly - monthly);
 
@@ -227,7 +236,7 @@ export function WorkloadCostSimulator({
             <div className="relative flex items-center h-5">
               <input
                 type="range"
-                min={100}
+                min={1}
                 max={100000}
                 step={500}
                 value={dailyRequests}
@@ -253,7 +262,7 @@ export function WorkloadCostSimulator({
             <div className="relative flex items-center h-5">
               <input
                 type="range"
-                min={500}
+                min={0}
                 max={100000}
                 step={500}
                 value={inputTokens}
@@ -279,7 +288,7 @@ export function WorkloadCostSimulator({
             <div className="relative flex items-center h-5">
               <input
                 type="range"
-                min={100}
+                min={0}
                 max={32000}
                 step={100}
                 value={outputTokens}
@@ -293,31 +302,47 @@ export function WorkloadCostSimulator({
           </div>
 
           {/* Prompt Caching Toggle Switch */}
-          <div className="p-3 rounded-[4px] bg-surface-raised/70 border border-hairline flex items-center justify-between">
+          <div className={`p-3 rounded-[4px] border flex items-center justify-between transition-opacity ${
+            hasCachingSupport ? "bg-surface-raised/70 border-hairline" : "bg-surface-well/40 border-hairline opacity-60"
+          }`}>
             <div className="flex items-center gap-2.5">
-              <Zap className="w-4 h-4 text-signal-amber" />
+              <Zap className={`w-4 h-4 ${hasCachingSupport ? "text-signal-amber" : "text-text-tertiary"}`} />
               <div className="flex flex-col">
-                <span className="font-sans text-xs font-medium text-text-primary">
-                  Prompt Caching Optimization
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="font-sans text-xs font-medium text-text-primary">
+                    Prompt Caching Optimization
+                  </span>
+                  {!hasCachingSupport && (
+                    <span className="text-[9px] font-mono text-text-tertiary px-1 py-0.2 rounded bg-surface-canvas border border-hairline">
+                      UNSUPPORTED
+                    </span>
+                  )}
+                </div>
                 <span className="font-sans text-[11px] text-text-tertiary">
-                  Applies provider ephemeral cache rates (~10-25% base token cost)
+                  {hasCachingSupport
+                    ? "Applies provider ephemeral cache rates (~10-25% base token cost)"
+                    : "Not supported by any provider endpoints for this model"}
                 </span>
               </div>
             </div>
 
             <button
               type="button"
-              onClick={() => setCachingEnabled((prev) => !prev)}
-              className={`w-10 h-5 rounded-[4px] p-0.5 transition-colors cursor-pointer border ${
-                cachingEnabled
-                  ? "bg-signal-amber/20 border-signal-amber"
-                  : "bg-surface-well border-hairline-strong"
+              disabled={!hasCachingSupport}
+              onClick={() => {
+                if (hasCachingSupport) setCachingEnabled((prev) => !prev);
+              }}
+              className={`w-10 h-5 rounded-[4px] p-0.5 transition-colors border ${
+                !hasCachingSupport
+                  ? "bg-surface-well border-hairline cursor-not-allowed opacity-40"
+                  : cachingEnabled
+                  ? "bg-signal-amber/20 border-signal-amber cursor-pointer"
+                  : "bg-surface-well border-hairline-strong cursor-pointer"
               }`}
             >
               <div
                 className={`w-3.5 h-3.5 rounded-[2px] transition-transform ${
-                  cachingEnabled
+                  hasCachingSupport && cachingEnabled
                     ? "translate-x-5 bg-signal-amber"
                     : "translate-x-0 bg-text-tertiary"
                 }`}
