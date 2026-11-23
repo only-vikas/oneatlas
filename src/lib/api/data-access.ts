@@ -74,20 +74,35 @@ let lastCheckTime = 0;
 
 async function isPrismaReady(): Promise<boolean> {
   const now = Date.now();
-  if (cachedPrismaReady !== null && now - lastCheckTime < 30000) {
+  if (cachedPrismaReady !== null && now - lastCheckTime < 10000) {
     return cachedPrismaReady;
   }
 
   try {
     const count = await prisma.model.count();
-    cachedPrismaReady = count > 0;
-    lastCheckTime = now;
-    return cachedPrismaReady;
-  } catch {
-    cachedPrismaReady = false;
-    lastCheckTime = now;
-    return false;
+    if (count > 0) {
+      cachedPrismaReady = true;
+      lastCheckTime = now;
+      return true;
+    }
+  } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      throw new Error(
+        `[CRITICAL_DATABASE_ERROR] Production requires an active PostgreSQL connection. Could not reach database: ${
+          (error as Error).message
+        }`
+      );
+    }
+    console.warn(
+      `[DATABASE_OFFLINE_WARNING] Could not reach PostgreSQL at DATABASE_URL. Falling back to development mock dataset. ${
+        (error as Error).message
+      }`
+    );
   }
+
+  cachedPrismaReady = false;
+  lastCheckTime = now;
+  return false;
 }
 
 // ----------------------------------------------------------------------------
@@ -951,9 +966,107 @@ export async function fetchDirectoryBySlug(slug: string) {
 // 10. GET /api/search
 // ----------------------------------------------------------------------------
 export async function searchAll(query: string) {
-  const q = query.trim().toLowerCase();
+  const useDb = await isPrismaReady();
+  const q = query.trim();
 
-  if (!q) {
+  if (useDb) {
+    if (!q) {
+      const [trendingModels, topLabs, topProviders] = await Promise.all([
+        prisma.model.findMany({
+          orderBy: { usageDelta7d: "desc" },
+          take: 5,
+          include: { lab: true },
+        }),
+        prisma.lab.findMany({ take: 5 }),
+        prisma.provider.findMany({ take: 5 }),
+      ]);
+
+      return {
+        models: trendingModels.map((m) => ({
+          id: m.id,
+          name: m.name,
+          slug: m.slug,
+          labName: m.lab.name,
+          compositeScore: m.compositeScore,
+          usageDelta7d: m.usageDelta7d,
+        })),
+        labs: topLabs.map((l) => ({
+          id: l.id,
+          name: l.name,
+          slug: l.slug,
+          logoSlug: l.logoSlug,
+        })),
+        providers: topProviders.map((p) => ({
+          id: p.id,
+          name: p.name,
+          slug: p.slug,
+          logoSlug: p.logoSlug,
+          type: p.type,
+        })),
+      };
+    }
+
+    const [matchedModels, matchedLabs, matchedProviders] = await Promise.all([
+      prisma.model.findMany({
+        where: {
+          OR: [
+            { name: { contains: q, mode: "insensitive" } },
+            { slug: { contains: q, mode: "insensitive" } },
+            { description: { contains: q, mode: "insensitive" } },
+          ],
+        },
+        take: 5,
+        include: { lab: true },
+      }),
+      prisma.lab.findMany({
+        where: {
+          OR: [
+            { name: { contains: q, mode: "insensitive" } },
+            { slug: { contains: q, mode: "insensitive" } },
+            { headquarters: { contains: q, mode: "insensitive" } },
+          ],
+        },
+        take: 5,
+      }),
+      prisma.provider.findMany({
+        where: {
+          OR: [
+            { name: { contains: q, mode: "insensitive" } },
+            { slug: { contains: q, mode: "insensitive" } },
+          ],
+        },
+        take: 5,
+      }),
+    ]);
+
+    return {
+      models: matchedModels.map((m) => ({
+        id: m.id,
+        name: m.name,
+        slug: m.slug,
+        labName: m.lab.name,
+        compositeScore: m.compositeScore,
+        usageDelta7d: m.usageDelta7d,
+      })),
+      labs: matchedLabs.map((l) => ({
+        id: l.id,
+        name: l.name,
+        slug: l.slug,
+        logoSlug: l.logoSlug,
+      })),
+      providers: matchedProviders.map((p) => ({
+        id: p.id,
+        name: p.name,
+        slug: p.slug,
+        logoSlug: p.logoSlug,
+        type: p.type,
+      })),
+    };
+  }
+
+  // Fallback to static in-memory data
+  const qLower = q.toLowerCase();
+  if (!qLower) {
     // Return default ⌘K palette state: top trending models, top labs, top providers
     const trendingModels = [...STATIC_MODELS]
       .sort((a, b) => b.usageDelta7d - a.usageDelta7d)
@@ -991,9 +1104,9 @@ export async function searchAll(query: string) {
 
   const matchedModels = STATIC_MODELS.filter(
     (m) =>
-      m.name.toLowerCase().includes(q) ||
-      m.slug.toLowerCase().includes(q) ||
-      m.description.toLowerCase().includes(q)
+      m.name.toLowerCase().includes(qLower) ||
+      m.slug.toLowerCase().includes(qLower) ||
+      m.description.toLowerCase().includes(qLower)
   )
     .slice(0, 5)
     .map((m) => ({
@@ -1007,9 +1120,9 @@ export async function searchAll(query: string) {
 
   const matchedLabs = STATIC_LABS.filter(
     (l) =>
-      l.name.toLowerCase().includes(q) ||
-      l.slug.toLowerCase().includes(q) ||
-      l.headquarters.toLowerCase().includes(q)
+      l.name.toLowerCase().includes(qLower) ||
+      l.slug.toLowerCase().includes(qLower) ||
+      l.headquarters.toLowerCase().includes(qLower)
   )
     .slice(0, 5)
     .map((l) => ({
@@ -1021,9 +1134,9 @@ export async function searchAll(query: string) {
 
   const matchedProviders = STATIC_PROVIDERS.filter(
     (p) =>
-      p.name.toLowerCase().includes(q) ||
-      p.slug.toLowerCase().includes(q) ||
-      p.regions.some((r) => r.toLowerCase().includes(q))
+      p.name.toLowerCase().includes(qLower) ||
+      p.slug.toLowerCase().includes(qLower) ||
+      p.regions.some((r) => r.toLowerCase().includes(qLower))
   )
     .slice(0, 5)
     .map((p) => ({
@@ -1038,5 +1151,121 @@ export async function searchAll(query: string) {
     models: matchedModels,
     labs: matchedLabs,
     providers: matchedProviders,
+  };
+}
+
+// ----------------------------------------------------------------------------
+// 11. GET /api/pulse (Market Pulse Landing Page)
+// ----------------------------------------------------------------------------
+export async function fetchMarketPulse() {
+  const useDb = await isPrismaReady();
+
+  if (useDb) {
+    const [modelCount, providerCount, labCount] = await Promise.all([
+      prisma.model.count(),
+      prisma.provider.count(),
+      prisma.lab.count(),
+    ]);
+
+    const trendingRaw = await prisma.model.findMany({
+      orderBy: { usageDelta7d: "desc" },
+      take: 5,
+      include: {
+        lab: true,
+        endpoints: true,
+      },
+    });
+
+    const recentRaw = await prisma.model.findMany({
+      orderBy: { releaseDate: "desc" },
+      take: 5,
+      include: {
+        lab: true,
+        endpoints: true,
+      },
+    });
+
+    const paretoResult = await fetchPareto({ category: "ALL" });
+    const paretoFrontier = paretoResult.points
+      .filter((p) => p.onFrontier)
+      .slice(0, 5);
+
+    const mapSummary = (m: typeof trendingRaw[number]) => ({
+      id: m.id,
+      name: m.name,
+      slug: m.slug,
+      lab: {
+        name: m.lab.name,
+        slug: m.lab.slug,
+        logoSlug: m.lab.logoSlug,
+      },
+      modality: m.modality,
+      modelType: m.modelType,
+      contextWindow: m.contextWindow,
+      compositeScore: m.compositeScore,
+      usageDelta7d: m.usageDelta7d,
+      sparkline7d: m.sparkline7d,
+      releaseDate: m.releaseDate,
+      pricing: computeModelPricing(m.endpoints),
+    });
+
+    return {
+      counts: {
+        models: modelCount,
+        providers: providerCount,
+        labs: labCount,
+      },
+      trending: trendingRaw.map(mapSummary),
+      recent: recentRaw.map(mapSummary),
+      paretoLeaders: paretoFrontier,
+    };
+  }
+
+  // Fallback to static in-memory data
+  const modelCount = STATIC_MODELS.length;
+  const providerCount = STATIC_PROVIDERS.length;
+  const labCount = STATIC_LABS.length;
+
+  const trendingRaw = [...STATIC_MODELS]
+    .sort((a, b) => b.usageDelta7d - a.usageDelta7d)
+    .slice(0, 5);
+
+  const recentRaw = [...STATIC_MODELS]
+    .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime())
+    .slice(0, 5);
+
+  const paretoResult = await fetchPareto({ category: "ALL" });
+  const paretoFrontier = paretoResult.points
+    .filter((p) => p.onFrontier)
+    .slice(0, 5);
+
+  const mapSummary = (m: (typeof STATIC_MODELS)[number]) => ({
+    id: m.id,
+    name: m.name,
+    slug: m.slug,
+    lab: {
+      name: m.lab.name,
+      slug: m.lab.slug,
+      logoSlug: m.lab.logoSlug,
+    },
+    modality: m.modality,
+    modelType: m.modelType,
+    contextWindow: m.contextWindow,
+    compositeScore: m.compositeScore,
+    usageDelta7d: m.usageDelta7d,
+    sparkline7d: m.sparkline7d,
+    releaseDate: m.releaseDate,
+    pricing: computeModelPricing(m.endpoints),
+  });
+
+  return {
+    counts: {
+      models: modelCount,
+      providers: providerCount,
+      labs: labCount,
+    },
+    trending: trendingRaw.map(mapSummary),
+    recent: recentRaw.map(mapSummary),
+    paretoLeaders: paretoFrontier,
   };
 }

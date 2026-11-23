@@ -9,6 +9,7 @@ import { GET as getPareto } from "../src/app/api/pareto/route";
 import { GET as getDirectory } from "../src/app/api/directory/route";
 import { GET as getDirectorySlug } from "../src/app/api/directory/[slug]/route";
 import { GET as getSearch } from "../src/app/api/search/route";
+import { GET as getPulse } from "../src/app/api/pulse/route";
 
 async function runTests() {
   console.log("\n========================================================");
@@ -29,7 +30,7 @@ async function runTests() {
   }
 
   // 1. GET /api/models
-  console.log("[1/10] Testing GET /api/models...");
+  console.log("[1/12] Testing GET /api/models...");
   {
     const req = new NextRequest("http://localhost:3000/api/models?limit=5&sort=rank");
     const res = await getModels(req);
@@ -42,7 +43,7 @@ async function runTests() {
   }
 
   // 2. GET /api/models/[slug]
-  console.log("\n[2/10] Testing GET /api/models/[slug]...");
+  console.log("\n[2/12] Testing GET /api/models/[slug]...");
   {
     const req = new NextRequest("http://localhost:3000/api/models/deepseek-r2");
     const res = await getModelSlug(req, { params: Promise.resolve({ slug: "deepseek-r2" }) });
@@ -54,11 +55,13 @@ async function runTests() {
 
     // 404 test
     const notFoundRes = await getModelSlug(req, { params: Promise.resolve({ slug: "non-existent-model" }) });
+    const notFoundData = await notFoundRes.json();
     assert(notFoundRes.status === 404, "Returns 404 for invalid slug");
+    assert(notFoundData.error?.code === "NOT_FOUND", "Error has NOT_FOUND code");
   }
 
   // 3. GET /api/models/[slug]/providers
-  console.log("\n[3/10] Testing GET /api/models/[slug]/providers...");
+  console.log("\n[3/12] Testing GET /api/models/[slug]/providers...");
   {
     const req = new NextRequest("http://localhost:3000/api/models/deepseek-r2/providers");
     const res = await getModelProviders(req, { params: Promise.resolve({ slug: "deepseek-r2" }) });
@@ -70,7 +73,7 @@ async function runTests() {
   }
 
   // 4. GET /api/models/[slug]/benchmarks
-  console.log("\n[4/10] Testing GET /api/models/[slug]/benchmarks...");
+  console.log("\n[4/12] Testing GET /api/models/[slug]/benchmarks...");
   {
     const req = new NextRequest("http://localhost:3000/api/models/gpt-5/benchmarks");
     const res = await getModelBenchmarks(req, { params: Promise.resolve({ slug: "gpt-5" }) });
@@ -81,7 +84,7 @@ async function runTests() {
   }
 
   // 5. GET /api/compare
-  console.log("\n[5/10] Testing GET /api/compare...");
+  console.log("\n[5/12] Testing GET /api/compare...");
   {
     const req = new NextRequest("http://localhost:3000/api/compare?slugs=claude-4-5-sonnet,gpt-5,deepseek-r2");
     const res = await getCompare(req);
@@ -95,7 +98,7 @@ async function runTests() {
   }
 
   // 6. GET /api/rankings
-  console.log("\n[6/10] Testing GET /api/rankings...");
+  console.log("\n[6/12] Testing GET /api/rankings...");
   {
     const req = new NextRequest("http://localhost:3000/api/rankings?category=REASONING&benchmark=COMPOSITE");
     const res = await getRankings(req);
@@ -108,7 +111,7 @@ async function runTests() {
   }
 
   // 7. GET /api/pareto
-  console.log("\n[7/10] Testing GET /api/pareto...");
+  console.log("\n[7/12] Testing GET /api/pareto...");
   {
     const req = new NextRequest("http://localhost:3000/api/pareto?category=ALL");
     const res = await getPareto(req);
@@ -125,7 +128,7 @@ async function runTests() {
   }
 
   // 8. GET /api/directory
-  console.log("\n[8/10] Testing GET /api/directory...");
+  console.log("\n[8/12] Testing GET /api/directory...");
   {
     const reqLab = new NextRequest("http://localhost:3000/api/directory?type=lab");
     const resLab = await getDirectory(reqLab);
@@ -143,7 +146,7 @@ async function runTests() {
   }
 
   // 9. GET /api/directory/[slug]
-  console.log("\n[9/10] Testing GET /api/directory/[slug]...");
+  console.log("\n[9/12] Testing GET /api/directory/[slug]...");
   {
     const reqLab = new NextRequest("http://localhost:3000/api/directory/anthropic");
     const resLab = await getDirectorySlug(reqLab, { params: Promise.resolve({ slug: "anthropic" }) });
@@ -161,7 +164,7 @@ async function runTests() {
   }
 
   // 10. GET /api/search
-  console.log("\n[10/10] Testing GET /api/search...");
+  console.log("\n[10/12] Testing GET /api/search...");
   {
     // Empty search -> palette default
     const reqEmpty = new NextRequest("http://localhost:3000/api/search");
@@ -177,6 +180,54 @@ async function runTests() {
     const dataQ = await resQ.json();
     assert(resQ.status === 200, "Status is 200 for query search");
     assert(dataQ.models.length >= 2, "Found matched Claude models");
+  }
+
+  // 11. GET /api/pulse
+  console.log("\n[11/12] Testing GET /api/pulse...");
+  {
+    const reqPulse = new NextRequest("http://localhost:3000/api/pulse");
+    const resPulse = await getPulse(reqPulse);
+    const dataPulse = await resPulse.json();
+    assert(resPulse.status === 200, "Status is 200 for market pulse");
+    assert(dataPulse.counts?.models === 32, `Counts models is 32 (got ${dataPulse.counts?.models})`);
+    assert(dataPulse.counts?.providers === 9, `Counts providers is 9 (got ${dataPulse.counts?.providers})`);
+    assert(dataPulse.counts?.labs === 8, `Counts labs is 8 (got ${dataPulse.counts?.labs})`);
+    assert(dataPulse.trending?.length === 5, `Trending has 5 models (got ${dataPulse.trending?.length})`);
+    assert(dataPulse.recent?.length === 5, `Recent has 5 models (got ${dataPulse.recent?.length})`);
+    assert(dataPulse.paretoLeaders?.length > 0, `Pareto leaders has items (got ${dataPulse.paretoLeaders?.length})`);
+    assert(dataPulse.trending[0].pricing.lowestInputPrice > 0, "Pulse models have computed pricing");
+  }
+
+  // 12. Negative / Error Validations (Standardized { error: { code, message } })
+  console.log("\n[12/12] Testing Error Handling & Input Validation (400/404)...");
+  {
+    // 400 on invalid sort in /api/models
+    const reqBadSort = new NextRequest("http://localhost:3000/api/models?sort=unsupported_sort");
+    const resBadSort = await getModels(reqBadSort);
+    const dataBadSort = await resBadSort.json();
+    assert(resBadSort.status === 400, "Returns 400 on invalid query params");
+    assert(dataBadSort.error?.code === "VALIDATION_ERROR", `Error code is VALIDATION_ERROR (got ${dataBadSort.error?.code})`);
+
+    // 400 on compare with > 4 slugs
+    const reqTooManySlugs = new NextRequest("http://localhost:3000/api/compare?slugs=m1,m2,m3,m4,m5");
+    const resTooManySlugs = await getCompare(reqTooManySlugs);
+    const dataTooManySlugs = await resTooManySlugs.json();
+    assert(resTooManySlugs.status === 400, "Returns 400 when >4 slugs requested in compare");
+    assert(dataTooManySlugs.error?.code === "VALIDATION_ERROR", "Error code is VALIDATION_ERROR");
+
+    // 400 on invalid directory type
+    const reqBadDir = new NextRequest("http://localhost:3000/api/directory?type=invalid_type");
+    const resBadDir = await getDirectory(reqBadDir);
+    const dataBadDir = await resBadDir.json();
+    assert(resBadDir.status === 400, "Returns 400 on invalid directory type");
+    assert(dataBadDir.error?.code === "VALIDATION_ERROR", "Error code is VALIDATION_ERROR");
+
+    // 404 on nonexistent directory entity
+    const reqMissingEntity = new NextRequest("http://localhost:3000/api/directory/nonexistent-org");
+    const resMissingEntity = await getDirectorySlug(reqMissingEntity, { params: Promise.resolve({ slug: "nonexistent-org" }) });
+    const dataMissingEntity = await resMissingEntity.json();
+    assert(resMissingEntity.status === 404, "Returns 404 for unknown directory entity");
+    assert(dataMissingEntity.error?.code === "NOT_FOUND", "Error code is NOT_FOUND");
   }
 
   console.log("\n========================================================");
