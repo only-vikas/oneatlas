@@ -4,6 +4,17 @@ import React from "react";
 import { Check, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/formatters";
 
+export const LAB_OPTIONS = [
+  { slug: "openai", label: "OpenAI" },
+  { slug: "anthropic", label: "Anthropic" },
+  { slug: "google-deepmind", label: "Google DeepMind" },
+  { slug: "meta-ai", label: "Meta AI" },
+  { slug: "deepseek", label: "DeepSeek" },
+  { slug: "mistral-ai", label: "Mistral AI" },
+  { slug: "alibaba-qwen", label: "Alibaba Qwen" },
+  { slug: "xai", label: "xAI" },
+];
+
 export const PROVIDER_OPTIONS = [
   { slug: "anthropic-direct", label: "Anthropic Direct" },
   { slug: "openai-direct", label: "OpenAI Direct" },
@@ -38,10 +49,12 @@ export const WEIGHT_OPTIONS = [
 ];
 
 interface FilterRailProps {
+  selectedLabs: string[];
   selectedProviders: string[];
   selectedCapabilities: string[];
   selectedContext: number;
   selectedWeights: string;
+  onToggleLab: (slug: string) => void;
   onToggleProvider: (slug: string) => void;
   onToggleCapability: (cap: string) => void;
   onSelectContext: (ctx: number) => void;
@@ -53,10 +66,12 @@ interface FilterRailProps {
 }
 
 export function FilterRail({
+  selectedLabs,
   selectedProviders,
   selectedCapabilities,
   selectedContext,
   selectedWeights,
+  onToggleLab,
   onToggleProvider,
   onToggleCapability,
   onSelectContext,
@@ -103,6 +118,44 @@ export function FilterRail({
               <span>RESET</span>
             </button>
           )}
+        </div>
+
+        {/* Section: AI Labs / Companies */}
+        <div className="p-4 space-y-2.5">
+          <div className="flex items-center justify-between">
+            <span className="font-sans text-[10px] font-medium uppercase tracking-[0.09em] text-text-tertiary">
+              LAB / COMPANY
+            </span>
+            {selectedLabs.length > 0 && (
+              <span className="font-mono text-[10px] text-signal-amber tabular-nums">
+                {selectedLabs.length}
+              </span>
+            )}
+          </div>
+          <div className="space-y-1.5">
+            {LAB_OPTIONS.map((lab) => {
+              const checked = selectedLabs.includes(lab.slug);
+              return (
+                <label
+                  key={lab.slug}
+                  onClick={() => onToggleLab(lab.slug)}
+                  className="flex items-center gap-2 text-text-secondary hover:text-text-primary cursor-pointer group transition-colors py-0.5"
+                >
+                  <div
+                    className={cn(
+                      "w-3.5 h-3.5 rounded-[3px] border flex items-center justify-center transition-colors",
+                      checked
+                        ? "bg-signal-amber border-signal-amber text-surface-canvas"
+                        : "bg-surface-raised border-hairline-strong group-hover:border-signal-amber/40"
+                    )}
+                  >
+                    {checked && <Check className="w-2.5 h-2.5 stroke-[3]" />}
+                  </div>
+                  <span className="font-sans text-xs tracking-tight">{lab.label}</span>
+                </label>
+              );
+            })}
+          </div>
         </div>
 
         {/* Section: Hosting Providers */}

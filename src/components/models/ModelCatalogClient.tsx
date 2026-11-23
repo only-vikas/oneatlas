@@ -33,6 +33,7 @@ export function ModelCatalogClient() {
   // Parse filters from URL
   const queryQ = searchParams.get("q") ?? "";
   const queryModality = searchParams.get("modality") ?? "ALL";
+  const queryLabs = searchParams.get("lab")?.split(",").filter(Boolean) ?? [];
   const queryProviders = searchParams.get("provider")?.split(",").filter(Boolean) ?? [];
   const queryCapabilities = searchParams.get("capability")?.split(",").filter(Boolean) ?? [];
   const queryMinContext = parseInt(searchParams.get("minContext") ?? "0", 10) || 0;
@@ -78,6 +79,13 @@ export function ModelCatalogClient() {
   );
 
   // Filter actions
+  const handleToggleLab = (slug: string) => {
+    const next = queryLabs.includes(slug)
+      ? queryLabs.filter((l) => l !== slug)
+      : [...queryLabs, slug];
+    updateQuery({ lab: next.length > 0 ? next.join(",") : undefined });
+  };
+
   const handleToggleProvider = (slug: string) => {
     const next = queryProviders.includes(slug)
       ? queryProviders.filter((p) => p !== slug)
@@ -124,6 +132,7 @@ export function ModelCatalogClient() {
   const hasActiveFilters =
     Boolean(queryQ) ||
     queryModality !== "ALL" ||
+    queryLabs.length > 0 ||
     queryProviders.length > 0 ||
     queryCapabilities.length > 0 ||
     queryMinContext > 0 ||
@@ -143,6 +152,7 @@ export function ModelCatalogClient() {
       "models",
       queryQ,
       queryModality,
+      queryLabs.join(","),
       queryProviders.join(","),
       queryCapabilities.join(","),
       queryMinContext,
@@ -160,6 +170,7 @@ export function ModelCatalogClient() {
           params.set("modality", queryModality);
         }
       }
+      if (queryLabs.length > 0) params.set("lab", queryLabs.join(","));
       if (queryProviders.length > 0) params.set("provider", queryProviders.join(","));
       if (queryCapabilities.length > 0) params.set("capability", queryCapabilities.join(","));
       if (queryMinContext > 0) params.set("minContext", String(queryMinContext));
@@ -300,10 +311,12 @@ export function ModelCatalogClient() {
         {/* Fixed 240px Left Filter Rail (Desktop ≥ 1024px) */}
         <div className="hidden lg:block shrink-0">
           <FilterRail
+            selectedLabs={queryLabs}
             selectedProviders={queryProviders}
             selectedCapabilities={queryCapabilities}
             selectedContext={queryMinContext}
             selectedWeights={queryWeights}
+            onToggleLab={handleToggleLab}
             onToggleProvider={handleToggleProvider}
             onToggleCapability={handleToggleCapability}
             onSelectContext={handleSelectContext}
@@ -336,6 +349,7 @@ export function ModelCatalogClient() {
                   activeFilters={[
                     queryQ ? `query: "${queryQ}"` : null,
                     queryModality !== "ALL" ? `modality: ${queryModality}` : null,
+                    ...queryLabs.map((l) => `lab: ${l}`),
                     ...queryProviders.map((p) => `provider: ${p}`),
                     ...queryCapabilities.map((c) => `capability: ${c}`),
                     queryMinContext > 0 ? `context ≥ ${queryMinContext}` : null,
@@ -406,10 +420,12 @@ export function ModelCatalogClient() {
               </div>
               <div className="overflow-y-auto flex-1">
                 <FilterRail
+                  selectedLabs={queryLabs}
                   selectedProviders={queryProviders}
                   selectedCapabilities={queryCapabilities}
                   selectedContext={queryMinContext}
                   selectedWeights={queryWeights}
+                  onToggleLab={handleToggleLab}
                   onToggleProvider={handleToggleProvider}
                   onToggleCapability={handleToggleCapability}
                   onSelectContext={handleSelectContext}
