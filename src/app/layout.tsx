@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import {
   Instrument_Serif,
   Space_Grotesk,
@@ -6,6 +7,12 @@ import {
   Geist_Mono,
 } from "next/font/google";
 import "./globals.css";
+import { QueryProvider } from "@/components/providers/QueryProvider";
+import { CompareProvider } from "@/lib/store/compare-store";
+import { Navbar } from "@/components/layout/Navbar";
+import { CommandPalette } from "@/components/layout/CommandPalette";
+import { CompareFloatingDock } from "@/components/layout/CompareFloatingDock";
+import { AmbientCanvasLoader } from "@/components/layout/AmbientCanvasLoader";
 
 const instrumentSerif = Instrument_Serif({
   weight: "400",
@@ -53,8 +60,32 @@ export default function RootLayout({
       lang="en"
       className={`${instrumentSerif.variable} ${spaceGrotesk.variable} ${geist.variable} ${geistMono.variable} dark h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans bg-[var(--surface-canvas)] text-[var(--text-primary)]">
-        {children}
+      <body className="min-h-full flex flex-col font-sans bg-[var(--surface-canvas)] text-[var(--text-primary)] relative selection:bg-signal-amber/20 selection:text-signal-amber">
+        <QueryProvider>
+          <CompareProvider>
+            {/* Persistent WebGL Background Scene */}
+            <AmbientCanvasLoader />
+
+            {/* Persistent Top Navigation Bar */}
+            <Suspense fallback={<div className="h-14 border-b border-hairline bg-surface-canvas/90" />}>
+              <Navbar />
+            </Suspense>
+
+            {/* Main Content Area */}
+            <main className="relative z-10 flex-1 pb-20 md:pb-12">
+              {children}
+            </main>
+
+            {/* Global Overlay Utilities */}
+            <Suspense fallback={null}>
+              <CommandPalette />
+            </Suspense>
+
+            <Suspense fallback={null}>
+              <CompareFloatingDock />
+            </Suspense>
+          </CompareProvider>
+        </QueryProvider>
       </body>
     </html>
   );

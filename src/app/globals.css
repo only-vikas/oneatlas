@@ -44,6 +44,46 @@
   font-feature-settings: "tnum" 1;
 }
 
+/* Header Dot Matrix Pattern (24px pitch radial dots) */
+.bg-dot-matrix {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Shimmer sweep animation (1400ms linear sweep, no grey blocks) */
+@keyframes shimmerSweep {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer-sweep {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    rgba(255, 255, 255, 0.09) 50%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmerSweep 1400ms linear infinite;
+}
+
+/* Custom subtle terminal scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #101013;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+}
+
 /* Static 2.5% SVG fractal-noise canvas grain overlay */
 body::before {
   content: "";
