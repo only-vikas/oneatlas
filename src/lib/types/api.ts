@@ -110,9 +110,21 @@ export interface CompareResponse {
 }
 
 export interface RankingItem {
-  rank: number;
+  id: string;
+  name: string;
+  slug: string;
+  lab: LabSummary;
+  modality: Modality;
+  modelType: ModelType;
+  isOpenWeights: boolean;
+  score: number;
+  rankCurrent: number;
+  rankPrevious: number;
   delta: number;
-  model: {
+  sparkline7d: number[];
+  rank: number;
+  updatedAt?: string;
+  model?: {
     id: string;
     name: string;
     slug: string;
@@ -123,14 +135,12 @@ export interface RankingItem {
     contextWindow: number;
     releaseDate: string;
   };
-  score: number;
-  benchmark: string;
-  pricing: {
+  benchmark?: string;
+  pricing?: {
     lowestInputPrice: number;
     lowestOutputPrice: number;
     blendedCost: number;
   };
-  sparkline7d: number[];
 }
 
 export interface RankingsResponse {

@@ -68,19 +68,30 @@ export interface EmptyStateProps {
   title?: string;
   italicWord?: string;
   description?: string;
+  message?: string;
   activeFilters?: string[];
   onReset?: () => void;
+  actionLabel?: string;
+  onAction?: () => void;
   className?: string;
 }
 
 export function EmptyState({
   title = "No models match ",
   italicWord = "that",
-  description = "The active filter combination did not return any indexed models from the catalog ledger. Loosen filters or reset bounds.",
+  description,
+  message,
   activeFilters = [],
   onReset,
+  actionLabel,
+  onAction,
   className,
 }: EmptyStateProps) {
+  const effectiveDescription =
+    message ||
+    description ||
+    "The active filter combination did not return any indexed models from the catalog ledger. Loosen filters or reset bounds.";
+  const handleAction = onAction || onReset;
   return (
     <div
       className={cn(
@@ -116,14 +127,14 @@ export function EmptyState({
         </div>
       )}
 
-      {onReset && (
+      {handleAction && (
         <button
           type="button"
-          onClick={onReset}
+          onClick={handleAction}
           className="inline-flex items-center gap-2 h-9 px-4 rounded-[4px] bg-transparent border border-hairline-strong text-text-primary hover:bg-surface-raised hover:border-hairline transition-all active:scale-[0.99] font-sans text-xs tracking-wide uppercase font-medium cursor-pointer"
         >
           <FilterX className="w-3.5 h-3.5 text-text-secondary" />
-          <span>Clear filters</span>
+          <span>{actionLabel || "Clear filters"}</span>
         </button>
       )}
     </div>

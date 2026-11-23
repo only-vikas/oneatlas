@@ -5,6 +5,8 @@ export type SignalTone = "amber" | "mint" | "sky" | "coral" | "neutral";
 
 export interface SignalBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   tone?: SignalTone;
+  variant?: SignalTone;
+  size?: "xs" | "sm" | "md";
   dot?: boolean;
   pulse?: boolean;
   children: React.ReactNode;
@@ -34,14 +36,17 @@ const TONE_CLASSES: Record<SignalTone, { badge: string; dot: string }> = {
 };
 
 export function SignalBadge({
-  tone = "neutral",
+  tone,
+  variant,
+  size = "sm",
   dot = false,
   pulse = false,
   children,
   className,
   ...props
 }: SignalBadgeProps) {
-  const config = TONE_CLASSES[tone];
+  const effectiveTone: SignalTone = tone || variant || "neutral";
+  const config = TONE_CLASSES[effectiveTone];
 
   return (
     <span

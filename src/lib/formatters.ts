@@ -19,6 +19,8 @@ export function formatPricePer1M(price: number | null | undefined): string {
   return `$${price.toFixed(2)}`;
 }
 
+export const formatPrice = formatPricePer1M;
+
 /**
  * Format context tokens into comma-separated tabular integer
  * e.g. "1,048,576"
@@ -43,6 +45,22 @@ export function formatContextShort(tokens: number | null | undefined): string {
     return Number.isInteger(val) ? `${val}K` : `${val.toFixed(1)}K`;
   }
   return `${tokens}`;
+}
+
+export const formatCompactNumber = formatContextShort;
+
+/**
+ * Format timestamp or ISO string into human-readable date
+ * e.g. "Oct 2024" or "Nov 15, 2024"
+ */
+export function formatDate(dateStr: string | Date | null | undefined): string {
+  if (!dateStr) return "—";
+  try {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+  } catch {
+    return String(dateStr);
+  }
 }
 
 /**
