@@ -33,6 +33,14 @@ export const metadata: Metadata = {
   title: "OneAtlas | AI Model Intelligence Ledger",
   description:
     "Real-time AI model intelligence, benchmarking, pricing, and latency routing ledger.",
+  icons: {
+    icon: [
+      { url: "/logo.png", type: "image/png" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: "/logo.png",
+    shortcut: "/logo.png",
+  },
 };
 
 export default function RootLayout({
