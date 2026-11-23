@@ -5,9 +5,13 @@ import gsap from "gsap";
 import { BenchmarkItem } from "@/lib/types/api";
 import { BarChart3 } from "lucide-react";
 
+export type CategoryAverageEntry =
+  | number
+  | { averageScore: number; sampleCount?: number; maxScore?: number };
+
 interface BenchmarkSectionProps {
   benchmarks: BenchmarkItem[];
-  categoryAverages?: Record<string, number>;
+  categoryAverages?: Record<string, CategoryAverageEntry>;
 }
 
 export function BenchmarkSection({
@@ -63,16 +67,27 @@ export function BenchmarkSection({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6">
         {benchmarks.map((bm) => {
           const isElo = bm.benchmarkName.toLowerCase().includes("elo");
-          const percentage = isElo
-            ? Math.min(100, Math.max(0, ((bm.score - 1000) / 500) * 100))
-            : Math.min(100, Math.max(0, (bm.score / (bm.maxScore || 100)) * 100));
+          const score = typeof bm.score === "number" ? bm.score : Number(bm.score) || 0;
+          const maxScore = bm.maxScore || 100;
 
-          const catAvg = categoryAverages[bm.category];
-          const avgPercentage = catAvg
-            ? isElo
-              ? Math.min(100, Math.max(0, ((catAvg - 1000) / 500) * 100))
-              : catAvg
-            : null;
+          const percentage = isElo
+            ? Math.min(100, Math.max(0, ((score - 1000) / 500) * 100))
+            : Math.min(100, Math.max(0, (score / maxScore) * 100));
+
+          const rawAvg = categoryAverages[bm.category];
+          const avgScore: number | null =
+            typeof rawAvg === "number"
+              ? rawAvg
+              : typeof rawAvg === "object" && rawAvg !== null && typeof (rawAvg as any).averageScore === "number"
+              ? (rawAvg as any).averageScore
+              : null;
+
+          const avgPercentage: number | null =
+            avgScore !== null && !isNaN(avgScore)
+              ? isElo
+                ? Math.min(100, Math.max(0, ((avgScore - 1000) / 500) * 100))
+                : Math.min(100, Math.max(0, (avgScore / maxScore) * 100))
+              : null;
 
           return (
             <div
@@ -91,11 +106,11 @@ export function BenchmarkSection({
 
                 <div className="flex items-baseline gap-1">
                   <span className="font-mono text-base font-semibold text-text-primary tabular-nums">
-                    {isElo ? Math.round(bm.score) : `${bm.score.toFixed(1)}%`}
+                    {isElo ? Math.round(score) : `${score.toFixed(1)}%`}
                   </span>
                   {!isElo && (
                     <span className="font-mono text-[10px] text-text-tertiary">
-                      / {bm.maxScore}%
+                      / {maxScore}%
                     </span>
                   )}
                 </div>
@@ -104,9 +119,9 @@ export function BenchmarkSection({
               {/* Progress Bar Container */}
               <div className="relative w-full h-3 bg-surface-raised rounded-[2px] overflow-hidden flex items-center">
                 {/* Category Average Marker */}
-                {avgPercentage !== null && (
+                {avgPercentage !== null && typeof avgPercentage === "number" && (
                   <div
-                    title={`Category Average: ${avgPercentage.toFixed(1)}%`}
+                    title={`Category Average: ${avgScore !== null ? (isElo ? Math.round(avgScore) : `${avgScore.toFixed(1)}%`) : `${avgPercentage.toFixed(1)}%`}`}
                     style={{ left: `${avgPercentage}%` }}
                     className="absolute top-0 bottom-0 w-[2px] bg-text-tertiary z-10"
                   />
@@ -122,9 +137,9 @@ export function BenchmarkSection({
               {/* Sub-label comparison */}
               <div className="flex items-center justify-between font-mono text-[10px] text-text-tertiary">
                 <span>0%</span>
-                {catAvg && (
+                {avgScore !== null && (
                   <span>
-                    AVG: {isElo ? Math.round(catAvg) : `${catAvg.toFixed(1)}%`}
+                    AVG: {isElo ? Math.round(avgScore) : `${avgScore.toFixed(1)}%`}
                   </span>
                 )}
                 <span>{isElo ? "1500" : "100%"}</span>

@@ -52,7 +52,10 @@ export function ModelDetailClient({ slug }: ModelDetailClientProps) {
   // 3. Fetch Benchmarks
   const { data: benchmarksData } = useQuery<{
     benchmarks: BenchmarkItem[];
-    categoryAverages: Record<string, number>;
+    categoryAverages: Record<
+      string,
+      { averageScore: number; sampleCount?: number; maxScore?: number } | number
+    >;
   }>({
     queryKey: ["model-benchmarks", slug],
     queryFn: async () => {
