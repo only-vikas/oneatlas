@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "tertiary-fixed": "#c4e7ff", "surface-container-low": "#1c1b1d", "surface-well": "#101013", "error-container": "#93000a", "secondary-container": "#00a572", "inverse-primary": "#855300", "surface-raised": "#16161A", "signal-mint": "#10B981", "on-primary-fixed-variant": "#653e00", "hairline-strong": "rgba(255, 255, 255, 0.14)", "tertiary": "#8ed5ff", "on-tertiary-fixed-variant": "#004c69", "surface": "#131315", "on-surface-variant": "#d8c3ad", "surface-container-high": "#2a2a2c", "on-error": "#690005", "background": "#131315", "signal-amber": "#F59E0B", "on-surface": "#e5e1e4", "text-secondary": "#A1A1AA", "inverse-on-surface": "#313032", "surface-bright": "#39393b", "primary": "#ffc174", "error": "#ffb4ab", "surface-dim": "#131315", "primary-container": "#f59e0b", "surface-tint": "#ffb95f", "surface-canvas": "#09090B", "outline-variant": "#534434", "on-primary-container": "#613b00", "on-primary-fixed": "#2a1700", "inverse-surface": "#e5e1e4", "tertiary-fixed-dim": "#7bd0ff", "surface-variant": "#353437", "on-secondary-fixed-variant": "#005236", "on-error-container": "#ffdad6", "on-secondary-fixed": "#002113", "secondary-fixed": "#6ffbbe", "primary-fixed-dim": "#ffb95f", "secondary": "#4edea3", "surface-container-lowest": "#0e0e10", "on-secondary": "#003824", "on-tertiary-fixed": "#001e2c", "hairline": "rgba(255, 255, 255, 0.07)", "on-tertiary-container": "#004965", "surface-container": "#201f22", "signal-coral": "#F43F5E", "on-secondary-container": "#00311f", "tertiary-container": "#38bdf8", "secondary-fixed-dim": "#4edea3", "text-primary": "#F4F4F5", "surface-container-highest": "#353437", "outline": "#a08e7a", "signal-sky": "#38BDF8", "on-primary": "#472a00", "primary-fixed": "#ffddb8", "on-tertiary": "#00354a", "on-background": "#e5e1e4", "surface-overlay": "#1C1C21", "text-tertiary": "#6B6B74" }, borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, spacing: { "gutter": "1rem", "space-lg": "1rem", "margin": "1.5rem", "space-sm": "0.5rem", "space-xl": "1.5rem", "space-xs": "0.25rem", "gutter-dense": "0.5rem", "margin-dock": "5rem", "space-md": "0.75rem" }, fontFamily: { "display-lg-mobile": ["Newsreader"], "label-micro": ["Geist"], "body-dense": ["Geist"], "display-md": ["Newsreader"], "display-lg": ["Newsreader"], "label-md": ["Geist"], "numeric-md": ["JetBrains Mono"], "numeric-lg": ["JetBrains Mono"], "numeric-sm": ["JetBrains Mono"], "body-md": ["Geist"], "headline-md": ["Space Grotesk"], "body-lg": ["Geist"], "headline-sm": ["Space Grotesk"], "headline-lg": ["Space Grotesk"] }, fontSize: { "display-lg-mobile": ["36px", { lineHeight: "44px", letterSpacing: "-0.01em", fontWeight: "400" }], "label-micro": ["10px", { lineHeight: "12px", letterSpacing: "0.09em", fontWeight: "500" }], "body-dense": ["13px", { lineHeight: "13px", letterSpacing: "0em", fontWeight: "400" }], "display-md": ["40px", { lineHeight: "48px", letterSpacing: "-0.01em", fontWeight: "400" }], "display-lg": ["56px", { lineHeight: "64px", letterSpacing: "-0.01em", fontWeight: "400" }], "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500" }], "numeric-md": ["13px", { lineHeight: "18px", letterSpacing: "0em", fontWeight: "400" }], "numeric-lg": ["15px", { lineHeight: "20px", letterSpacing: "0em", fontWeight: "500" }], "numeric-sm": ["12px", { lineHeight: "16px", letterSpacing: "0em", fontWeight: "400" }], "body-md": ["13px", { lineHeight: "19px", letterSpacing: "-0.01em", fontWeight: "400" }], "headline-md": ["22px", { lineHeight: "30px", letterSpacing: "-0.02em", fontWeight: "500" }], "body-lg": ["14px", { lineHeight: "21px", letterSpacing: "-0.01em", fontWeight: "400" }], "headline-sm": ["18px", { lineHeight: "24px", letterSpacing: "-0.02em", fontWeight: "500" }], "headline-lg": ["28px", { lineHeight: "36px", letterSpacing: "-0.03em", fontWeight: "600" }] } } } };</script><style>@layer base{html,body{width:100%;margin:0;padding:0;background-color:#09090B;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head><body class="bg-surface-canvas text-text-primary font-body-md text-body-md antialiased min-h-screen flex flex-col selection:bg-signal-amber selection:text-surface-canvas"><header class="fixed top-0 w-full z-50 pt-safe bg-surface-canvas/90 backdrop-blur-xl"><div class="h-[52px] px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-none bg-signal-amber"></div><span class="font-headline-sm text-headline-sm font-semibold tracking-tight text-text-primary uppercase">OneAtlas</span><span class="h-3 w-[1px] bg-hairline-strong mx-space-xs"></span><span class="font-label-micro text-label-micro uppercase tracking-wider text-text-tertiary">TM-01</span></div><div class="flex items-center gap-space-sm"><button aria-label="Command Palette" class="h-7 px-space-sm rounded-lg bg-surface-well flex items-center gap-1.5 text-text-secondary active:bg-surface-raised transition-colors"><span class="font-numeric-sm text-numeric-sm text-signal-amber font-medium">⌘K</span><span class="font-label-micro text-label-micro uppercase tracking-wider text-text-tertiary">CMD</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-[52px] pb-[56px] bg-surface-canvas"><div class="flex flex-col w-full relative">
+<!-- Subtle Dot Matrix Technical Underlay -->
+<div class="absolute inset-0 pointer-events-none opacity-[0.035]" style="background-image: radial-gradient(#F4F4F5 1px, transparent 1px); background-size: 16px 16px;"></div>
+<!-- Catalog Header & Command Bar -->
+<div class="px-gutter pt-space-md pb-space-sm bg-surface-canvas border-b border-hairline relative z-10">
+<div class="flex items-baseline justify-between mb-space-xs">
+<div class="flex items-center gap-2">
+<h1 class="font-headline-sm text-headline-sm tracking-tight text-text-primary uppercase">Discovery Catalog</h1>
+<span class="inline-flex items-center justify-center px-1.5 h-4 rounded-lg bg-surface-raised border border-hairline font-numeric-sm text-label-micro text-text-tertiary">128</span>
+</div>
+<div class="flex items-center gap-1 font-label-micro text-label-micro text-signal-mint tracking-wider uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint animate-pulse"></span>
+        STREAM ACTIVE
+      </div>
+</div>
+<div class="font-display-md text-body-md text-text-secondary italic font-light">
+      Quantitative intelligence &amp; benchmark telemetry.
+    </div>
+<!-- Controls Row: Search + Filter Trigger -->
+<div class="mt-space-md flex items-center gap-space-xs">
+<div class="relative flex-1">
+<div class="absolute inset-y-0 left-2.5 flex items-center pointer-events-none text-text-tertiary">
+<span class="material-symbols-outlined text-[17px]">search</span>
+</div>
+<input class="w-full h-10 pl-8 pr-3 rounded-lg bg-surface-well border border-hairline text-text-primary font-body-dense placeholder:text-text-tertiary text-body-dense focus:outline-none focus:border-signal-amber transition-colors" placeholder="Search 128+ models..." type="text"/>
+<div class="absolute inset-y-0 right-2.5 flex items-center">
+<span class="font-numeric-sm text-label-micro text-text-tertiary uppercase tracking-wider">/</span>
+</div>
+</div>
+<button aria-label="Open filter matrix" class="h-10 px-space-sm rounded-lg bg-surface-raised border border-hairline-strong flex items-center gap-1.5 text-text-primary active:bg-surface-well transition-colors shrink-0" id="filterTrigger">
+<span class="material-symbols-outlined text-signal-amber text-[16px]">tune</span>
+<span class="font-label-micro text-label-micro uppercase tracking-wider text-text-primary font-medium">FILTERS (3)</span>
+</button>
+</div>
+<!-- Active Filter Tags Strip -->
+<div class="flex items-center gap-1.5 mt-space-xs overflow-x-auto no-scrollbar py-1">
+<span class="font-label-micro text-label-micro text-text-tertiary uppercase tracking-wider pr-1">Active:</span>
+<div class="flex items-center gap-1 h-5 px-1.5 rounded-lg bg-signal-amber/10 border border-signal-amber/30 text-signal-amber font-label-micro text-label-micro tracking-wider uppercase">
+<span>Reasoning</span>
+<button class="hover:text-text-primary flex items-center"><span class="material-symbols-outlined text-[12px]">close</span></button>
+</div>
+<div class="flex items-center gap-1 h-5 px-1.5 rounded-lg bg-surface-raised border border-hairline text-text-secondary font-label-micro text-label-micro tracking-wider uppercase">
+<span>Anthropic</span>
+<button class="hover:text-text-primary flex items-center"><span class="material-symbols-outlined text-[12px]">close</span></button>
+</div>
+<div class="flex items-center gap-1 h-5 px-1.5 rounded-lg bg-surface-raised border border-hairline text-text-secondary font-label-micro text-label-micro tracking-wider uppercase">
+<span>Open Weights</span>
+<button class="hover:text-text-primary flex items-center"><span class="material-symbols-outlined text-[12px]">close</span></button>
+</div>
+</div>
+</div>
+<!-- Modality Tabs (Single horizontal line, technical pills) -->
+<div class="w-full bg-surface-canvas border-b border-hairline px-gutter py-2 overflow-x-auto no-scrollbar sticky top-[52px] z-20 backdrop-blur-md bg-surface-canvas/90">
+<div class="flex items-center gap-1.5 min-w-max">
+<button class="h-7 px-2.5 rounded-lg bg-transparent text-text-tertiary hover:text-text-secondary font-label-micro text-label-micro uppercase tracking-wider transition-colors">
+        ALL (128)
+      </button>
+<button class="h-7 px-2.5 rounded-lg bg-transparent text-text-tertiary hover:text-text-secondary font-label-micro text-label-micro uppercase tracking-wider transition-colors">
+        TEXT &amp; CODE (84)
+      </button>
+<!-- Active Signature Tab Pill -->
+<button class="h-7 px-2.5 rounded-lg bg-surface-raised border border-signal-amber/60 text-signal-amber font-label-micro text-label-micro uppercase tracking-wider shadow-[0_0_8px_rgba(245,158,11,0.15)] flex items-center gap-1">
+<span class="w-1 h-1 rounded-full bg-signal-amber"></span>
+        REASONING (26)
+      </button>
+<button class="h-7 px-2.5 rounded-lg bg-transparent text-text-tertiary hover:text-text-secondary font-label-micro text-label-micro uppercase tracking-wider transition-colors">
+        MULTIMODAL (42)
+      </button>
+<button class="h-7 px-2.5 rounded-lg bg-transparent text-text-tertiary hover:text-text-secondary font-label-micro text-label-micro uppercase tracking-wider transition-colors">
+        EMBEDDINGS (18)
+      </button>
+</div>
+</div>
+<!-- Telemetry Table Ledger (Mobile Stacked Rows) -->
+<div class="w-full divide-y divide-hairline bg-surface-canvas relative z-10 pb-28">
+<!-- Model Row 1 (Checked for Compare) -->
+<div class="px-gutter py-space-sm bg-surface-raised/40 hover:bg-surface-raised transition-colors flex items-start gap-space-sm">
+<div class="pt-0.5">
+<input checked="" class="w-3.5 h-3.5 rounded-lg accent-signal-amber bg-surface-well border border-hairline cursor-pointer" type="checkbox"/>
+</div>
+<div class="flex-1 min-w-0">
+<!-- Line 1: Monogram, Name, Tags, Metric -->
+<div class="flex items-center justify-between gap-1">
+<div class="flex items-center gap-1.5 truncate">
+<span class="w-4 h-4 rounded-lg bg-surface-well border border-hairline flex items-center justify-center font-numeric-sm text-[9px] text-text-secondary font-bold shrink-0">C</span>
+<span class="font-headline-sm text-body-lg font-medium text-text-primary tracking-tight truncate">Claude 3.7 Sonnet</span>
+<span class="h-4 px-1 rounded-lg bg-signal-mint/10 border border-signal-mint/30 text-signal-mint font-label-micro text-[9px] uppercase tracking-wider shrink-0">HYBRID</span>
+</div>
+<div class="text-right shrink-0">
+<span class="font-numeric-md text-numeric-md text-signal-amber font-medium">94.8</span>
+<span class="font-numeric-sm text-label-micro text-text-tertiary uppercase ml-0.5">SWE</span>
+</div>
+</div>
+<!-- Line 2: Pricing, Context, Modality Indicators -->
+<div class="flex items-center justify-between mt-1 text-text-tertiary font-numeric-sm text-numeric-sm">
+<div class="flex items-center gap-1.5">
+<span class="text-text-secondary">$3.00 / $15.00</span>
+<span class="text-text-tertiary">·</span>
+<span>200k ctx</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky" title="Text"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky" title="Code"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky" title="Vision"></span>
+<span class="font-label-micro text-label-micro text-text-tertiary ml-1 uppercase">1M</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Model Row 2 (Checked for Compare) -->
+<div class="px-gutter py-space-sm bg-surface-raised/40 hover:bg-surface-raised transition-colors flex items-start gap-space-sm">
+<div class="pt-0.5">
+<input checked="" class="w-3.5 h-3.5 rounded-lg accent-signal-amber bg-surface-well border border-hairline cursor-pointer" type="checkbox"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<div class="flex items-center gap-1.5 truncate">
+<span class="w-4 h-4 rounded-lg bg-surface-well border border-hairline flex items-center justify-center font-numeric-sm text-[9px] text-text-secondary font-bold shrink-0">D</span>
+<span class="font-headline-sm text-body-lg font-medium text-text-primary tracking-tight truncate">DeepSeek R1</span>
+<span class="h-4 px-1 rounded-lg bg-signal-mint/10 border border-signal-mint/30 text-signal-mint font-label-micro text-[9px] uppercase tracking-wider shrink-0">BEST VALUE</span>
+</div>
+<div class="text-right shrink-0">
+<span class="font-numeric-md text-numeric-md text-signal-mint font-medium">92.3</span>
+<span class="font-numeric-sm text-label-micro text-text-tertiary uppercase ml-0.5">AIME</span>
+</div>
+</div>
+<div class="flex items-center justify-between mt-1 text-text-tertiary font-numeric-sm text-numeric-sm">
+<div class="flex items-center gap-1.5">
+<span class="text-signal-mint">$0.55 / $2.19</span>
+<span class="text-text-tertiary">·</span>
+<span>128k ctx</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-text-tertiary/40"></span>
+<span class="font-label-micro text-label-micro text-text-tertiary ml-1 uppercase">1M</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Model Row 3 -->
+<div class="px-gutter py-space-sm hover:bg-surface-raised transition-colors flex items-start gap-space-sm">
+<div class="pt-0.5">
+<input class="w-3.5 h-3.5 rounded-lg accent-signal-amber bg-surface-well border border-hairline cursor-pointer" type="checkbox"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<div class="flex items-center gap-1.5 truncate">
+<span class="w-4 h-4 rounded-lg bg-surface-well border border-hairline flex items-center justify-center font-numeric-sm text-[9px] text-text-secondary font-bold shrink-0">O</span>
+<span class="font-headline-sm text-body-lg font-medium text-text-primary tracking-tight truncate">o3-mini High</span>
+<span class="h-4 px-1 rounded-lg bg-signal-sky/10 border border-signal-sky/30 text-signal-sky font-label-micro text-[9px] uppercase tracking-wider shrink-0">STEM</span>
+</div>
+<div class="text-right shrink-0">
+<span class="font-numeric-md text-numeric-md text-text-primary font-medium">91.4</span>
+<span class="font-numeric-sm text-label-micro text-text-tertiary uppercase ml-0.5">AIME</span>
+</div>
+</div>
+<div class="flex items-center justify-between mt-1 text-text-tertiary font-numeric-sm text-numeric-sm">
+<div class="flex items-center gap-1.5">
+<span class="text-text-secondary">$1.10 / $4.40</span>
+<span class="text-text-tertiary">·</span>
+<span>200k ctx</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-text-tertiary/40"></span>
+<span class="font-label-micro text-label-micro text-text-tertiary ml-1 uppercase">1M</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Model Row 4 -->
+<div class="px-gutter py-space-sm hover:bg-surface-raised transition-colors flex items-start gap-space-sm">
+<div class="pt-0.5">
+<input class="w-3.5 h-3.5 rounded-lg accent-signal-amber bg-surface-well border border-hairline cursor-pointer" type="checkbox"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<div class="flex items-center gap-1.5 truncate">
+<span class="w-4 h-4 rounded-lg bg-surface-well border border-hairline flex items-center justify-center font-numeric-sm text-[9px] text-text-secondary font-bold shrink-0">G</span>
+<span class="font-headline-sm text-body-lg font-medium text-text-primary tracking-tight truncate">Gemini 2.0 Flash Thinking</span>
+<span class="h-4 px-1 rounded-lg bg-signal-sky/10 border border-signal-sky/30 text-signal-sky font-label-micro text-[9px] uppercase tracking-wider shrink-0">NEW</span>
+</div>
+<div class="text-right shrink-0">
+<span class="font-numeric-md text-numeric-md text-text-primary font-medium">89.6</span>
+<span class="font-numeric-sm text-label-micro text-text-tertiary uppercase ml-0.5">MATH</span>
+</div>
+</div>
+<div class="flex items-center justify-between mt-1 text-text-tertiary font-numeric-sm text-numeric-sm">
+<div class="flex items-center gap-1.5">
+<span class="text-text-secondary">$0.10 / $0.40</span>
+<span class="text-text-tertiary">·</span>
+<span>1048k ctx</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="font-label-micro text-label-micro text-text-tertiary ml-1 uppercase">1M</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Model Row 5 -->
+<div class="px-gutter py-space-sm hover:bg-surface-raised transition-colors flex items-start gap-space-sm">
+<div class="pt-0.5">
+<input class="w-3.5 h-3.5 rounded-lg accent-signal-amber bg-surface-well border border-hairline cursor-pointer" type="checkbox"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<div class="flex items-center gap-1.5 truncate">
+<span class="w-4 h-4 rounded-lg bg-surface-well border border-hairline flex items-center justify-center font-numeric-sm text-[9px] text-text-secondary font-bold shrink-0">Q</span>
+<span class="font-headline-sm text-body-lg font-medium text-text-primary tracking-tight truncate">Qwen 2.5 Max</span>
+<span class="h-4 px-1 rounded-lg bg-surface-raised border border-hairline font-label-micro text-[9px] text-text-secondary uppercase tracking-wider shrink-0">MOE</span>
+</div>
+<div class="text-right shrink-0">
+<span class="font-numeric-md text-numeric-md text-text-primary font-medium">88.2</span>
+<span class="font-numeric-sm text-label-micro text-text-tertiary uppercase ml-0.5">MMLU</span>
+</div>
+</div>
+<div class="flex items-center justify-between mt-1 text-text-tertiary font-numeric-sm text-numeric-sm">
+<div class="flex items-center gap-1.5">
+<span class="text-text-secondary">$1.60 / $6.40</span>
+<span class="text-text-tertiary">·</span>
+<span>32k ctx</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-text-tertiary/40"></span>
+<span class="font-label-micro text-label-micro text-text-tertiary ml-1 uppercase">1M</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Model Row 6 -->
+<div class="px-gutter py-space-sm hover:bg-surface-raised transition-colors flex items-start gap-space-sm">
+<div class="pt-0.5">
+<input class="w-3.5 h-3.5 rounded-lg accent-signal-amber bg-surface-well border border-hairline cursor-pointer" type="checkbox"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<div class="flex items-center gap-1.5 truncate">
+<span class="w-4 h-4 rounded-lg bg-surface-well border border-hairline flex items-center justify-center font-numeric-sm text-[9px] text-text-secondary font-bold shrink-0">L</span>
+<span class="font-headline-sm text-body-lg font-medium text-text-primary tracking-tight truncate">Llama 3.3 70B Instruct</span>
+<span class="h-4 px-1 rounded-lg bg-surface-raised border border-hairline text-text-secondary font-label-micro text-[9px] uppercase tracking-wider shrink-0">OSS</span>
+</div>
+<div class="text-right shrink-0">
+<span class="font-numeric-md text-numeric-md text-text-primary font-medium">85.4</span>
+<span class="font-numeric-sm text-label-micro text-text-tertiary uppercase ml-0.5">MATH</span>
+</div>
+</div>
+<div class="flex items-center justify-between mt-1 text-text-tertiary font-numeric-sm text-numeric-sm">
+<div class="flex items-center gap-1.5">
+<span class="text-signal-mint">$0.12 / $0.30</span>
+<span class="text-text-tertiary">·</span>
+<span>128k ctx</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-text-tertiary/40"></span>
+<span class="font-label-micro text-label-micro text-text-tertiary ml-1 uppercase">1M</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Model Row 7 -->
+<div class="px-gutter py-space-sm hover:bg-surface-raised transition-colors flex items-start gap-space-sm">
+<div class="pt-0.5">
+<input class="w-3.5 h-3.5 rounded-lg accent-signal-amber bg-surface-well border border-hairline cursor-pointer" type="checkbox"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<div class="flex items-center gap-1.5 truncate">
+<span class="w-4 h-4 rounded-lg bg-surface-well border border-hairline flex items-center justify-center font-numeric-sm text-[9px] text-text-secondary font-bold shrink-0">C</span>
+<span class="font-headline-sm text-body-lg font-medium text-text-primary tracking-tight truncate">Claude 3.5 Haiku</span>
+<span class="h-4 px-1 rounded-lg bg-surface-raised border border-hairline text-text-secondary font-label-micro text-[9px] uppercase tracking-wider shrink-0">FAST</span>
+</div>
+<div class="text-right shrink-0">
+<span class="font-numeric-md text-numeric-md text-text-primary font-medium">75.2</span>
+<span class="font-numeric-sm text-label-micro text-text-tertiary uppercase ml-0.5">SWE</span>
+</div>
+</div>
+<div class="flex items-center justify-between mt-1 text-text-tertiary font-numeric-sm text-numeric-sm">
+<div class="flex items-center gap-1.5">
+<span class="text-text-secondary">$0.80 / $4.00</span>
+<span class="text-text-tertiary">·</span>
+<span>200k ctx</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="font-label-micro text-label-micro text-text-tertiary ml-1 uppercase">1M</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Telemetry Status Line -->
+<div class="px-gutter py-4 bg-surface-canvas text-center">
+<div class="font-numeric-sm text-label-micro text-text-tertiary uppercase tracking-widest">
+        128 MODELS INDEXED · 9 PROVIDERS · UPDATED 4M AGO
+      </div>
+<div class="font-label-micro text-[9px] text-text-tertiary/60 uppercase tracking-tight mt-1">
+        LATENCY STREAM PING: 42MS · LEDGER VERIFIED (SHA-256)
+      </div>
+</div>
+</div>
+<!-- FLOATING COMPARE DOCK (Positioned directly above bottom navigation bar) -->
+<div class="fixed bottom-[64px] inset-x-0 px-gutter z-40 pointer-events-none flex justify-center">
+<div class="pointer-events-auto w-full max-w-[390px] h-12 rounded-lg bg-surface-overlay/90 backdrop-blur-xl border border-signal-amber/40 shadow-xl flex items-center justify-between px-space-md">
+<div class="flex items-center gap-2 min-w-0">
+<div class="w-2 h-2 rounded-full bg-signal-amber animate-pulse shrink-0"></div>
+<div class="flex items-center gap-1.5 truncate">
+<span class="font-numeric-sm text-label-micro uppercase font-medium text-signal-amber tracking-wider shrink-0">2 SELECTED</span>
+<span class="text-hairline-strong shrink-0">|</span>
+<div class="flex items-center gap-1 truncate">
+<span class="px-1.5 py-0.5 rounded-lg bg-surface-raised border border-hairline font-label-micro text-[10px] text-text-primary truncate">Claude 3.7</span>
+<span class="px-1.5 py-0.5 rounded-lg bg-surface-raised border border-hairline font-label-micro text-[10px] text-text-primary truncate">DeepSeek R1</span>
+</div>
+</div>
+</div>
+<button class="h-8 px-space-sm rounded-lg bg-signal-amber text-surface-canvas font-headline-sm text-label-md font-semibold flex items-center gap-1 active:opacity-90 shrink-0 ml-2">
+<span>COMPARE</span>
+<span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Frosted Bottom-Sheet Filter Drawer (Peek / Modal State) -->
+<div class="fixed inset-0 z-50 bg-surface-canvas/80 backdrop-blur-md hidden flex-col justify-end" id="filterDrawer">
+<div class="w-full bg-surface-overlay border-t border-hairline-strong rounded-t-xl p-gutter max-h-[82vh] flex flex-col">
+<div class="w-8 h-1 bg-hairline-strong rounded-full mx-auto mb-space-md"></div>
+<div class="flex items-center justify-between pb-space-sm border-b border-hairline">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-text-primary uppercase tracking-tight">Parametric Filters</h2>
+<span class="font-numeric-sm text-label-micro text-text-tertiary uppercase">3 PARAMETERS ACTIVE</span>
+</div>
+<button class="w-8 h-8 rounded-lg bg-surface-well border border-hairline flex items-center justify-center text-text-secondary active:text-text-primary" id="closeFilter">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- Filter Controls Body -->
+<div class="py-space-md space-y-space-md overflow-y-auto no-scrollbar flex-1 font-body-dense">
+<div>
+<label class="font-label-micro text-label-micro uppercase tracking-wider text-text-tertiary block mb-2">Architectural Paradigm</label>
+<div class="grid grid-cols-2 gap-2">
+<button class="h-9 px-2.5 rounded-lg bg-surface-well border border-signal-amber text-signal-amber font-label-micro text-label-micro uppercase text-left flex items-center justify-between">
+<span>Reasoning (CoT)</span>
+<span class="material-symbols-outlined text-[16px]">check</span>
+</button>
+<button class="h-9 px-2.5 rounded-lg bg-surface-well border border-hairline text-text-secondary font-label-micro text-label-micro uppercase text-left">
+              Dense Mixture (MoE)
+            </button>
+<button class="h-9 px-2.5 rounded-lg bg-surface-well border border-hairline text-text-secondary font-label-micro text-label-micro uppercase text-left">
+              Diffusion / Latent
+            </button>
+<button class="h-9 px-2.5 rounded-lg bg-surface-well border border-hairline text-text-secondary font-label-micro text-label-micro uppercase text-left">
+              Dense Transformer
+            </button>
+</div>
+</div>
+<div>
+<label class="font-label-micro text-label-micro uppercase tracking-wider text-text-tertiary block mb-2">Weight Governance</label>
+<div class="grid grid-cols-3 gap-2">
+<button class="h-8 rounded-lg bg-surface-well border border-signal-amber text-signal-amber font-label-micro text-label-micro uppercase">
+              Open Weights
+            </button>
+<button class="h-8 rounded-lg bg-surface-well border border-hairline text-text-secondary font-label-micro text-label-micro uppercase">
+              Proprietary
+            </button>
+<button class="h-8 rounded-lg bg-surface-well border border-hairline text-text-secondary font-label-micro text-label-micro uppercase">
+              Hosted Only
+            </button>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-2">
+<label class="font-label-micro text-label-micro uppercase tracking-wider text-text-tertiary">Max Output Cost / 1M</label>
+<span class="font-numeric-sm text-numeric-sm text-signal-amber">$15.00</span>
+</div>
+<input class="w-full accent-signal-amber bg-surface-well h-1 rounded-lg" max="100" min="0" type="range" value="15"/>
+</div>
+</div>
+<!-- Filter Sheet Action Footer -->
+<div class="pt-space-md border-t border-hairline flex items-center gap-space-sm">
+<button class="h-10 px-4 rounded-lg bg-surface-well border border-hairline text-text-secondary font-label-micro text-label-micro uppercase tracking-wider flex-1 active:bg-surface-raised">
+          Reset (All)
+        </button>
+<button class="h-10 px-4 rounded-lg bg-signal-amber text-surface-canvas font-headline-sm text-body-dense font-semibold uppercase tracking-tight flex-1 flex items-center justify-center gap-1 active:opacity-90" id="applyFilter">
+          Apply Telemetry
+        </button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Filter Drawer peek interaction
+  const trigger = document.getElementById('filterTrigger');
+  const drawer = document.getElementById('filterDrawer');
+  const close = document.getElementById('closeFilter');
+  const apply = document.getElementById('applyFilter');
+
+  if (trigger && drawer) {
+    trigger.addEventListener('click', () => {
+      drawer.classList.remove('hidden');
+      drawer.classList.add('flex');
+    });
+  }
+
+  const hideDrawer = () => {
+    if (drawer) {
+      drawer.classList.add('hidden');
+      drawer.classList.remove('flex');
+    }
+  };
+
+  if (close) close.addEventListener('click', hideDrawer);
+  if (apply) apply.addEventListener('click', hideDrawer);
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-canvas/95 backdrop-blur-xl" data-active-classes="text-signal-amber bg-surface-raised"><div class="h-[56px] px-gutter flex items-center justify-around"><a class="flex flex-col items-center justify-center h-10 px-space-md rounded-lg text-text-secondary hover:text-text-primary transition-colors min-w-[64px]" data-path="model-index" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="font-label-micro text-label-micro uppercase mt-0.5">Ledger</span></a><a class="flex flex-col items-center justify-center h-10 px-space-md rounded-lg text-text-secondary hover:text-text-primary transition-colors min-w-[64px]" data-path="telemetry-matrix" href="#"><span class="material-symbols-outlined text-[20px]">finance_mode</span><span class="font-label-micro text-label-micro uppercase mt-0.5">Matrix</span></a><a class="flex flex-col items-center justify-center h-10 px-space-md rounded-lg text-text-secondary hover:text-text-primary transition-colors min-w-[64px]" data-path="latency-tracker" href="#"><span class="material-symbols-outlined text-[20px]">speed</span><span class="font-label-micro text-label-micro uppercase mt-0.5">Latency</span></a><a class="flex flex-col items-center justify-center h-10 px-space-md rounded-lg text-text-secondary hover:text-text-primary transition-colors min-w-[64px]" data-path="terminal-logs" href="#"><span class="material-symbols-outlined text-[20px]">terminal</span><span class="font-label-micro text-label-micro uppercase mt-0.5">Logs</span></a></div></nav></body></html>

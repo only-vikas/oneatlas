@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OneAtlas — ⌘K Command Palette Overlay</title>
+<!-- Fonts: Instrument Serif, Space Grotesk, Geist Sans, Geist Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&amp;family=Geist:wght@300;400;500;600&amp;family=Instrument+Serif:ital@0;1&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            surface: {
+              canvas: '#09090B',
+              well: '#101013',
+              raised: '#16161A',
+              overlay: '#1C1C21',
+            },
+            hairline: {
+              DEFAULT: 'rgba(255, 255, 255, 0.07)',
+              strong: 'rgba(255, 255, 255, 0.14)',
+            },
+            signal: {
+              amber: '#F59E0B',
+              mint: '#10B981',
+              sky: '#38BDF8',
+              coral: '#F43F5E',
+            },
+            ledger: {
+              textPrimary: '#F4F4F5',
+              textSecondary: '#A1A1AA',
+              textTertiary: '#6B6B74',
+            }
+          },
+          fontFamily: {
+            display: ['"Instrument Serif"', 'serif'],
+            structural: ['"Space Grotesk"', 'sans-serif'],
+            ui: ['"Geist"', 'sans-serif'],
+            mono: ['"Geist Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Grain texture overlay */
+    .grain-overlay {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* Radial dot-matrix header band */
+    .dot-matrix {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* Tabular numeric alignment */
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Custom subtle scrollbar */
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #101013;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 2px;
+    }
+
+    /* Command Palette Specific Blur & Focus Halo */
+    .palette-glow {
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14),
+                  0 24px 48px -12px rgba(0, 0, 0, 0.85),
+                  0 0 80px -20px rgba(0, 0, 0, 0.95);
+    }
+
+    .active-pill-glow {
+      box-shadow: inset 0 0 0 1px rgba(245, 158, 11, 0.35), 0 0 16px -4px rgba(245, 158, 11, 0.12);
+    }
+  </style>
+</head>
+<body class="bg-surface-canvas text-ledger-textPrimary font-ui antialiased min-h-screen relative overflow-x-hidden selection:bg-signal-amber/20 selection:text-signal-amber">
+<!-- Grain Overlay (Global persistent texture) -->
+<div class="grain-overlay" style="opacity: 0.025;"></div>
+<!-- ============================================================== -->
+<!-- BACKGROUND SCREEN: /models Model Discovery Catalog (Dimmed 50%)-->
+<!-- ============================================================== -->
+<div class="relative w-full min-h-screen opacity-45 blur-[3px] pointer-events-none select-none filter transition-all duration-300">
+<!-- Top Navigation (Shell §7.2) -->
+<header class="h-14 border-b border-hairline bg-surface-canvas/90 flex items-center justify-between px-6 sticky top-0 z-30">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2">
+<!-- Monogram Logo -->
+<div class="w-6 h-6 border border-hairline-strong flex items-center justify-center rounded-[2px] bg-surface-well text-signal-amber font-structural font-bold text-xs tracking-tighter">
+            OA
+          </div>
+<span class="font-structural font-semibold text-[15px] tracking-tight text-ledger-textPrimary">OneAtlas</span>
+<span class="font-mono text-[10px] text-ledger-textTertiary tracking-wider px-1.5 py-0.5 border border-hairline rounded-[2px]">LEDGER_v3.2</span>
+</div>
+<nav class="flex items-center gap-1 font-structural text-[13px]">
+<!-- Active Models pill -->
+<div class="relative px-3 py-1 rounded-[4px] bg-surface-raised text-ledger-textPrimary border border-hairline-strong flex items-center gap-1.5 font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-amber"></span>
+            Models
+          </div>
+<div class="px-3 py-1 text-ledger-textSecondary hover:text-ledger-textPrimary">Rankings</div>
+<div class="px-3 py-1 text-ledger-textSecondary hover:text-ledger-textPrimary">Compare</div>
+<div class="px-3 py-1 text-ledger-textSecondary hover:text-ledger-textPrimary">Directory</div>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<!-- Telemetry Pill -->
+<div class="flex items-center gap-2 font-mono text-[11px] text-ledger-textSecondary px-2.5 py-1 border border-hairline rounded-[4px] bg-surface-well">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint animate-pulse"></span>
+<span>LATENCY: <span class="text-ledger-textPrimary tabular-nums">18ms</span></span>
+</div>
+<!-- ⌘K trigger simulated in top nav -->
+<div class="flex items-center gap-2 border border-hairline-strong px-2.5 py-1 rounded-[4px] bg-surface-raised font-mono text-[11px] text-signal-amber">
+<span>Search index</span>
+<kbd class="px-1 border border-signal-amber/30 rounded text-[10px]">⌘K</kbd>
+</div>
+</div>
+</header>
+<!-- Sub-hero Banner / Search Header Band -->
+<div class="border-b border-hairline dot-matrix relative px-8 py-7 bg-surface-canvas">
+<div class="max-w-7xl">
+<div class="font-mono text-[11px] uppercase tracking-[0.09em] text-ledger-textTertiary mb-1">
+          Catalog Ledger // Unified Intelligence Index
+        </div>
+<h1 class="font-display text-4xl text-ledger-textPrimary tracking-[-0.01em]">
+          Frontier Models &amp; <span class="italic text-signal-amber">Inference</span> Economics
+        </h1>
+<p class="font-ui text-sm text-ledger-textSecondary mt-1">
+          Real-time cross-provider benchmarks, live token pricing parity, and deterministic latency tracking.
+        </p>
+</div>
+</div>
+<!-- Main /models Content Layout: Rail (240px) + Spine + Table Ledger -->
+<div class="flex w-full min-h-[calc(100vh-148px)]">
+<!-- Left Rail (240px) -->
+<aside class="w-[240px] shrink-0 border-r border-hairline bg-surface-well/50 p-5 space-y-6">
+<div>
+<div class="font-ui text-[10px] font-medium tracking-[0.09em] uppercase text-ledger-textTertiary mb-3 flex items-center justify-between">
+<span>Provider</span>
+<span class="font-mono text-[10px] text-ledger-textSecondary">04</span>
+</div>
+<div class="space-y-1.5 font-ui text-[13px] text-ledger-textSecondary">
+<div class="flex items-center justify-between px-2 py-1 rounded-[4px] bg-surface-raised text-ledger-textPrimary">
+<span class="flex items-center gap-2"><span class="w-3 h-3 border border-signal-amber bg-signal-amber/10 rounded-[2px] flex items-center justify-center text-[9px] text-signal-amber">✓</span> Anthropic</span>
+<span class="font-mono text-[11px]">8</span>
+</div>
+<div class="flex items-center justify-between px-2 py-1 rounded-[4px] hover:bg-surface-raised/40">
+<span class="flex items-center gap-2"><span class="w-3 h-3 border border-hairline rounded-[2px]"></span> OpenAI</span>
+<span class="font-mono text-[11px]">14</span>
+</div>
+<div class="flex items-center justify-between px-2 py-1 rounded-[4px] hover:bg-surface-raised/40">
+<span class="flex items-center gap-2"><span class="w-3 h-3 border border-hairline rounded-[2px]"></span> DeepSeek</span>
+<span class="font-mono text-[11px]">6</span>
+</div>
+<div class="flex items-center justify-between px-2 py-1 rounded-[4px] hover:bg-surface-raised/40">
+<span class="flex items-center gap-2"><span class="w-3 h-3 border border-hairline rounded-[2px]"></span> Google</span>
+<span class="font-mono text-[11px]">9</span>
+</div>
+</div>
+</div>
+<div>
+<div class="font-ui text-[10px] font-medium tracking-[0.09em] uppercase text-ledger-textTertiary mb-3 flex items-center justify-between">
+<span>Modality</span>
+<span class="font-mono text-[10px] text-ledger-textSecondary">02</span>
+</div>
+<div class="space-y-1.5 font-ui text-[13px] text-ledger-textSecondary">
+<div class="flex items-center justify-between px-2 py-1 rounded-[4px] bg-surface-raised text-ledger-textPrimary">
+<span class="flex items-center gap-2"><span class="w-3 h-3 border border-signal-amber bg-signal-amber/10 rounded-[2px] flex items-center justify-center text-[9px] text-signal-amber">✓</span> Reasoning</span>
+<span class="font-mono text-[11px]">11</span>
+</div>
+<div class="flex items-center justify-between px-2 py-1 rounded-[4px] hover:bg-surface-raised/40">
+<span class="flex items-center gap-2"><span class="w-3 h-3 border border-hairline rounded-[2px]"></span> Multimodal</span>
+<span class="font-mono text-[11px]">19</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Center Ledger Table -->
+<main class="flex-1 bg-surface-well/20">
+<!-- Table Column Headers -->
+<div class="h-10 border-b border-hairline px-6 grid grid-cols-12 items-center font-ui text-[11px] uppercase tracking-[0.09em] text-ledger-textTertiary">
+<div class="col-span-4">Model / Specification</div>
+<div class="col-span-2">Provider</div>
+<div class="col-span-2 text-right">Input / 1M</div>
+<div class="col-span-2 text-right">Output / 1M</div>
+<div class="col-span-2 text-right">Context</div>
+</div>
+<!-- Sample Mock Rows -->
+<div class="divide-y divide-hairline">
+<div class="h-12 px-6 grid grid-cols-12 items-center text-sm bg-surface-raised/20">
+<div class="col-span-4 flex items-center gap-2">
+<span class="font-mono text-xs text-signal-amber font-semibold">#01</span>
+<span class="font-structural font-medium text-ledger-textPrimary">Claude 3.7 Sonnet</span>
+<span class="px-1.5 py-0.5 text-[10px] font-ui uppercase font-medium bg-signal-sky/10 border border-signal-sky/20 text-signal-sky rounded-[4px]">Hybrid</span>
+</div>
+<div class="col-span-2 text-ledger-textSecondary text-xs">Anthropic</div>
+<div class="col-span-2 text-right font-mono text-xs tabular-nums text-ledger-textPrimary">$3.00</div>
+<div class="col-span-2 text-right font-mono text-xs tabular-nums text-ledger-textPrimary">$15.00</div>
+<div class="col-span-2 text-right font-mono text-xs tabular-nums text-ledger-textSecondary">200K</div>
+</div>
+<div class="h-12 px-6 grid grid-cols-12 items-center text-sm">
+<div class="col-span-4 flex items-center gap-2">
+<span class="font-mono text-xs text-ledger-textTertiary">#02</span>
+<span class="font-structural font-medium text-ledger-textPrimary">DeepSeek R1</span>
+<span class="px-1.5 py-0.5 text-[10px] font-ui uppercase font-medium bg-signal-mint/10 border border-signal-mint/20 text-signal-mint rounded-[4px]">Best Value</span>
+</div>
+<div class="col-span-2 text-ledger-textSecondary text-xs">DeepSeek AI</div>
+<div class="col-span-2 text-right font-mono text-xs tabular-nums text-signal-mint font-medium">$0.14</div>
+<div class="col-span-2 text-right font-mono text-xs tabular-nums text-signal-mint font-medium">$0.28</div>
+<div class="col-span-2 text-right font-mono text-xs tabular-nums text-ledger-textSecondary">128K</div>
+</div>
+<div class="h-12 px-6 grid grid-cols-12 items-center text-sm">
+<div class="col-span-4 flex items-center gap-2">
+<span class="font-mono text-xs text-ledger-textTertiary">#03</span>
+<span class="font-structural font-medium text-ledger-textPrimary">GPT-4o</span>
+<span class="px-1.5 py-0.5 text-[10px] font-ui uppercase font-medium bg-hairline border border-hairline-strong text-ledger-textSecondary rounded-[4px]">Frontier</span>
+</div>
+<div class="col-span-2 text-ledger-textSecondary text-xs">OpenAI</div>
+<div class="col-span-2 text-right font-mono text-xs tabular-nums text-ledger-textPrimary">$2.50</div>
+<div class="col-span-2 text-right font-mono text-xs tabular-nums text-ledger-textPrimary">$10.00</div>
+<div class="col-span-2 text-right font-mono text-xs tabular-nums text-ledger-textSecondary">128K</div>
+</div>
+<div class="h-12 px-6 grid grid-cols-12 items-center text-sm">
+<div class="col-span-4 flex items-center gap-2">
+<span class="font-mono text-xs text-ledger-textTertiary">#04</span>
+<span class="font-structural font-medium text-ledger-textPrimary">Claude 3.5 Haiku</span>
+</div>
+<div class="col-span-2 text-ledger-textSecondary text-xs">Anthropic</div>
+<div class="col-span-2 text-right font-mono text-xs tabular-nums text-ledger-textPrimary">$0.80</div>
+<div class="col-span-2 text-right font-mono text-xs tabular-nums text-ledger-textPrimary">$4.00</div>
+<div class="col-span-2 text-right font-mono text-xs tabular-nums text-ledger-textSecondary">200K</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Bottom Telemetry Strip (§3) -->
+<div class="h-14 border-t border-hairline bg-surface-canvas px-6 flex items-center justify-between font-mono text-[11px] text-ledger-textSecondary">
+<div>Catalog Index: 128 frontier models · 9 inference providers</div>
+<div>Telemetry sync: nominal · 2m ago</div>
+</div>
+</div>
+<!-- ============================================================== -->
+<!-- COMMAND PALETTE OVERLAY (MODAL VIEWPORT - 600px WIDE, TOP 20%)  -->
+<!-- ============================================================== -->
+<div class="fixed inset-0 z-50 flex justify-center items-start pt-[12vh] sm:pt-[15vh] px-4 pointer-events-auto" style="padding-top: 20vh;">
+<!-- Backdrop Dimmer (50% darkness + 4px blur) -->
+<div class="fixed inset-0 bg-black/60 backdrop-blur-[4px] -z-10 transition-opacity"></div>
+<!-- Command Palette Window (600px, 4px radius, 1px --hairline-strong, --surface-overlay) -->
+<div class="w-full max-w-[600px] bg-surface-overlay border border-hairline-strong rounded-[4px] palette-glow flex flex-col overflow-hidden animate-in fade-in zoom-in-[0.98] duration-150" style="box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14), 0 24px 24px rgba(0, 0, 0, 0.40);">
+<!-- 1. INPUT ROW (48px) -->
+<div class="h-12 px-4 border-b border-hairline-strong flex items-center justify-between gap-3 bg-surface-overlay relative">
+<!-- Search icon (1.5px stroke, --text-secondary) -->
+<svg class="w-4 h-4 text-ledger-textSecondary shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24">
+<path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<!-- Main Input -->
+<input autofocus="" class="w-full bg-transparent border-none outline-none font-ui text-[14px] text-ledger-textPrimary placeholder:text-ledger-textTertiary tracking-[-0.01em]" placeholder="Search models, labs, providers, or actions…" type="text" value=""/>
+<!-- Micro-label "ESC" keycap on right -->
+<div class="flex items-center gap-1.5 shrink-0">
+<kbd class="font-mono text-[10px] font-medium tracking-[0.09em] uppercase text-ledger-textTertiary px-1.5 py-0.5 border border-hairline-strong rounded-[3px] bg-surface-well/80 shadow-sm">
+            ESC
+          </kbd>
+</div>
+</div>
+<!-- 2. SCROLLABLE RESULTS AREA (40px Rows Grouped by Micro-Labels) -->
+<div class="max-h-[460px] overflow-y-auto divide-y divide-hairline py-1 bg-surface-overlay">
+<!-- GROUP A: MODELS -->
+<div class="py-1">
+<!-- Micro-label Group Header -->
+<div class="px-4 py-1.5 font-ui text-[10px] font-medium tracking-[0.09em] uppercase text-ledger-textTertiary">
+            MODELS
+          </div>
+<!-- Active Row: Claude 3.7 Sonnet (Signature 1 Sliding Pill: 4px radius, 1px border, amber accent) -->
+<div class="relative mx-1.5 px-3 h-10 flex items-center justify-between rounded-[4px] bg-surface-raised border border-signal-amber/40 active-pill-glow cursor-pointer transition-colors group">
+<div class="flex items-center gap-2.5 overflow-hidden">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-amber shrink-0"></span>
+<span class="font-structural font-medium text-[13px] text-ledger-textPrimary truncate">Claude 3.7 Sonnet</span>
+<span class="font-ui text-[12px] text-ledger-textSecondary shrink-0">Anthropic</span>
+<span class="px-1.5 py-0.5 text-[9px] font-mono tracking-wider text-signal-sky border border-signal-sky/30 bg-signal-sky/10 rounded-[3px]">HYBRID</span>
+</div>
+<div class="flex items-center gap-3 shrink-0">
+<!-- Right-aligned Geist Mono input price & context -->
+<span class="font-mono text-[12px] text-ledger-textSecondary tabular-nums">$3.00 / 1M</span>
+<span class="font-mono text-[11px] text-ledger-textTertiary tabular-nums border-l border-hairline pl-2.5">200k</span>
+<!-- Keyboard Hint "↵ Open" -->
+<div class="flex items-center gap-1 font-mono text-[10px] uppercase tracking-wider text-signal-amber px-1.5 py-0.5 rounded-[3px] bg-signal-amber/10 border border-signal-amber/20 ml-1">
+<span>↵</span>
+<span>Open</span>
+</div>
+</div>
+</div>
+<!-- Inactive Row: DeepSeek R1 -->
+<div class="mx-1.5 px-3 h-10 flex items-center justify-between rounded-[4px] hover:bg-surface-raised cursor-pointer transition-colors">
+<div class="flex items-center gap-2.5 overflow-hidden">
+<span class="w-1.5 h-1.5 rounded-full bg-transparent shrink-0"></span>
+<span class="font-structural font-medium text-[13px] text-ledger-textPrimary truncate">DeepSeek R1</span>
+<span class="font-ui text-[12px] text-ledger-textSecondary shrink-0">DeepSeek AI</span>
+<span class="px-1.5 py-0.5 text-[9px] font-mono tracking-wider text-signal-mint border border-signal-mint/30 bg-signal-mint/10 rounded-[3px]">BEST VALUE</span>
+</div>
+<div class="flex items-center gap-3 shrink-0">
+<span class="font-mono text-[12px] text-signal-mint tabular-nums font-medium">$0.14 / 1M</span>
+<span class="font-mono text-[11px] text-ledger-textTertiary tabular-nums border-l border-hairline pl-2.5">128k</span>
+<span class="font-mono text-[10px] text-ledger-textTertiary opacity-0 group-hover:opacity-100">↵</span>
+</div>
+</div>
+<!-- Inactive Row: GPT-4o -->
+<div class="mx-1.5 px-3 h-10 flex items-center justify-between rounded-[4px] hover:bg-surface-raised cursor-pointer transition-colors">
+<div class="flex items-center gap-2.5 overflow-hidden">
+<span class="w-1.5 h-1.5 rounded-full bg-transparent shrink-0"></span>
+<span class="font-structural font-medium text-[13px] text-ledger-textPrimary truncate">GPT-4o</span>
+<span class="font-ui text-[12px] text-ledger-textSecondary shrink-0">OpenAI</span>
+</div>
+<div class="flex items-center gap-3 shrink-0">
+<span class="font-mono text-[12px] text-ledger-textSecondary tabular-nums">$2.50 / 1M</span>
+<span class="font-mono text-[11px] text-ledger-textTertiary tabular-nums border-l border-hairline pl-2.5">128k</span>
+</div>
+</div>
+</div>
+<!-- GROUP B: RESEARCH LABS -->
+<div class="py-1">
+<div class="px-4 py-1.5 font-ui text-[10px] font-medium tracking-[0.09em] uppercase text-ledger-textTertiary">
+            RESEARCH LABS
+          </div>
+<!-- Lab Row: Anthropic -->
+<div class="mx-1.5 px-3 h-10 flex items-center justify-between rounded-[4px] hover:bg-surface-raised cursor-pointer transition-colors group">
+<div class="flex items-center gap-2.5">
+<div class="w-4 h-4 border border-hairline-strong rounded-[2px] bg-surface-well flex items-center justify-center font-structural text-[10px] font-bold text-ledger-textPrimary">
+                A
+              </div>
+<span class="font-structural font-medium text-[13px] text-ledger-textPrimary">Anthropic</span>
+<span class="font-mono text-[11px] text-ledger-textTertiary">· San Francisco, CA</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-mono text-[11px] text-ledger-textSecondary tabular-nums">14 models indexed</span>
+<!-- Keyboard Hint "C Compare" -->
+<div class="flex items-center gap-1 font-mono text-[10px] uppercase tracking-wider text-ledger-textTertiary px-1.5 py-0.5 rounded-[3px] border border-hairline bg-surface-well">
+<span class="text-ledger-textSecondary">C</span>
+<span>Compare</span>
+</div>
+</div>
+</div>
+<!-- Lab Row: OpenAI -->
+<div class="mx-1.5 px-3 h-10 flex items-center justify-between rounded-[4px] hover:bg-surface-raised cursor-pointer transition-colors group">
+<div class="flex items-center gap-2.5">
+<div class="w-4 h-4 border border-hairline-strong rounded-[2px] bg-surface-well flex items-center justify-center font-structural text-[10px] font-bold text-ledger-textPrimary">
+                O
+              </div>
+<span class="font-structural font-medium text-[13px] text-ledger-textPrimary">OpenAI</span>
+<span class="font-mono text-[11px] text-ledger-textTertiary">· San Francisco, CA</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-mono text-[11px] text-ledger-textSecondary tabular-nums">22 models indexed</span>
+<div class="flex items-center gap-1 font-mono text-[10px] uppercase tracking-wider text-ledger-textTertiary px-1.5 py-0.5 rounded-[3px] border border-hairline bg-surface-well">
+<span class="text-ledger-textSecondary">C</span>
+<span>Compare</span>
+</div>
+</div>
+</div>
+</div>
+<!-- GROUP C: INFERENCE PROVIDERS -->
+<div class="py-1">
+<div class="px-4 py-1.5 font-ui text-[10px] font-medium tracking-[0.09em] uppercase text-ledger-textTertiary">
+            INFERENCE PROVIDERS
+          </div>
+<!-- Provider Row: Groq -->
+<div class="mx-1.5 px-3 h-10 flex items-center justify-between rounded-[4px] hover:bg-surface-raised cursor-pointer transition-colors group">
+<div class="flex items-center gap-2.5">
+<div class="w-4 h-4 border border-hairline-strong rounded-[2px] bg-surface-well flex items-center justify-center font-structural text-[10px] font-bold text-signal-amber">
+                G
+              </div>
+<span class="font-structural font-medium text-[13px] text-ledger-textPrimary">Groq</span>
+<span class="px-1.5 py-0.2 text-[9px] font-mono text-ledger-textSecondary bg-surface-well border border-hairline rounded-[2px]">LPU INFRA</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-mono text-[11px] text-ledger-textSecondary tabular-nums">8 hosted models · 240 tok/s</span>
+<div class="flex items-center gap-1 font-mono text-[10px] uppercase tracking-wider text-ledger-textTertiary px-1.5 py-0.5 rounded-[3px] border border-hairline bg-surface-well">
+<span class="text-ledger-textSecondary">C</span>
+<span>Compare</span>
+</div>
+</div>
+</div>
+<!-- Provider Row: Together AI -->
+<div class="mx-1.5 px-3 h-10 flex items-center justify-between rounded-[4px] hover:bg-surface-raised cursor-pointer transition-colors group">
+<div class="flex items-center gap-2.5">
+<div class="w-4 h-4 border border-hairline-strong rounded-[2px] bg-surface-well flex items-center justify-center font-structural text-[10px] font-bold text-ledger-textPrimary">
+                T
+              </div>
+<span class="font-structural font-medium text-[13px] text-ledger-textPrimary">Together AI</span>
+<span class="px-1.5 py-0.2 text-[9px] font-mono text-ledger-textSecondary bg-surface-well border border-hairline rounded-[2px]">SERVERLESS</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-mono text-[11px] text-ledger-textSecondary tabular-nums">48 hosted models</span>
+<div class="flex items-center gap-1 font-mono text-[10px] uppercase tracking-wider text-ledger-textTertiary px-1.5 py-0.5 rounded-[3px] border border-hairline bg-surface-well">
+<span class="text-ledger-textSecondary">C</span>
+<span>Compare</span>
+</div>
+</div>
+</div>
+</div>
+<!-- GROUP D: ACTIONS (Two-key sequences) -->
+<div class="py-1">
+<div class="px-4 py-1.5 font-ui text-[10px] font-medium tracking-[0.09em] uppercase text-ledger-textTertiary">
+            ACTIONS
+          </div>
+<!-- Action: Go to Rankings -->
+<div class="mx-1.5 px-3 h-10 flex items-center justify-between rounded-[4px] hover:bg-surface-raised cursor-pointer transition-colors">
+<div class="flex items-center gap-2.5">
+<svg class="w-3.5 h-3.5 text-ledger-textTertiary" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24">
+<path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="font-ui text-[13px] text-ledger-textPrimary">Go to Rankings &amp; Pareto Quadrant</span>
+</div>
+<div class="flex items-center gap-1 font-mono text-[10px] text-ledger-textSecondary">
+<kbd class="px-1.5 py-0.5 border border-hairline rounded bg-surface-well">G</kbd>
+<kbd class="px-1.5 py-0.5 border border-hairline rounded bg-surface-well">R</kbd>
+</div>
+</div>
+<!-- Action: Open Compare Matrix -->
+<div class="mx-1.5 px-3 h-10 flex items-center justify-between rounded-[4px] hover:bg-surface-raised cursor-pointer transition-colors">
+<div class="flex items-center gap-2.5">
+<svg class="w-3.5 h-3.5 text-ledger-textTertiary" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24">
+<path d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="font-ui text-[13px] text-ledger-textPrimary">Open Compare Matrix</span>
+</div>
+<div class="flex items-center gap-1 font-mono text-[10px] text-ledger-textSecondary">
+<kbd class="px-1.5 py-0.5 border border-hairline rounded bg-surface-well">G</kbd>
+<kbd class="px-1.5 py-0.5 border border-hairline rounded bg-surface-well">C</kbd>
+</div>
+</div>
+<!-- Action: Copy API slug -->
+<div class="mx-1.5 px-3 h-10 flex items-center justify-between rounded-[4px] hover:bg-surface-raised cursor-pointer transition-colors">
+<div class="flex items-center gap-2.5">
+<svg class="w-3.5 h-3.5 text-ledger-textTertiary" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24">
+<path d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="font-ui text-[13px] text-ledger-textPrimary">Copy API Slug</span>
+</div>
+<div class="flex items-center gap-1 font-mono text-[10px] text-ledger-textSecondary">
+<kbd class="px-1.5 py-0.5 border border-hairline rounded bg-surface-well">C</kbd>
+<kbd class="px-1.5 py-0.5 border border-hairline rounded bg-surface-well">S</kbd>
+</div>
+</div>
+</div>
+</div>
+<!-- 3. FOOTER ROW (32px, Micro-label) -->
+<div class="h-8 px-4 border-t border-hairline bg-surface-well/80 flex items-center justify-between font-mono text-[10px] text-ledger-textTertiary uppercase tracking-[0.09em]">
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1.5">
+<kbd class="text-ledger-textSecondary font-semibold">↑↓</kbd> Navigate
+          </span>
+<span class="flex items-center gap-1.5">
+<kbd class="text-ledger-textSecondary font-semibold">↵</kbd> Open
+          </span>
+<span class="flex items-center gap-1.5">
+<kbd class="text-ledger-textSecondary font-semibold">Esc</kbd> Close
+          </span>
+</div>
+<div class="flex items-center gap-1.5 text-ledger-textSecondary">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint"></span>
+<span>GET /api/search</span>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

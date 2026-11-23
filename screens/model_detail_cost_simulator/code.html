@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "error-container": "#93000a", "hairline": "rgba(255, 255, 255, 0.07)", "primary-container": "#f59e0b", "inverse-primary": "#855300", "tertiary-container": "#38bdf8", "inverse-surface": "#e5e1e4", "surface-raised": "#16161A", "tertiary": "#8ed5ff", "on-error-container": "#ffdad6", "on-secondary-fixed-variant": "#005236", "primary-fixed-dim": "#ffb95f", "text-secondary": "#A1A1AA", "hairline-strong": "rgba(255, 255, 255, 0.14)", "on-tertiary-fixed-variant": "#004c69", "on-error": "#690005", "on-background": "#e5e1e4", "on-primary-fixed": "#2a1700", "on-secondary": "#003824", "surface-well": "#101013", "on-surface": "#e5e1e4", "text-primary": "#F4F4F5", "primary-fixed": "#ffddb8", "inverse-on-surface": "#313032", "surface": "#131315", "surface-container": "#201f22", "on-tertiary-fixed": "#001e2c", "primary": "#ffc174", "signal-amber": "#F59E0B", "error": "#ffb4ab", "text-tertiary": "#6B6B74", "signal-sky": "#38BDF8", "secondary-fixed": "#6ffbbe", "outline": "#a08e7a", "signal-coral": "#F43F5E", "surface-container-lowest": "#0e0e10", "on-tertiary": "#00354a", "surface-variant": "#353437", "on-primary-fixed-variant": "#653e00", "surface-container-low": "#1c1b1d", "background": "#131315", "on-primary": "#472a00", "on-primary-container": "#613b00", "tertiary-fixed-dim": "#7bd0ff", "secondary-container": "#00a572", "signal-mint": "#10B981", "on-surface-variant": "#d8c3ad", "tertiary-fixed": "#c4e7ff", "outline-variant": "#534434", "on-secondary-container": "#00311f", "surface-overlay": "#1C1C21", "secondary-fixed-dim": "#4edea3", "surface-bright": "#39393b", "surface-container-highest": "#353437", "on-secondary-fixed": "#002113", "surface-dim": "#131315", "on-tertiary-container": "#004965", "surface-container-high": "#2a2a2c", "surface-canvas": "#09090B", "surface-tint": "#ffb95f", "secondary": "#4edea3" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-lg": "1rem", "space-sm": "0.5rem", "gutter-dense": "0.5rem", "space-xl": "1.5rem", "space-xs": "0.25rem", "gutter": "1rem", "margin-dock": "5rem", "margin": "1.5rem", "space-md": "0.75rem" }, "fontFamily": { "numeric-md": [ "JetBrains Mono" ], "body-dense": [ "Geist" ], "label-md": [ "Geist" ], "display-lg-mobile": [ "Newsreader" ], "body-lg": [ "Geist" ], "headline-lg": [ "Space Grotesk" ], "headline-md": [ "Space Grotesk" ], "display-md": [ "Newsreader" ], "numeric-sm": [ "JetBrains Mono" ], "headline-sm": [ "Space Grotesk" ], "numeric-lg": [ "JetBrains Mono" ], "body-md": [ "Geist" ], "display-lg": [ "Newsreader" ], "label-micro": [ "Geist" ] }, "fontSize": { "numeric-md": [ "13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" } ], "body-dense": [ "13px", { "lineHeight": "13px", "letterSpacing": "0em", "fontWeight": "400" } ], "label-md": [ "12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" } ], "display-lg-mobile": [ "36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "body-lg": [ "14px", { "lineHeight": "21px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "headline-lg": [ "28px", { "lineHeight": "36px", "letterSpacing": "-0.03em", "fontWeight": "600" } ], "headline-md": [ "22px", { "lineHeight": "30px", "letterSpacing": "-0.02em", "fontWeight": "500" } ], "display-md": [ "40px", { "lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "numeric-sm": [ "12px", { "lineHeight": "16px", "letterSpacing": "0em", "fontWeight": "400" } ], "headline-sm": [ "18px", { "lineHeight": "24px", "letterSpacing": "-0.02em", "fontWeight": "500" } ], "numeric-lg": [ "15px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "500" } ], "body-md": [ "13px", { "lineHeight": "19px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "display-lg": [ "56px", { "lineHeight": "64px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "label-micro": [ "10px", { "lineHeight": "12px", "letterSpacing": "0.09em", "fontWeight": "500" } ] } } } };</script></head><body class="bg-surface-canvas font-body-md text-body-md text-text-primary antialiased selection:bg-signal-amber selection:text-surface-canvas"><header class="fixed top-0 left-0 right-0 w-full z-50 bg-surface-canvas/90 backdrop-blur-md border-b border-hairline"><div class="absolute inset-0 pointer-events-none bg-[radial-gradient(rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)]"></div><div class="relative h-14 w-full px-margin flex items-center justify-between"><div class="flex items-center gap-space-xl"><div class="flex items-center gap-space-sm"><div class="w-3.5 h-3.5 bg-signal-amber rounded-sm rotate-45 transform flex items-center justify-center"><div class="w-1 h-1 bg-surface-canvas rounded-sm"></div></div><span class="font-headline-sm text-headline-sm font-semibold tracking-tight text-text-primary uppercase">OneAtlas</span></div><nav class="flex items-center gap-space-xs" data-active-classes="bg-surface-raised text-text-primary border border-hairline-strong rounded-lg"><a aria-current="page" class="px-space-md py-1.5 font-label-md transition-colors bg-surface-raised text-text-primary border border-hairline-strong rounded-lg" data-path="models" href="#">Models</a><a class="px-space-md py-1.5 font-label-md text-label-md text-text-secondary hover:text-text-primary hover:bg-surface-raised transition-colors" data-path="rankings" href="#">Rankings</a><a class="px-space-md py-1.5 font-label-md text-label-md text-text-secondary hover:text-text-primary hover:bg-surface-raised transition-colors" data-path="compare" href="#">Compare</a><a class="px-space-md py-1.5 font-label-md text-label-md text-text-secondary hover:text-text-primary hover:bg-surface-raised transition-colors" data-path="directory" href="#">Directory</a></nav></div><div class="flex items-center gap-space-lg"><div class="flex items-center gap-2 px-2.5 py-1 rounded bg-surface-well border border-hairline"><span class="w-1.5 h-1.5 rounded-full bg-signal-mint animate-pulse"></span><span class="font-label-micro text-label-micro tracking-widest text-signal-mint uppercase">FEED LIVE</span></div><div class="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-surface-well border border-hairline text-text-tertiary"><span class="font-numeric-sm text-numeric-sm">⌘K</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-14 bg-surface-canvas min-h-[calc(100vh-56px)]"><div class="flex flex-col w-full relative">
+<!-- PROCEDURAL GRAIN OVERLAY -->
+<div class="pointer-events-none fixed inset-0 z-40 opacity-[0.025] mix-blend-overlay bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+<!-- BREADCRUMB STRIP -->
+<div class="w-full border-b border-hairline bg-surface-canvas/60 px-margin py-2.5 flex items-center justify-between">
+<div class="flex items-center gap-2 font-label-micro text-label-micro tracking-[0.09em] uppercase text-text-tertiary">
+<a class="hover:text-text-primary transition-colors" href="#">MODELS</a>
+<span class="text-hairline-strong">/</span>
+<span class="text-text-primary font-medium">ATLAS REASONER 4</span>
+<span class="ml-2 px-1.5 py-0.5 rounded-[2px] bg-surface-raised border border-hairline text-[9px] text-signal-amber font-numeric-sm">MOCK_ID: AR4-8902</span>
+</div>
+<div class="flex items-center gap-space-lg font-numeric-sm text-numeric-sm text-text-tertiary">
+<span>STATE: <span class="text-signal-mint">NOMINAL</span></span>
+<span class="text-hairline-strong">|</span>
+<span>SYNC_EPOCH: <span class="text-text-secondary">1773489110</span></span>
+</div>
+</div>
+<!-- HERO ZONE (Transparent with Ambient Routing Graph underlay) -->
+<section class="relative w-full border-b border-hairline overflow-hidden">
+<!-- AMBIENT ROUTING GRAPH SVG BACKGROUND -->
+<div class="absolute inset-0 pointer-events-none z-0 flex items-center justify-center opacity-70">
+<svg class="w-full h-full max-w-6xl" fill="none" viewbox="0 0 1000 360" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="24" id="dot-grid" patternunits="userSpaceOnUse" width="24" x="0" y="0">
+<circle cx="2" cy="2" fill="rgba(255,255,255,0.08)" r="0.75"></circle>
+</pattern>
+<lineargradient id="line-glow" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" stop-color="rgba(245, 158, 11, 0.4)"></stop>
+<stop offset="50%" stop-color="rgba(56, 189, 248, 0.25)"></stop>
+<stop offset="100%" stop-color="rgba(255, 255, 255, 0.05)"></stop>
+</lineargradient>
+</defs>
+<rect fill="url(#dot-grid)" height="360" opacity="0.6" width="1000"></rect>
+<!-- Graph Links with 1px hairline pulses -->
+<g class="transition-all duration-700" stroke-width="1">
+<line stroke="url(#line-glow)" stroke-dasharray="3 3" x1="500" x2="240" y1="180" y2="90"></line>
+<line stroke="url(#line-glow)" x1="500" x2="270" y1="180" y2="280"></line>
+<line stroke="url(#line-glow)" x1="500" x2="760" y1="180" y2="100"></line>
+<line stroke="url(#line-glow)" stroke-dasharray="4 2" x1="500" x2="740" y1="180" y2="270"></line>
+<line stroke="rgba(255,255,255,0.06)" x1="240" x2="140" y1="90" y2="130"></line>
+<line stroke="rgba(255,255,255,0.06)" x1="760" x2="860" y1="100" y2="60"></line>
+</g>
+<!-- Provider Nodes -->
+<g class="text-[9px] font-mono tracking-widest uppercase">
+<!-- AWS Bedrock -->
+<circle cx="240" cy="90" fill="#16161A" r="4" stroke="rgba(255,255,255,0.3)" stroke-width="1"></circle>
+<text fill="#A1A1AA" x="210" y="75">AWS-BEDROCK-US1</text>
+<!-- Vertex AI -->
+<circle cx="270" cy="280" fill="#16161A" r="4" stroke="rgba(255,255,255,0.3)" stroke-width="1"></circle>
+<text fill="#A1A1AA" x="215" y="305">GCP-VERTEX-WEST</text>
+<!-- Groq -->
+<circle cx="760" cy="100" fill="#16161A" r="4" stroke="#10B981" stroke-width="1.5"></circle>
+<text fill="#10B981" x="775" y="104">GROQ-LPU-CLUSTER</text>
+<!-- Together AI -->
+<circle cx="740" cy="270" fill="#16161A" r="4" stroke="rgba(255,255,255,0.3)" stroke-width="1"></circle>
+<text fill="#A1A1AA" x="755" y="274">TOGETHER-EUG-01</text>
+</g>
+<!-- Center Node (Amber OneAtlas Target) -->
+<g>
+<circle cx="500" cy="180" fill="rgba(245, 158, 11, 0.08)" r="16" stroke="#F59E0B" stroke-width="1"></circle>
+<circle cx="500" cy="180" fill="#F59E0B" r="5"></circle>
+<circle class="animate-spin [animation-duration:18s] origin-[500px_180px]" cx="500" cy="180" r="28" stroke="rgba(245, 158, 11, 0.2)" stroke-dasharray="2 4"></circle>
+</g>
+</svg>
+</div>
+<!-- HERO CONTENT -->
+<div class="relative z-10 px-margin pt-10 pb-8 flex flex-col items-start gap-4 max-w-7xl">
+<!-- Release Metadata -->
+<div class="flex items-center gap-3 font-label-micro text-label-micro uppercase tracking-[0.09em] text-text-tertiary">
+<span class="text-signal-amber font-semibold">● ACTIVE ROUTE</span>
+<span class="text-hairline-strong">/</span>
+<span>PROVIDER · ATLAS LABS</span>
+<span class="text-hairline-strong">/</span>
+<span class="font-numeric-sm text-numeric-sm text-text-secondary">RELEASED 2026-03-14</span>
+</div>
+<!-- Display Headline (Instrument Serif feel via display-lg + italic emphasis) -->
+<h1 class="font-display-lg text-display-lg text-text-primary tracking-tight font-normal -ml-0.5 leading-none">
+        Atlas Reasoner <span class="italic text-primary font-normal">4</span>
+</h1>
+<!-- Capabilities & Tags -->
+<div class="flex flex-wrap items-center gap-2 pt-1">
+<div class="h-5 px-2 rounded bg-signal-sky/10 border border-signal-sky/20 flex items-center">
+<span class="font-label-micro text-label-micro tracking-[0.09em] text-signal-sky uppercase">TEXT</span>
+</div>
+<div class="h-5 px-2 rounded bg-signal-sky/10 border border-signal-sky/20 flex items-center">
+<span class="font-label-micro text-label-micro tracking-[0.09em] text-signal-sky uppercase">IMAGE IN</span>
+</div>
+<div class="h-5 px-2 rounded bg-signal-sky/10 border border-signal-sky/20 flex items-center">
+<span class="font-label-micro text-label-micro tracking-[0.09em] text-signal-sky uppercase">CODE</span>
+</div>
+<div class="h-5 px-2 rounded bg-signal-sky/10 border border-signal-sky/20 flex items-center">
+<span class="font-label-micro text-label-micro tracking-[0.09em] text-signal-sky uppercase">TOOLS</span>
+</div>
+<div class="h-5 px-2 rounded bg-surface-raised border border-hairline-strong flex items-center ml-2">
+<span class="font-label-micro text-label-micro tracking-[0.09em] text-text-secondary uppercase">SYS_PROMPT_SUPPORTED</span>
+</div>
+</div>
+</div>
+<!-- TELEMETRY STRIP (Fixed 56px height, 4 distinct hairlined columns) -->
+<div class="relative z-10 w-full h-14 bg-surface-well border-t border-hairline grid grid-cols-2 md:grid-cols-4 divide-x divide-hairline">
+<div class="h-full px-margin flex items-center justify-between">
+<span class="font-label-micro text-label-micro uppercase tracking-[0.09em] text-text-tertiary">CONTEXT</span>
+<span class="font-numeric-md text-numeric-md text-text-primary font-medium">1,048,576</span>
+</div>
+<div class="h-full px-margin flex items-center justify-between">
+<span class="font-label-micro text-label-micro uppercase tracking-[0.09em] text-text-tertiary">MAX OUTPUT</span>
+<span class="font-numeric-md text-numeric-md text-text-primary font-medium">64,000</span>
+</div>
+<div class="h-full px-margin flex items-center justify-between">
+<span class="font-label-micro text-label-micro uppercase tracking-[0.09em] text-text-tertiary">CUTOFF</span>
+<span class="font-numeric-md text-numeric-md text-text-primary font-medium">2026-01</span>
+</div>
+<div class="h-full px-margin flex items-center justify-between">
+<span class="font-label-micro text-label-micro uppercase tracking-[0.09em] text-text-tertiary">LICENSE</span>
+<span class="font-numeric-md text-numeric-md text-text-secondary font-medium">PROPRIETARY</span>
+</div>
+</div>
+</section>
+<!-- MAIN QUANTITATIVE TELEMETRY WORKSTATION -->
+<div class="w-full flex-1 flex flex-col lg:flex-row">
+<!-- LEFT COMPONENT: BENCHMARKS & COST SIMULATOR (58% desktop width) -->
+<div class="flex-1 lg:max-w-[62%] border-r border-hairline flex flex-col">
+<!-- COST SIMULATOR PANEL -->
+<section class="p-margin border-b border-hairline bg-surface-well/40">
+<div class="flex items-center justify-between pb-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-signal-amber rounded-none rotate-45"></span>
+<h2 class="font-headline-sm text-headline-sm uppercase text-text-primary tracking-tight">Cost Engine Simulator</h2>
+</div>
+<span class="font-label-micro text-label-micro uppercase tracking-[0.09em] text-text-tertiary">MODEL_ID: AR4_SIM_V1</span>
+</div>
+<!-- Capability Preset Pills -->
+<div class="flex flex-wrap items-center gap-2 pb-6 border-b border-hairline">
+<button class="px-3 py-1.5 rounded-[3px] border border-hairline bg-surface-well hover:border-hairline-strong transition-colors text-left flex items-center gap-2" id="preset-chat" onclick="setPreset('chat')">
+<span class="w-1.5 h-1.5 rounded-full bg-text-tertiary"></span>
+<span class="font-label-md text-label-md text-text-secondary">1K Chat Replies · 2K in / 500 out</span>
+</button>
+<button class="px-3 py-1.5 rounded-[3px] border border-signal-amber bg-signal-amber/10 transition-colors text-left flex items-center gap-2" id="preset-rag" onclick="setPreset('rag')">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-amber"></span>
+<span class="font-label-md text-label-md text-signal-amber font-medium">1K RAG Queries · 32K in / 800 out</span>
+</button>
+<button class="px-3 py-1.5 rounded-[3px] border border-hairline bg-surface-well hover:border-hairline-strong transition-colors text-left flex items-center gap-2" id="preset-agent" onclick="setPreset('agent')">
+<span class="w-1.5 h-1.5 rounded-full bg-text-tertiary"></span>
+<span class="font-label-md text-label-md text-text-secondary">1K Agent Runs · 50K in / 5K out</span>
+</button>
+</div>
+<!-- Interactive Sliders & Prompt Cache Toggle -->
+<div class="py-6 space-y-6">
+<!-- Daily Requests Slider -->
+<div class="space-y-2">
+<div class="flex justify-between items-baseline">
+<label class="font-label-md text-label-md text-text-secondary uppercase tracking-wider" for="req-range">DAILY REQUEST VOLUME</label>
+<div class="font-numeric-md text-numeric-md text-text-primary">
+<span class="font-semibold text-signal-amber" id="req-val">25,000</span> <span class="text-text-tertiary">/ day</span>
+</div>
+</div>
+<div class="relative flex items-center py-2">
+<input class="w-full h-[2px] bg-surface-raised appearance-none cursor-pointer accent-signal-amber focus:outline-none" id="req-range" max="100000" min="1000" oninput="updateCalculation()" step="1000" type="range" value="25000"/>
+</div>
+<div class="flex justify-between font-numeric-sm text-numeric-sm text-text-tertiary">
+<span>1K reqs</span>
+<span>50K</span>
+<span>100K max</span>
+</div>
+</div>
+<!-- Token Density Multi-Spec -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="p-3 bg-surface-well border border-hairline">
+<div class="flex justify-between text-text-tertiary font-label-micro text-label-micro uppercase">
+<span>INPUT DENSITY</span>
+<span class="text-text-primary font-numeric-sm" id="input-token-val">32,000 tok</span>
+</div>
+<input class="w-full mt-3 h-[2px] bg-surface-raised appearance-none cursor-pointer accent-signal-amber focus:outline-none" id="input-range" max="128000" min="500" oninput="updateCalculation()" step="500" type="range" value="32000"/>
+</div>
+<div class="p-3 bg-surface-well border border-hairline">
+<div class="flex justify-between text-text-tertiary font-label-micro text-label-micro uppercase">
+<span>OUTPUT DENSITY</span>
+<span class="text-text-primary font-numeric-sm" id="output-token-val">800 tok</span>
+</div>
+<input class="w-full mt-3 h-[2px] bg-surface-raised appearance-none cursor-pointer accent-signal-amber focus:outline-none" id="output-range" max="16000" min="100" oninput="updateCalculation()" step="100" type="range" value="800"/>
+</div>
+</div>
+<!-- Prompt Caching Toggle -->
+<div class="flex items-center justify-between p-3.5 bg-surface border border-hairline">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-text-primary">Prompt caching (where supported)</span>
+<span class="font-label-micro text-label-micro text-text-tertiary uppercase tracking-wider">APPLIES UP TO 75% DISCOUNT ON REUSED PROMPT PREFIXES</span>
+</div>
+<button class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-[2px] border border-hairline-strong bg-surface-well transition-colors duration-200 ease-in-out focus:outline-none" id="cache-toggle" onclick="toggleCache()">
+<span class="translate-x-5 pointer-events-none inline-block h-3.5 w-3.5 mt-[2px] ml-[2px] transform rounded-[1px] bg-signal-mint shadow transition duration-200 ease-in-out" id="cache-thumb"></span>
+</button>
+</div>
+</div>
+<!-- Spend Readout Summary Card -->
+<div class="p-4 bg-surface border border-hairline-strong flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<div class="font-label-micro text-label-micro uppercase tracking-[0.09em] text-text-tertiary">EST. MONTHLY SPEND (MOCK)</div>
+<div class="font-numeric-lg text-[28px] leading-tight text-text-primary font-semibold tracking-tight mt-1 flex items-baseline gap-2">
+<span class="text-signal-amber text-[20px] font-normal">$</span>
+<span class="font-numeric-lg" id="spend-total">482.40</span>
+<span class="text-text-tertiary font-label-md text-label-md font-normal">/ mo</span>
+</div>
+</div>
+<div class="border-t md:border-t-0 md:border-l border-hairline pt-3 md:pt-0 md:pl-6 flex flex-col justify-center">
+<span class="font-label-micro text-label-micro uppercase text-text-tertiary">EFFICIENCY DELTA</span>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="material-symbols-outlined text-signal-mint text-[16px]">trending_down</span>
+<span class="font-numeric-md text-numeric-md text-signal-mint" id="cache-savings">Savings with cache: $118.60 (24.6%)</span>
+</div>
+</div>
+</div>
+</section>
+<!-- COST COMPARISON BARS SECTION -->
+<section class="p-margin border-b border-hairline bg-surface-canvas">
+<div class="flex items-center justify-between pb-3">
+<div class="font-label-micro text-label-micro uppercase tracking-[0.09em] text-text-tertiary">MONTHLY BILLING AT SCALE (SIMULATED ROUTE)</div>
+<span class="font-label-micro text-label-micro text-text-tertiary">SCRUB PINNED @ 25K/DAY</span>
+</div>
+<!-- Relative Bar Visualization with dashed scrub-cursor -->
+<div class="relative space-y-4 pt-2">
+<!-- Dashed scrub line -->
+<div class="absolute top-0 bottom-0 left-[68%] w-0 border-r border-dashed border-signal-amber/40 pointer-events-none z-10 flex flex-col justify-between">
+<span class="bg-surface-raised border border-signal-amber text-signal-amber font-numeric-sm text-[10px] px-1 py-0.5 -translate-x-1/2 -translate-y-2 whitespace-nowrap">BUDGET TARGET</span>
+<span class="text-signal-amber font-numeric-sm text-[10px] -translate-x-1/2 translate-y-2">$450</span>
+</div>
+<!-- Groq -->
+<div class="space-y-1">
+<div class="flex justify-between items-baseline font-body-dense text-body-dense">
+<span class="text-text-primary font-medium">Groq (LPU Inference)</span>
+<span class="font-numeric-sm text-signal-mint font-semibold">$345.60</span>
+</div>
+<div class="w-full h-1.5 bg-surface-well overflow-hidden">
+<div class="h-full bg-signal-mint" style="width: 52%;"></div>
+</div>
+</div>
+<!-- Together AI -->
+<div class="space-y-1">
+<div class="flex justify-between items-baseline font-body-dense text-body-dense">
+<span class="text-text-secondary">Together AI</span>
+<span class="font-numeric-sm text-text-primary">$403.20</span>
+</div>
+<div class="w-full h-1.5 bg-surface-well overflow-hidden">
+<div class="h-full bg-signal-sky" style="width: 62%;"></div>
+</div>
+</div>
+<!-- AWS Bedrock -->
+<div class="space-y-1">
+<div class="flex justify-between items-baseline font-body-dense text-body-dense">
+<span class="text-text-secondary">AWS Bedrock</span>
+<span class="font-numeric-sm text-text-primary">$460.80</span>
+</div>
+<div class="w-full h-1.5 bg-surface-well overflow-hidden">
+<div class="h-full bg-signal-sky" style="width: 71%;"></div>
+</div>
+</div>
+<!-- Vertex AI -->
+<div class="space-y-1">
+<div class="flex justify-between items-baseline font-body-dense text-body-dense">
+<span class="text-text-secondary">Vertex AI</span>
+<span class="font-numeric-sm text-text-primary">$480.00</span>
+</div>
+<div class="w-full h-1.5 bg-surface-well overflow-hidden">
+<div class="h-full bg-signal-sky" style="width: 75%;"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- BENCHMARKS SECTION -->
+<section class="p-margin bg-surface-canvas flex-1">
+<div class="flex items-center justify-between pb-3">
+<h3 class="font-label-micro text-label-micro uppercase tracking-[0.09em] text-text-tertiary">STANDARDIZED EVALUATION SUITE</h3>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary">N=4,000 RUNS</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 pt-1">
+<!-- SWE-bench -->
+<div class="p-3 bg-surface-well border border-hairline flex flex-col justify-between">
+<div class="flex justify-between items-center mb-2">
+<span class="font-body-md text-body-md text-text-primary">SWE-bench Verified</span>
+<span class="font-numeric-md text-numeric-md text-signal-amber font-semibold">68.4%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-raised">
+<div class="h-full bg-signal-amber" style="width: 68.4%;"></div>
+</div>
+<div class="flex justify-between mt-2 font-label-micro text-label-micro text-text-tertiary">
+<span>SOTA BASE: 65.2%</span>
+<span class="text-signal-mint">+3.2%</span>
+</div>
+</div>
+<!-- MMLU-Pro -->
+<div class="p-3 bg-surface-well border border-hairline flex flex-col justify-between">
+<div class="flex justify-between items-center mb-2">
+<span class="font-body-md text-body-md text-text-primary">MMLU-Pro</span>
+<span class="font-numeric-md text-numeric-md text-text-primary font-semibold">84.2%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-raised">
+<div class="h-full bg-signal-sky" style="width: 84.2%;"></div>
+</div>
+<div class="flex justify-between mt-2 font-label-micro text-label-micro text-text-tertiary">
+<span>REASONING/MATH/LOGIC</span>
+<span class="text-text-secondary">TOP 2%</span>
+</div>
+</div>
+<!-- LiveCodeBench -->
+<div class="p-3 bg-surface-well border border-hairline flex flex-col justify-between">
+<div class="flex justify-between items-center mb-2">
+<span class="font-body-md text-body-md text-text-primary">LiveCodeBench</span>
+<span class="font-numeric-md text-numeric-md text-text-primary font-semibold">72.8%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-raised">
+<div class="h-full bg-signal-sky" style="width: 72.8%;"></div>
+</div>
+<div class="flex justify-between mt-2 font-label-micro text-label-micro text-text-tertiary">
+<span>PYTHON EXEC PASS@1</span>
+<span class="text-signal-mint">RELIABLE</span>
+</div>
+</div>
+<!-- Arena Elo -->
+<div class="p-3 bg-surface-well border border-hairline flex flex-col justify-between">
+<div class="flex justify-between items-center mb-2">
+<span class="font-body-md text-body-md text-text-primary">Arena Elo</span>
+<span class="font-numeric-md text-numeric-md text-signal-mint font-semibold">1342 Elo</span>
+</div>
+<div class="w-full h-1.5 bg-surface-raised">
+<div class="h-full bg-signal-mint" style="width: 91.5%;"></div>
+</div>
+<div class="flex justify-between mt-2 font-label-micro text-label-micro text-text-tertiary">
+<span>STYLE-CONTROLLED</span>
+<span class="text-signal-mint">RANK #3 GLOBAL</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- RIGHT COMPONENT: PROVIDER ROUTING MATRIX & API DRAWER (42% desktop width) -->
+<div class="flex-1 lg:max-w-[38%] flex flex-col bg-surface-canvas">
+<!-- PROVIDER ROUTING MATRIX (DENSE LEDGER) -->
+<section class="border-b border-hairline flex flex-col">
+<div class="px-margin py-3 border-b border-hairline bg-surface-well/60 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-signal-amber">hub</span>
+<span class="font-label-micro text-label-micro uppercase tracking-[0.09em] text-text-primary font-medium">Provider Routing Matrix</span>
+</div>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary">4 ENDPOINTS SYNCED</span>
+</div>
+<!-- Ledger Table -->
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left border-collapse font-body-dense text-body-dense">
+<thead>
+<tr class="h-9 border-b border-hairline bg-surface-well/30 text-text-tertiary font-label-micro text-label-micro uppercase tracking-wider">
+<th class="px-3 font-normal">Provider</th>
+<th class="px-2 font-normal text-right">In/1M</th>
+<th class="px-2 font-normal text-right">Out/1M</th>
+<th class="px-2 font-normal text-right">Cache</th>
+<th class="px-2 font-normal text-right">p50 Lat</th>
+<th class="px-3 font-normal text-right">Uptime</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-hairline">
+<!-- Row 1: AWS Bedrock -->
+<tr class="h-11 hover:bg-surface-raised transition-colors group">
+<td class="px-3 text-text-primary font-medium whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint"></span>
+<span>AWS Bedrock</span>
+</div>
+</td>
+<td class="px-2 text-right font-numeric-sm text-text-secondary">$2.40</td>
+<td class="px-2 text-right font-numeric-sm text-text-secondary">$9.60</td>
+<td class="px-2 text-right font-numeric-sm text-text-secondary">$0.60</td>
+<td class="px-2 text-right font-numeric-sm text-text-primary">412ms</td>
+<td class="px-3 text-right font-numeric-sm text-signal-mint">99.99%</td>
+</tr>
+<!-- Row 2: Vertex AI -->
+<tr class="h-11 hover:bg-surface-raised transition-colors group">
+<td class="px-3 text-text-primary font-medium whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint"></span>
+<span>Vertex AI</span>
+</div>
+</td>
+<td class="px-2 text-right font-numeric-sm text-text-secondary">$2.50</td>
+<td class="px-2 text-right font-numeric-sm text-text-secondary">$10.00</td>
+<td class="px-2 text-right font-numeric-sm text-text-secondary">$0.62</td>
+<td class="px-2 text-right font-numeric-sm text-text-primary">460ms</td>
+<td class="px-3 text-right font-numeric-sm text-signal-mint">99.98%</td>
+</tr>
+<!-- Row 3: Groq (Best Value) -->
+<tr class="h-11 bg-surface-raised/40 hover:bg-surface-raised transition-colors group">
+<td class="px-3 text-text-primary font-medium whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint animate-pulse"></span>
+<span class="text-signal-mint font-semibold">Groq (LPU)</span>
+<span class="ml-1 px-1 py-0.2 rounded-[2px] bg-signal-mint/10 border border-signal-mint/30 text-[9px] text-signal-mint font-label-micro">BEST VALUE</span>
+</div>
+</td>
+<td class="px-2 text-right font-numeric-sm text-signal-mint font-medium">$1.80</td>
+<td class="px-2 text-right font-numeric-sm text-signal-mint font-medium">$7.20</td>
+<td class="px-2 text-right font-numeric-sm text-text-tertiary">N/A</td>
+<td class="px-2 text-right font-numeric-sm text-signal-mint font-bold">148ms</td>
+<td class="px-3 text-right font-numeric-sm text-text-secondary">99.95%</td>
+</tr>
+<!-- Row 4: Together AI -->
+<tr class="h-11 hover:bg-surface-raised transition-colors group">
+<td class="px-3 text-text-primary font-medium whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-coral"></span>
+<span>Together AI</span>
+</div>
+</td>
+<td class="px-2 text-right font-numeric-sm text-text-secondary">$2.10</td>
+<td class="px-2 text-right font-numeric-sm text-text-secondary">$8.40</td>
+<td class="px-2 text-right font-numeric-sm text-text-secondary">$0.55</td>
+<td class="px-2 text-right font-numeric-sm text-signal-coral font-medium">
+<div class="flex items-center justify-end gap-1">
+<span>890ms</span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-coral"></span>
+</div>
+</td>
+<td class="px-3 text-right font-numeric-sm text-text-secondary">99.91%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- API SNIPPET DRAWER (Collapsible Section) -->
+<section class="flex-1 flex flex-col border-b border-hairline bg-surface-well/50">
+<!-- Drawer Header -->
+<div class="px-margin py-3 border-b border-hairline flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-signal-sky">terminal</span>
+<span class="font-label-micro text-label-micro uppercase tracking-[0.09em] text-text-primary font-semibold">Quick Route via OneAtlas API</span>
+</div>
+<button class="h-7 px-2.5 rounded-[4px] border border-hairline-strong bg-surface hover:bg-surface-raised transition-colors flex items-center gap-1 text-text-secondary hover:text-text-primary" onclick="copySlug()">
+<span class="material-symbols-outlined text-[13px]">content_copy</span>
+<span class="font-label-micro text-label-micro uppercase tracking-wider" id="copy-btn-text">Copy Slug</span>
+</button>
+</div>
+<!-- Language Selector Tabs -->
+<div class="px-margin pt-3 flex items-center justify-between border-b border-hairline pb-2.5">
+<div class="flex items-center gap-1">
+<button class="px-2.5 py-1 rounded-[3px] bg-surface-raised border border-hairline-strong text-signal-amber font-label-micro text-label-micro tracking-wider uppercase" id="tab-curl" onclick="switchTab('curl')">cURL</button>
+<button class="px-2.5 py-1 rounded-[3px] bg-transparent border border-transparent text-text-tertiary hover:text-text-secondary font-label-micro text-label-micro tracking-wider uppercase" id="tab-ts" onclick="switchTab('ts')">TypeScript</button>
+<button class="px-2.5 py-1 rounded-[3px] bg-transparent border border-transparent text-text-tertiary hover:text-text-secondary font-label-micro text-label-micro tracking-wider uppercase" id="tab-py" onclick="switchTab('py')">Python</button>
+</div>
+<span class="font-label-micro text-label-micro text-text-tertiary uppercase">SDK V3.2.0</span>
+</div>
+<!-- Code Block Viewport -->
+<div class="p-margin flex-1 bg-surface-canvas overflow-x-auto flex flex-col justify-between">
+<pre class="font-numeric-md text-numeric-md leading-relaxed text-text-secondary whitespace-pre" id="code-snippet"><span class="text-signal-amber">curl</span> https://api.oneatlas.io/v1/chat/completions \
+  -H <span class="text-text-primary">"Authorization: Bearer $ONEATLAS_API_KEY"</span> \
+  -d <span class="text-text-primary">'{
+    "model": "<span class="text-signal-sky font-semibold">atlas-reasoner-4</span>",
+    "messages": [
+      {"role": "user", "content": "Analyze telemetry."}
+    ],
+    "cache_control": {"type": "ephemeral"}
+  }'</span></pre>
+<!-- Drawer Mini-Telemetry Footer -->
+<div class="mt-4 pt-3 border-t border-hairline flex items-center justify-between font-numeric-sm text-numeric-sm text-text-tertiary">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint"></span>
+<span>RATE_LIMIT: 50,000 RPM</span>
+</div>
+<span>FALLBACK: AUTO_REROUTE</span>
+</div>
+</div>
+</section>
+<!-- DOCK CALL-TO-ACTION BAND -->
+<div class="p-margin bg-surface border-t border-hairline flex items-center justify-between">
+<div>
+<div class="font-label-micro text-label-micro text-text-tertiary uppercase">MODEL ACCESS TIER</div>
+<div class="font-headline-sm text-headline-sm text-text-primary">Zero-Markup Enterprise</div>
+</div>
+<button class="h-9 px-4 rounded-[4px] bg-signal-amber hover:bg-signal-amber/90 text-surface-canvas font-headline-sm text-[13px] font-semibold tracking-wider uppercase transition-colors flex items-center gap-2">
+<span>Provision Route</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- INTERACTIVE ENGINE LOGIC -->
+<script>
+  let cacheEnabled = true;
+
+  function setPreset(type) {
+    const reqSlider = document.getElementById('req-range');
+    const inSlider = document.getElementById('input-range');
+    const outSlider = document.getElementById('output-range');
+
+    const bChat = document.getElementById('preset-chat');
+    const bRag = document.getElementById('preset-rag');
+    const bAgent = document.getElementById('preset-agent');
+
+    // Reset styles
+    [bChat, bRag, bAgent].forEach(btn => {
+      btn.className = "px-3 py-1.5 rounded-[3px] border border-hairline bg-surface-well hover:border-hairline-strong transition-colors text-left flex items-center gap-2";
+      btn.children[0].className = "w-1.5 h-1.5 rounded-full bg-text-tertiary";
+      btn.children[1].className = "font-label-md text-label-md text-text-secondary";
+    });
+
+    if (type === 'chat') {
+      bChat.className = "px-3 py-1.5 rounded-[3px] border border-signal-amber bg-signal-amber/10 transition-colors text-left flex items-center gap-2";
+      bChat.children[0].className = "w-1.5 h-1.5 rounded-full bg-signal-amber";
+      bChat.children[1].className = "font-label-md text-label-md text-signal-amber font-medium";
+      inSlider.value = 2000;
+      outSlider.value = 500;
+    } else if (type === 'rag') {
+      bRag.className = "px-3 py-1.5 rounded-[3px] border border-signal-amber bg-signal-amber/10 transition-colors text-left flex items-center gap-2";
+      bRag.children[0].className = "w-1.5 h-1.5 rounded-full bg-signal-amber";
+      bRag.children[1].className = "font-label-md text-label-md text-signal-amber font-medium";
+      inSlider.value = 32000;
+      outSlider.value = 800;
+    } else if (type === 'agent') {
+      bAgent.className = "px-3 py-1.5 rounded-[3px] border border-signal-amber bg-signal-amber/10 transition-colors text-left flex items-center gap-2";
+      bAgent.children[0].className = "w-1.5 h-1.5 rounded-full bg-signal-amber";
+      bAgent.children[1].className = "font-label-md text-label-md text-signal-amber font-medium";
+      inSlider.value = 50000;
+      outSlider.value = 5000;
+    }
+    updateCalculation();
+  }
+
+  function toggleCache() {
+    cacheEnabled = !cacheEnabled;
+    const thumb = document.getElementById('cache-thumb');
+    if (cacheEnabled) {
+      thumb.className = "translate-x-5 pointer-events-none inline-block h-3.5 w-3.5 mt-[2px] ml-[2px] transform rounded-[1px] bg-signal-mint shadow transition duration-200 ease-in-out";
+    } else {
+      thumb.className = "translate-x-0 pointer-events-none inline-block h-3.5 w-3.5 mt-[2px] ml-[2px] transform rounded-[1px] bg-text-tertiary shadow transition duration-200 ease-in-out";
+    }
+    updateCalculation();
+  }
+
+  function updateCalculation() {
+    const reqs = parseInt(document.getElementById('req-range').value);
+    const inTokens = parseInt(document.getElementById('input-range').value);
+    const outTokens = parseInt(document.getElementById('output-range').value);
+
+    document.getElementById('req-val').innerText = Number(reqs).toLocaleString();
+    document.getElementById('input-token-val').innerText = Number(inTokens).toLocaleString() + ' tok';
+    document.getElementById('output-token-val').innerText = Number(outTokens).toLocaleString() + ' tok';
+
+    // Model Base blend rate: in $2.40/1M, out $9.60/1M, cache disc 75%
+    const monthlyReqs = reqs * 30;
+    const totalInTokens = (monthlyReqs * inTokens) / 1000000;
+    const totalOutTokens = (monthlyReqs * outTokens) / 1000000;
+
+    let baseInCost = totalInTokens * 2.40;
+    const baseOutCost = totalOutTokens * 9.60;
+
+    let savings = 0;
+    if (cacheEnabled) {
+      // 60% of prompt assumed eligible for 75% cache discount
+      savings = (baseInCost * 0.60) * 0.75;
+      baseInCost = baseInCost - savings;
+    }
+
+    const totalSpend = baseInCost + baseOutCost;
+    document.getElementById('spend-total').innerText = (totalSpend).toFixed(2);
+
+    const savingsNode = document.getElementById('cache-savings');
+    if (cacheEnabled) {
+      const pct = ((savings / (totalSpend + savings)) * 100).toFixed(1);
+      savingsNode.innerText = `Savings with cache: $${savings.toFixed(2)} (${pct}%)`;
+      savingsNode.className = "font-numeric-md text-numeric-md text-signal-mint";
+    } else {
+      savingsNode.innerText = "Prompt caching disabled (0% saved)";
+      savingsNode.className = "font-numeric-md text-numeric-md text-text-tertiary";
+    }
+  }
+
+  function copySlug() {
+    const slug = "atlas-reasoner-4";
+    navigator.clipboard.writeText(slug);
+    const btnText = document.getElementById('copy-btn-text');
+    btnText.innerText = "COPIED!";
+    setTimeout(() => {
+      btnText.innerText = "Copy Slug";
+    }, 1800);
+  }
+
+  function switchTab(lang) {
+    const tCurl = document.getElementById('tab-curl');
+    const tTs = document.getElementById('tab-ts');
+    const tPy = document.getElementById('tab-py');
+    const snippet = document.getElementById('code-snippet');
+
+    [tCurl, tTs, tPy].forEach(t => {
+      t.className = "px-2.5 py-1 rounded-[3px] bg-transparent border border-transparent text-text-tertiary hover:text-text-secondary font-label-micro text-label-micro tracking-wider uppercase";
+    });
+
+    const activeClass = "px-2.5 py-1 rounded-[3px] bg-surface-raised border border-hairline-strong text-signal-amber font-label-micro text-label-micro tracking-wider uppercase";
+
+    if (lang === 'curl') {
+      tCurl.className = activeClass;
+      snippet.innerHTML = `<span class="text-signal-amber">curl</span> https://api.oneatlas.io/v1/chat/completions \\
+  -H <span class="text-text-primary">"Authorization: Bearer $ONEATLAS_API_KEY"</span> \\
+  -d <span class="text-text-primary">'{
+    "model": "<span class="text-signal-sky font-semibold">atlas-reasoner-4</span>",
+    "messages": [
+      {"role": "user", "content": "Analyze telemetry."}
+    ],
+    "cache_control": {"type": "ephemeral"}
+  }'</span>`;
+    } else if (lang === 'ts') {
+      tTs.className = activeClass;
+      snippet.innerHTML = `<span class="text-signal-amber">import</span> { OneAtlas } <span class="text-signal-amber">from</span> <span class="text-text-primary">'@oneatlas/sdk'</span>;
+
+<span class="text-text-tertiary">const</span> client = <span class="text-signal-amber">new</span> OneAtlas();
+<span class="text-text-tertiary">const</span> response = <span class="text-signal-amber">await</span> client.chat.create({
+  model: <span class="text-signal-sky font-semibold">'atlas-reasoner-4'</span>,
+  messages: [{ role: <span class="text-text-primary">'user'</span>, content: <span class="text-text-primary">'Analyze telemetry.'</span> }],
+  promptCache: <span class="text-signal-mint">true</span>
+});`;
+    } else if (lang === 'py') {
+      tPy.className = activeClass;
+      snippet.innerHTML = `<span class="text-signal-amber">from</span> oneatlas <span class="text-signal-amber">import</span> OneAtlas
+
+client = OneAtlas()
+response = client.chat.completions.create(
+    model=<span class="text-signal-sky font-semibold">"atlas-reasoner-4"</span>,
+    messages=[{<span class="text-text-primary">"role"</span>: <span class="text-text-primary">"user"</span>, <span class="text-text-primary">"content"</span>: <span class="text-text-primary">"Analyze telemetry."</span>}],
+    cache_control={<span class="text-text-primary">"type"</span>: <span class="text-text-primary">"ephemeral"</span>}
+)`;
+    }
+  }
+</script></main><footer class="w-full h-14 bg-surface-well border-t border-hairline"><div class="h-full w-full px-margin flex items-center justify-between text-text-tertiary font-label-micro text-label-micro"><div class="flex items-center gap-space-lg"><span class="uppercase tracking-wider">OneAtlas Terminal v3.2</span><span class="text-hairline-strong">|</span><span class="font-numeric-sm text-numeric-sm text-text-secondary">LATENCY: 18ms</span><span class="text-hairline-strong">|</span><span class="font-numeric-sm text-numeric-sm text-text-secondary">NODES: 4,096 SYNCED</span></div><div class="flex items-center gap-space-md font-numeric-sm text-numeric-sm"><span>LEDGER_OK</span></div></div></footer></body></html>

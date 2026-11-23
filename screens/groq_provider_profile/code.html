@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OneAtlas — Groq Provider Profile</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&amp;family=Geist:wght@400;500;600&amp;family=Instrument+Serif:ital@0;1&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary-fixed": "#ffddb8",
+            "error": "#ffb4ab",
+            "on-primary-fixed": "#2a1700",
+            "on-error": "#690005",
+            "surface-dim": "#131315",
+            "surface-bright": "#39393b",
+            "on-tertiary-fixed-variant": "#004c69",
+            "surface": "#131315",
+            "on-surface-variant": "#d8c3ad",
+            "signal-coral": "#F43F5E",
+            "primary-container": "#f59e0b",
+            "inverse-on-surface": "#313032",
+            "on-secondary-container": "#00311f",
+            "on-secondary": "#003824",
+            "primary": "#ffc174",
+            "on-tertiary": "#00354a",
+            "background": "#131315",
+            "surface-canvas": "#09090B",
+            "tertiary-fixed-dim": "#7bd0ff",
+            "signal-mint": "#10B981",
+            "inverse-surface": "#e5e1e4",
+            "surface-well": "#101013",
+            "on-background": "#e5e1e4",
+            "hairline": "rgba(255, 255, 255, 0.07)",
+            "text-secondary": "#A1A1AA",
+            "on-surface": "#e5e1e4",
+            "text-tertiary": "#6B6B74",
+            "surface-container": "#201f22",
+            "surface-container-highest": "#353437",
+            "surface-tint": "#ffb95f",
+            "surface-variant": "#353437",
+            "surface-container-high": "#2a2a2c",
+            "on-tertiary-fixed": "#001e2c",
+            "on-secondary-fixed": "#002113",
+            "surface-overlay": "#1C1C21",
+            "surface-container-low": "#1c1b1d",
+            "outline": "#a08e7a",
+            "signal-sky": "#38BDF8",
+            "on-primary-fixed-variant": "#653e00",
+            "hairline-strong": "rgba(255, 255, 255, 0.14)",
+            "primary-fixed-dim": "#ffb95f",
+            "surface-raised": "#16161A",
+            "on-tertiary-container": "#004965",
+            "secondary-container": "#00a572",
+            "on-error-container": "#ffdad6",
+            "signal-amber": "#F59E0B",
+            "tertiary-container": "#38bdf8",
+            "inverse-primary": "#855300",
+            "on-secondary-fixed-variant": "#005236",
+            "outline-variant": "#534434",
+            "secondary": "#4edea3",
+            "on-primary-container": "#613b00",
+            "on-primary": "#472a00",
+            "text-primary": "#F4F4F5",
+            "tertiary-fixed": "#c4e7ff",
+            "secondary-fixed-dim": "#4edea3",
+            "surface-container-lowest": "#0e0e10",
+            "tertiary": "#8ed5ff",
+            "error-container": "#93000a",
+            "secondary-fixed": "#6ffbbe"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-md": "0.75rem",
+            "gutter": "1rem",
+            "space-xs": "0.25rem",
+            "space-xl": "1.5rem",
+            "margin": "1.5rem",
+            "space-lg": "1rem",
+            "space-sm": "0.5rem",
+            "margin-dock": "5rem",
+            "gutter-dense": "0.5rem"
+          },
+          "fontFamily": {
+            "headline-lg": ["Space Grotesk"],
+            "headline-sm": ["Space Grotesk"],
+            "label-md": ["Geist"],
+            "display-lg-mobile": ["Newsreader"],
+            "headline-md": ["Space Grotesk"],
+            "body-dense": ["Geist"],
+            "display-md": ["Newsreader"],
+            "numeric-md": ["Geist Mono"],
+            "numeric-lg": ["Geist Mono"],
+            "numeric-sm": ["Geist Mono"],
+            "body-lg": ["Geist"],
+            "body-md": ["Geist"],
+            "display-lg": ["Instrument Serif"],
+            "label-micro": ["Geist"]
+          },
+          "fontSize": {
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.03em", "fontWeight": "600" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "display-lg-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "headline-md": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+            "body-dense": ["13px", { "lineHeight": "13px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "display-md": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "numeric-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "numeric-lg": ["15px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "500" }],
+            "numeric-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "body-lg": ["14px", { "lineHeight": "21px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "body-md": ["13px", { "lineHeight": "19px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "display-lg": ["48px", { "lineHeight": "52px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "label-micro": ["10px", { "lineHeight": "12px", "letterSpacing": "0.09em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .dot-matrix-bg {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+      background-size: 16px 16px;
+    }
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+    /* Custom 4px square checkbox */
+    .atlas-checkbox {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background-color: #101013;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .atlas-checkbox:checked {
+      background-color: #F59E0B;
+      border-color: #F59E0B;
+    }
+    .atlas-checkbox:checked::after {
+      content: "";
+      width: 7px;
+      height: 4px;
+      border-left: 1.5px solid #09090B;
+      border-bottom: 1.5px solid #09090B;
+      transform: rotate(-45deg) translate(0.5px, -0.5px);
+    }
+  </style>
+</head>
+<body class="bg-surface-canvas text-text-primary font-body-md antialiased selection:bg-signal-amber/20 selection:text-signal-amber min-h-screen flex flex-col">
+<!-- TOP NAVIGATION BAR (Shared Shell) -->
+<header class="h-14 border-b border-hairline bg-surface-canvas px-6 flex items-center justify-between whitespace-nowrap shrink-0 z-30">
+<div class="flex items-center gap-8">
+<a class="flex items-center gap-3 text-text-primary" href="#">
+<div class="w-4 h-4 text-text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_535)">
+<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+</g>
+<defs>
+<clippath id="clip0_6_535"><rect fill="white" height="48" width="48"></rect></clippath>
+</defs>
+</svg>
+</div>
+<span class="font-headline-sm text-text-primary text-base font-bold tracking-tight">OneAtlas</span>
+</a>
+<nav class="flex items-center gap-7">
+<a class="text-text-primary text-body-md font-medium border-b border-signal-amber py-4 -mb-px" href="#">Providers</a>
+<a class="text-text-secondary hover:text-text-primary transition-colors text-body-md font-medium py-4" href="#">Models</a>
+<a class="text-text-secondary hover:text-text-primary transition-colors text-body-md font-medium py-4" href="#">Benchmarks</a>
+<a class="text-text-secondary hover:text-text-primary transition-colors text-body-md font-medium py-4" href="#">Pricing</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<label class="flex items-center h-8 w-64 rounded-lg border border-hairline bg-surface-well px-3 gap-2 focus-within:border-hairline-strong">
+<span class="material-symbols-outlined text-text-tertiary text-[16px]">search</span>
+<input class="w-full bg-transparent border-none p-0 text-body-md text-text-primary placeholder:text-text-tertiary focus:outline-none focus:ring-0" placeholder="Search" type="text"/>
+</label>
+</div>
+</header>
+<!-- MAIN SHELL: 240px Left Rail + Fluid Content Area -->
+<div class="flex flex-1 min-h-0">
+<!-- LEFT RAIL (240px fixed, 1px spine border on right) -->
+<aside class="w-[240px] shrink-0 border-r border-hairline bg-surface-canvas flex flex-col justify-between select-none">
+<div class="p-4 flex flex-col gap-3">
+<!-- Breadcrumb / Context -->
+<div class="pb-2 border-b border-hairline flex items-center justify-between">
+<span class="text-label-micro uppercase text-text-tertiary">FILTERS</span>
+<button class="text-label-micro uppercase text-text-tertiary hover:text-text-primary transition-colors" id="reset-filters">RESET</button>
+</div>
+<!-- REGION -->
+<details class="group border-b border-hairline pb-3" open="">
+<summary class="flex cursor-pointer items-center justify-between py-1 list-none">
+<span class="text-label-micro uppercase text-text-secondary">REGION</span>
+<div class="flex items-center gap-2">
+<span class="font-numeric-sm text-numeric-sm tabular-nums text-text-tertiary" data-count-for="region">3</span>
+<span class="material-symbols-outlined text-text-tertiary text-[16px] transition-transform group-open:rotate-180">expand_more</span>
+</div>
+</summary>
+<div class="mt-2 flex flex-col gap-2">
+<label class="flex items-center gap-2.5 cursor-pointer text-body-md text-text-primary">
+<input checked="" class="atlas-checkbox filter-cb" data-group="region" type="checkbox"/>
+<span>US</span>
+</label>
+<label class="flex items-center gap-2.5 cursor-pointer text-body-md text-text-primary">
+<input checked="" class="atlas-checkbox filter-cb" data-group="region" type="checkbox"/>
+<span>EU</span>
+</label>
+<label class="flex items-center gap-2.5 cursor-pointer text-body-md text-text-primary">
+<input checked="" class="atlas-checkbox filter-cb" data-group="region" type="checkbox"/>
+<span>APAC</span>
+</label>
+</div>
+</details>
+<!-- TIER -->
+<details class="group border-b border-hairline pb-3" open="">
+<summary class="flex cursor-pointer items-center justify-between py-1 list-none">
+<span class="text-label-micro uppercase text-text-secondary">TIER</span>
+<div class="flex items-center gap-2">
+<span class="font-numeric-sm text-numeric-sm tabular-nums text-text-tertiary" data-count-for="tier">2</span>
+<span class="material-symbols-outlined text-text-tertiary text-[16px] transition-transform group-open:rotate-180">expand_more</span>
+</div>
+</summary>
+<div class="mt-2 flex flex-col gap-2">
+<label class="flex items-center gap-2.5 cursor-pointer text-body-md text-text-primary">
+<input checked="" class="atlas-checkbox filter-cb" data-group="tier" type="checkbox"/>
+<span>Serverless</span>
+</label>
+<label class="flex items-center gap-2.5 cursor-pointer text-body-md text-text-primary">
+<input checked="" class="atlas-checkbox filter-cb" data-group="tier" type="checkbox"/>
+<span>Dedicated</span>
+</label>
+</div>
+</details>
+<!-- HARDWARE -->
+<details class="group border-b border-hairline pb-3" open="">
+<summary class="flex cursor-pointer items-center justify-between py-1 list-none">
+<span class="text-label-micro uppercase text-text-secondary">HARDWARE</span>
+<div class="flex items-center gap-2">
+<span class="font-numeric-sm text-numeric-sm tabular-nums text-text-tertiary" data-count-for="hardware">2</span>
+<span class="material-symbols-outlined text-text-tertiary text-[16px] transition-transform group-open:rotate-180">expand_more</span>
+</div>
+</summary>
+<div class="mt-2 flex flex-col gap-2">
+<label class="flex items-center gap-2.5 cursor-pointer text-body-md text-text-primary">
+<input checked="" class="atlas-checkbox filter-cb" data-group="hardware" type="checkbox"/>
+<span>LPU v2</span>
+</label>
+<label class="flex items-center gap-2.5 cursor-pointer text-body-md text-text-primary">
+<input checked="" class="atlas-checkbox filter-cb" data-group="hardware" type="checkbox"/>
+<span>LPU v3</span>
+</label>
+<label class="flex items-center gap-2.5 cursor-pointer text-body-md text-text-secondary">
+<input class="atlas-checkbox filter-cb" data-group="hardware" type="checkbox"/>
+<span>H100</span>
+</label>
+</div>
+</details>
+<!-- MODEL FAMILY -->
+<details class="group pb-2" open="">
+<summary class="flex cursor-pointer items-center justify-between py-1 list-none">
+<span class="text-label-micro uppercase text-text-secondary">MODEL FAMILY</span>
+<div class="flex items-center gap-2">
+<span class="font-numeric-sm text-numeric-sm tabular-nums text-text-tertiary" data-count-for="family">4</span>
+<span class="material-symbols-outlined text-text-tertiary text-[16px] transition-transform group-open:rotate-180">expand_more</span>
+</div>
+</summary>
+<div class="mt-2 flex flex-col gap-2">
+<label class="flex items-center gap-2.5 cursor-pointer text-body-md text-text-primary">
+<input checked="" class="atlas-checkbox filter-cb" data-group="family" type="checkbox"/>
+<span>Llama</span>
+</label>
+<label class="flex items-center gap-2.5 cursor-pointer text-body-md text-text-primary">
+<input checked="" class="atlas-checkbox filter-cb" data-group="family" type="checkbox"/>
+<span>Mixtral</span>
+</label>
+<label class="flex items-center gap-2.5 cursor-pointer text-body-md text-text-primary">
+<input checked="" class="atlas-checkbox filter-cb" data-group="family" type="checkbox"/>
+<span>Gemma</span>
+</label>
+<label class="flex items-center gap-2.5 cursor-pointer text-body-md text-text-primary">
+<input checked="" class="atlas-checkbox filter-cb" data-group="family" type="checkbox"/>
+<span>Whisper</span>
+</label>
+</div>
+</details>
+</div>
+<div class="p-4 border-t border-hairline">
+<div class="text-label-micro uppercase text-text-tertiary">PROVIDER ROUTE</div>
+<div class="font-numeric-sm text-numeric-sm text-text-secondary mt-1">/providers/groq</div>
+</div>
+</aside>
+<!-- CONTENT AREA (fluid, min 720px, left-aligned to spine, asymmetric right margin) -->
+<main class="flex-1 min-w-[720px] dot-matrix-bg bg-surface-canvas flex flex-col justify-between">
+<div class="flex flex-1">
+<!-- Primary Column -->
+<div class="flex-1 max-w-[1040px] pl-8 pr-6 py-6 flex flex-col gap-6">
+<!-- MODULE A — PROVIDER MASTHEAD (160px tall, opaque surface-well, 1px hairline) -->
+<section class="h-[160px] bg-surface-well border border-hairline px-6 py-5 flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-1.5">
+<h1 class="font-display-lg text-[48px] leading-none tracking-[-0.01em] text-text-primary">GROQ</h1>
+<p class="text-body-lg text-text-secondary">Inference at the speed of thought</p>
+</div>
+<a class="inline-flex items-center gap-2 px-2.5 py-1.5 border border-hairline bg-surface-canvas text-label-micro uppercase text-text-primary hover:border-hairline-strong transition-colors" href="#">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint"></span>
+<span>SYSTEM STATUS: OPERATIONAL ↗</span>
+</a>
+</div>
+<div class="pt-3 border-t border-hairline flex items-center gap-6 font-numeric-sm text-numeric-sm tabular-nums text-text-secondary uppercase tracking-[0.06em]">
+<span><strong class="text-text-primary font-medium">8</strong> HOSTED MODELS</span>
+<span class="text-text-tertiary">·</span>
+<span>P50 <strong class="text-text-primary font-medium">240</strong> TOK/S</span>
+<span class="text-text-tertiary">·</span>
+<span><strong class="text-text-primary font-medium">99.98%</strong> UPTIME</span>
+<span class="text-text-tertiary">·</span>
+<span><strong class="text-text-primary font-medium">3</strong> REGIONS</span>
+</div>
+</section>
+<!-- MODULE B — THROUGHPUT VS. PRICE QUADRANT (280px tall, opaque surface-well, 1px hairline) -->
+<section class="h-[280px] bg-surface-well border border-hairline px-6 py-4 flex flex-col justify-between relative">
+<div class="flex items-center justify-between">
+<span class="text-label-micro uppercase text-text-secondary">THROUGHPUT VS. COST · BLENDED $/1M</span>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary">LOG-X / LINEAR-Y</span>
+</div>
+<!-- Chart Canvas -->
+<div class="relative flex-1 my-2" id="quadrant-container">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 800 180">
+<!-- Horizontal Gridlines -->
+<line stroke="rgba(255,255,255,0.07)" stroke-width="1" x1="48" x2="788" y1="150" y2="150"></line>
+<line stroke="rgba(255,255,255,0.04)" stroke-width="1" x1="48" x2="788" y1="115" y2="115"></line>
+<line stroke="rgba(255,255,255,0.04)" stroke-width="1" x1="48" x2="788" y1="80" y2="80"></line>
+<line stroke="rgba(255,255,255,0.04)" stroke-width="1" x1="48" x2="788" y1="45" y2="45"></line>
+<line stroke="rgba(255,255,255,0.04)" stroke-width="1" x1="48" x2="788" y1="10" y2="10"></line>
+<!-- Y-Axis Ticks (Geist Mono) -->
+<text fill="#6B6B74" font-family="Geist Mono, monospace" font-size="10" text-anchor="end" x="38" y="153">100</text>
+<text fill="#6B6B74" font-family="Geist Mono, monospace" font-size="10" text-anchor="end" x="38" y="118">200</text>
+<text fill="#6B6B74" font-family="Geist Mono, monospace" font-size="10" text-anchor="end" x="38" y="83">300</text>
+<text fill="#6B6B74" font-family="Geist Mono, monospace" font-size="10" text-anchor="end" x="38" y="48">400</text>
+<text fill="#6B6B74" font-family="Geist Mono, monospace" font-size="10" text-anchor="end" x="38" y="13">500</text>
+<!-- X-Axis Ticks (Log scale: $0.05, $0.10, $0.30, $1.00, $3.00) -->
+<text fill="#6B6B74" font-family="Geist Mono, monospace" font-size="10" text-anchor="middle" x="70" y="168">$0.05</text>
+<text fill="#6B6B74" font-family="Geist Mono, monospace" font-size="10" text-anchor="middle" x="200" y="168">$0.10</text>
+<text fill="#6B6B74" font-family="Geist Mono, monospace" font-size="10" text-anchor="middle" x="405" y="168">$0.30</text>
+<text fill="#6B6B74" font-family="Geist Mono, monospace" font-size="10" text-anchor="middle" x="615" y="168">$1.00</text>
+<text fill="#6B6B74" font-family="Geist Mono, monospace" font-size="10" text-anchor="middle" x="770" y="168">$3.00</text>
+<!-- Frontier Polyline (1px dashed --signal-amber in cost order) -->
+<polyline fill="none" points="145,10 295,24 510,38" stroke="#F59E0B" stroke-dasharray="4 3" stroke-width="1"></polyline>
+<!-- Non-Frontier Nodes (--text-tertiary at 50% opacity, 6px circles -> r=3) -->
+<circle class="quadrant-node cursor-pointer" cx="120" cy="88" data-meta="260 tok/s · $0.08 / 1M" data-name="Whisper Large v3" fill="#6B6B74" fill-opacity="0.5" r="3"></circle>
+<circle class="quadrant-node cursor-pointer" cx="200" cy="96" data-meta="280 tok/s · $0.10 / 1M" data-name="Llama 3.1 8B Instant" fill="#6B6B74" fill-opacity="0.5" r="3"></circle>
+<circle class="quadrant-node cursor-pointer" cx="355" cy="72" data-meta="340 tok/s · $0.24 / 1M" data-name="Gemma 2 9B" fill="#6B6B74" fill-opacity="0.5" r="3"></circle>
+<circle class="quadrant-node cursor-pointer" cx="435" cy="112" data-meta="220 tok/s · $0.36 / 1M" data-name="Mixtral 8x7B" fill="#6B6B74" fill-opacity="0.5" r="3"></circle>
+<circle class="quadrant-node cursor-pointer" cx="565" cy="128" data-meta="175 tok/s · $0.90 / 1M" data-name="Llama 3.2 90B Vision" fill="#6B6B74" fill-opacity="0.5" r="3"></circle>
+<!-- Frontier Nodes (--signal-amber, 6px circles -> r=3) -->
+<circle class="quadrant-node cursor-pointer" cx="145" cy="10" data-meta="520 tok/s · $0.07 / 1M" data-name="Llama 3.3 70B SpecDec" fill="#F59E0B" r="3.5"></circle>
+<circle class="quadrant-node cursor-pointer" cx="295" cy="24" data-meta="460 tok/s · $0.18 / 1M" data-name="Llama 3.1 70B Versatile" fill="#F59E0B" r="3.5"></circle>
+<circle class="quadrant-node cursor-pointer" cx="510" cy="38" data-meta="420 tok/s · $0.59 / 1M" data-name="Llama 3.3 70B Versatile" fill="#F59E0B" r="3.5"></circle>
+</svg>
+<!-- Hover Tooltip (4px-radius --surface-overlay) -->
+<div class="hidden pointer-events-none absolute z-20 rounded-lg bg-surface-overlay border border-hairline-strong px-3 py-2" id="quadrant-tooltip">
+<div class="font-headline-sm text-[13px] leading-tight text-text-primary font-medium" id="tooltip-name">Llama 3.3 70B Versatile</div>
+<div class="font-numeric-sm text-numeric-sm tabular-nums text-text-secondary mt-0.5" id="tooltip-meta">420 tok/s · $0.59 / 1M</div>
+</div>
+</div>
+<!-- Legend at bottom-left -->
+<div class="flex items-center gap-5 text-label-micro uppercase text-text-secondary">
+<span class="inline-flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-amber"></span>
+<span>FRONTIER</span>
+</span>
+<span class="inline-flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-text-tertiary/50"></span>
+<span>OTHERS</span>
+</span>
+</div>
+</section>
+<!-- MODULE C — HOSTED MODELS LIST (Rank-driven heights: #1=64px, #2-6=44px, #7-8=36px) -->
+<section class="bg-surface-well border border-hairline">
+<!-- Header Row -->
+<div class="h-9 px-4 border-b border-hairline flex items-center text-label-micro uppercase text-text-tertiary">
+<div class="w-8 shrink-0">#</div>
+<div class="flex-1">MODEL / FAMILY</div>
+<div class="w-28 text-right">P50 TOK/S</div>
+<div class="w-24 text-right">$/1M</div>
+<div class="w-40 pl-6 text-right">BENCHMARK</div>
+</div>
+<!-- Rank #1 (64px height, Space Grotesk 18px, #1 4px-radius badge, 2% radial amber wash) -->
+<div class="h-[64px] px-4 border-b border-hairline flex items-center relative overflow-hidden" style="background: radial-gradient(circle at 18% 50%, rgba(245, 158, 11, 0.04), transparent 65%);">
+<div class="w-8 shrink-0">
+<span class="inline-flex items-center justify-center px-1.5 py-0.5 rounded-lg bg-signal-amber/15 border border-signal-amber/30 text-signal-amber text-label-micro font-numeric-sm tabular-nums">#1</span>
+</div>
+<div class="flex-1 flex items-center gap-3 min-w-0">
+<span class="font-headline-sm text-headline-sm text-text-primary truncate">Llama 3.3 70B Versatile</span>
+<span class="px-1.5 py-0.5 rounded-lg border border-hairline bg-surface-canvas text-label-micro uppercase text-text-secondary">Llama</span>
+</div>
+<div class="w-28 text-right font-numeric-lg text-numeric-lg tabular-nums text-text-primary">520 <span class="text-text-tertiary text-numeric-sm">tok/s</span></div>
+<div class="w-24 text-right font-numeric-lg text-numeric-lg tabular-nums text-text-primary">$0.59</div>
+<div class="w-40 pl-6 flex items-center gap-2.5 justify-end">
+<div class="w-20 h-1 bg-surface-canvas overflow-hidden">
+<div class="h-full bg-signal-sky" style="width: 92%;"></div>
+</div>
+<span class="font-numeric-md text-numeric-md tabular-nums text-text-primary w-8 text-right">92.4</span>
+</div>
+</div>
+<!-- Rank #2 (44px) -->
+<div class="h-[44px] px-4 border-b border-hairline flex items-center hover:bg-surface-raised transition-colors">
+<div class="w-8 shrink-0 font-numeric-sm text-numeric-sm tabular-nums text-text-tertiary">02</div>
+<div class="flex-1 flex items-center gap-2.5 min-w-0">
+<span class="font-headline-sm text-[14px] text-text-primary truncate">Llama 3.1 70B Versatile</span>
+<span class="px-1.5 py-0.5 rounded-lg border border-hairline bg-surface-canvas text-label-micro uppercase text-text-tertiary">Llama</span>
+</div>
+<div class="w-28 text-right font-numeric-md text-numeric-md tabular-nums text-text-primary">460 <span class="text-text-tertiary text-numeric-sm">tok/s</span></div>
+<div class="w-24 text-right font-numeric-md text-numeric-md tabular-nums text-text-primary">$0.18</div>
+<div class="w-40 pl-6 flex items-center gap-2.5 justify-end">
+<div class="w-20 h-1 bg-surface-canvas overflow-hidden">
+<div class="h-full bg-signal-sky" style="width: 88%;"></div>
+</div>
+<span class="font-numeric-md text-numeric-md tabular-nums text-text-secondary w-8 text-right">88.1</span>
+</div>
+</div>
+<!-- Rank #3 (44px) -->
+<div class="h-[44px] px-4 border-b border-hairline flex items-center hover:bg-surface-raised transition-colors">
+<div class="w-8 shrink-0 font-numeric-sm text-numeric-sm tabular-nums text-text-tertiary">03</div>
+<div class="flex-1 flex items-center gap-2.5 min-w-0">
+<span class="font-headline-sm text-[14px] text-text-primary truncate">Gemma 2 9B</span>
+<span class="px-1.5 py-0.5 rounded-lg border border-hairline bg-surface-canvas text-label-micro uppercase text-text-tertiary">Gemma</span>
+</div>
+<div class="w-28 text-right font-numeric-md text-numeric-md tabular-nums text-text-primary">340 <span class="text-text-tertiary text-numeric-sm">tok/s</span></div>
+<div class="w-24 text-right font-numeric-md text-numeric-md tabular-nums text-text-primary">$0.24</div>
+<div class="w-40 pl-6 flex items-center gap-2.5 justify-end">
+<div class="w-20 h-1 bg-surface-canvas overflow-hidden">
+<div class="h-full bg-signal-sky" style="width: 81%;"></div>
+</div>
+<span class="font-numeric-md text-numeric-md tabular-nums text-text-secondary w-8 text-right">81.0</span>
+</div>
+</div>
+<!-- Rank #4 (44px) -->
+<div class="h-[44px] px-4 border-b border-hairline flex items-center hover:bg-surface-raised transition-colors">
+<div class="w-8 shrink-0 font-numeric-sm text-numeric-sm tabular-nums text-text-tertiary">04</div>
+<div class="flex-1 flex items-center gap-2.5 min-w-0">
+<span class="font-headline-sm text-[14px] text-text-primary truncate">Llama 3.1 8B Instant</span>
+<span class="px-1.5 py-0.5 rounded-lg border border-hairline bg-surface-canvas text-label-micro uppercase text-text-tertiary">Llama</span>
+</div>
+<div class="w-28 text-right font-numeric-md text-numeric-md tabular-nums text-text-primary">280 <span class="text-text-tertiary text-numeric-sm">tok/s</span></div>
+<div class="w-24 text-right font-numeric-md text-numeric-md tabular-nums text-signal-mint">$0.10</div>
+<div class="w-40 pl-6 flex items-center gap-2.5 justify-end">
+<div class="w-20 h-1 bg-surface-canvas overflow-hidden">
+<div class="h-full bg-signal-mint" style="width: 76%;"></div>
+</div>
+<span class="font-numeric-md text-numeric-md tabular-nums text-text-secondary w-8 text-right">76.5</span>
+</div>
+</div>
+<!-- Rank #5 (44px) -->
+<div class="h-[44px] px-4 border-b border-hairline flex items-center hover:bg-surface-raised transition-colors">
+<div class="w-8 shrink-0 font-numeric-sm text-numeric-sm tabular-nums text-text-tertiary">05</div>
+<div class="flex-1 flex items-center gap-2.5 min-w-0">
+<span class="font-headline-sm text-[14px] text-text-primary truncate">Mixtral 8x7B</span>
+<span class="px-1.5 py-0.5 rounded-lg border border-hairline bg-surface-canvas text-label-micro uppercase text-text-tertiary">Mixtral</span>
+</div>
+<div class="w-28 text-right font-numeric-md text-numeric-md tabular-nums text-text-primary">220 <span class="text-text-tertiary text-numeric-sm">tok/s</span></div>
+<div class="w-24 text-right font-numeric-md text-numeric-md tabular-nums text-text-primary">$0.36</div>
+<div class="w-40 pl-6 flex items-center gap-2.5 justify-end">
+<div class="w-20 h-1 bg-surface-canvas overflow-hidden">
+<div class="h-full bg-signal-sky" style="width: 74%;"></div>
+</div>
+<span class="font-numeric-md text-numeric-md tabular-nums text-text-secondary w-8 text-right">74.2</span>
+</div>
+</div>
+<!-- Rank #6 (44px) -->
+<div class="h-[44px] px-4 border-b border-hairline flex items-center hover:bg-surface-raised transition-colors">
+<div class="w-8 shrink-0 font-numeric-sm text-numeric-sm tabular-nums text-text-tertiary">06</div>
+<div class="flex-1 flex items-center gap-2.5 min-w-0">
+<span class="font-headline-sm text-[14px] text-text-primary truncate">Whisper Large v3</span>
+<span class="px-1.5 py-0.5 rounded-lg border border-hairline bg-surface-canvas text-label-micro uppercase text-text-tertiary">Whisper</span>
+</div>
+<div class="w-28 text-right font-numeric-md text-numeric-md tabular-nums text-text-primary">260 <span class="text-text-tertiary text-numeric-sm">tok/s</span></div>
+<div class="w-24 text-right font-numeric-md text-numeric-md tabular-nums text-signal-mint">$0.08</div>
+<div class="w-40 pl-6 flex items-center gap-2.5 justify-end">
+<div class="w-20 h-1 bg-surface-canvas overflow-hidden">
+<div class="h-full bg-signal-mint" style="width: 72%;"></div>
+</div>
+<span class="font-numeric-md text-numeric-md tabular-nums text-text-secondary w-8 text-right">72.0</span>
+</div>
+</div>
+<!-- Rank #7 (36px, --text-secondary) -->
+<div class="h-[36px] px-4 border-b border-hairline flex items-center text-text-secondary hover:bg-surface-raised transition-colors">
+<div class="w-8 shrink-0 font-numeric-sm text-numeric-sm tabular-nums text-text-tertiary">07</div>
+<div class="flex-1 flex items-center gap-2.5 min-w-0">
+<span class="font-headline-sm text-[13px] text-text-secondary truncate">Llama 3.2 90B Vision</span>
+<span class="px-1.5 py-0.5 rounded-lg border border-hairline bg-surface-canvas text-label-micro uppercase text-text-tertiary">Llama</span>
+</div>
+<div class="w-28 text-right font-numeric-sm text-numeric-sm tabular-nums">175 <span class="text-text-tertiary">tok/s</span></div>
+<div class="w-24 text-right font-numeric-sm text-numeric-sm tabular-nums">$0.90</div>
+<div class="w-40 pl-6 flex items-center gap-2.5 justify-end">
+<div class="w-20 h-1 bg-surface-canvas overflow-hidden">
+<div class="h-full bg-signal-sky/70" style="width: 68%;"></div>
+</div>
+<span class="font-numeric-sm text-numeric-sm tabular-nums text-text-tertiary w-8 text-right">68.4</span>
+</div>
+</div>
+<!-- Rank #8 (36px, --text-secondary) -->
+<div class="h-[36px] px-4 flex items-center text-text-secondary hover:bg-surface-raised transition-colors">
+<div class="w-8 shrink-0 font-numeric-sm text-numeric-sm tabular-nums text-text-tertiary">08</div>
+<div class="flex-1 flex items-center gap-2.5 min-w-0">
+<span class="font-headline-sm text-[13px] text-text-secondary truncate">Llama 3.2 11B Vision</span>
+<span class="px-1.5 py-0.5 rounded-lg border border-hairline bg-surface-canvas text-label-micro uppercase text-text-tertiary">Llama</span>
+</div>
+<div class="w-28 text-right font-numeric-sm text-numeric-sm tabular-nums">190 <span class="text-text-tertiary">tok/s</span></div>
+<div class="w-24 text-right font-numeric-sm text-numeric-sm tabular-nums">$0.18</div>
+<div class="w-40 pl-6 flex items-center gap-2.5 justify-end">
+<div class="w-20 h-1 bg-surface-canvas overflow-hidden">
+<div class="h-full bg-signal-sky/70" style="width: 64%;"></div>
+</div>
+<span class="font-numeric-sm text-numeric-sm tabular-nums text-text-tertiary w-8 text-right">64.1</span>
+</div>
+</div>
+</section>
+<!-- MODULE D — REGION LATENCY STRIP (Three-column grid, 1px hairline dividers, opaque surface-well) -->
+<section class="bg-surface-well border border-hairline grid grid-cols-3 divide-x divide-hairline">
+<div class="px-5 py-4 flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="text-label-micro uppercase text-text-secondary">US-EAST / VIRGINIA</span>
+<span class="font-numeric-sm text-numeric-sm tabular-nums text-signal-mint">99.99%</span>
+</div>
+<div class="font-numeric-md text-numeric-md tabular-nums text-text-primary">p50: 165ms <span class="text-text-tertiary">·</span> p95: 280ms</div>
+</div>
+<div class="px-5 py-4 flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="text-label-micro uppercase text-text-secondary">EU-CENTRAL / FRANKFURT</span>
+<span class="font-numeric-sm text-numeric-sm tabular-nums text-signal-mint">99.98%</span>
+</div>
+<div class="font-numeric-md text-numeric-md tabular-nums text-text-primary">p50: 195ms <span class="text-text-tertiary">·</span> p95: 310ms</div>
+</div>
+<div class="px-5 py-4 flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="text-label-micro uppercase text-text-secondary">APAC-EAST / TOKYO</span>
+<span class="font-numeric-sm text-numeric-sm tabular-nums text-signal-mint">99.95%</span>
+</div>
+<div class="font-numeric-md text-numeric-md tabular-nums text-text-primary">p50: 240ms <span class="text-text-tertiary">·</span> p95: 390ms</div>
+</div>
+</section>
+</div>
+<!-- ASYMMETRIC RIGHT MARGIN (80–120px) holding annotations -->
+<aside class="w-[112px] shrink-0 py-6 pr-6 hidden xl:flex flex-col justify-center">
+<div class="border-l border-hairline pl-3 flex flex-col gap-2">
+<span class="text-label-micro uppercase text-text-tertiary">7D P50 LATENCY</span>
+<svg class="w-20 h-6 overflow-visible" viewbox="0 0 80 24">
+<polyline fill="none" points="0,16 13,14 26,18 39,11 52,13 65,9 78,10" stroke="#38BDF8" stroke-width="1.25"></polyline>
+<circle cx="78" cy="10" fill="#38BDF8" r="2"></circle>
+</svg>
+<span class="font-numeric-sm text-[10px] tabular-nums text-text-tertiary">as of 2m ago</span>
+</div>
+</aside>
+</div>
+<!-- MODULE E — TELEMETRY STRIP (bottom-anchored, 56px height, hairline border, Geist Mono) -->
+<footer class="h-[56px] border-t border-hairline bg-surface-well px-8 flex items-center justify-between shrink-0">
+<p class="font-numeric-sm text-numeric-sm tabular-nums text-text-secondary">
+          8 hosted models · updated 2m ago · p50 latency: 180ms · source: provider status page (mock).
+        </p>
+<button class="px-3 py-1.5 rounded-lg border border-hairline bg-surface-canvas hover:border-hairline-strong text-text-primary font-numeric-sm text-numeric-sm tracking-tight transition-colors" id="export-spec-btn">
+          EXPORT PROVIDER SPEC [JSON]
+        </button>
+</footer>
+</main>
+</div>
+<script>
+    // Filter count updater
+    function updateFilterCounts() {
+      const groups = ['region', 'tier', 'hardware', 'family'];
+      groups.forEach(group => {
+        const checkboxes = document.querySelectorAll(`.filter-cb[data-group="${group}"]`);
+        const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+        const badge = document.querySelector(`[data-count-for="${group}"]`);
+        if (badge) badge.textContent = checkedCount;
+      });
+    }
+
+    document.querySelectorAll('.filter-cb').forEach(cb => {
+      cb.addEventListener('change', updateFilterCounts);
+    });
+
+    document.getElementById('reset-filters')?.addEventListener('click', () => {
+      document.querySelectorAll('.filter-cb').forEach(cb => {
+        cb.checked = true;
+      });
+      updateFilterCounts();
+    });
+
+    // Quadrant hover tooltip
+    const container = document.getElementById('quadrant-container');
+    const tooltip = document.getElementById('quadrant-tooltip');
+    const tooltipName = document.getElementById('tooltip-name');
+    const tooltipMeta = document.getElementById('tooltip-meta');
+
+    document.querySelectorAll('.quadrant-node').forEach(node => {
+      node.addEventListener('mouseenter', (e) => {
+        const rect = container.getBoundingClientRect();
+        const nodeRect = node.getBoundingClientRect();
+        tooltipName.textContent = node.dataset.name;
+        tooltipMeta.textContent = node.dataset.meta;
+        tooltip.classList.remove('hidden');
+
+        const left = Math.min(nodeRect.left - rect.left + 12, rect.width - 200);
+        const top = Math.max(nodeRect.top - rect.top - 48, 4);
+        tooltip.style.left = `${left}px`;
+        tooltip.style.top = `${top}px`;
+      });
+
+      node.addEventListener('mouseleave', () => {
+        tooltip.classList.add('hidden');
+      });
+    });
+
+    // Export Provider Spec [JSON]
+    document.getElementById('export-spec-btn')?.addEventListener('click', function () {
+      const original = this.textContent;
+      this.textContent = 'SPEC COPIED [JSON] ✓';
+      setTimeout(() => {
+        this.textContent = original;
+      }, 1800);
+    });
+  </script>
+</body></html>

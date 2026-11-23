@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OneAtlas / Compare — Unified Model Matrix</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Script -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-highest": "#353437",
+            "background": "#131315",
+            "on-primary-fixed-variant": "#653e00",
+            "surface-dim": "#131315",
+            "surface": "#131315",
+            "inverse-surface": "#e5e1e4",
+            "surface-container": "#201f22",
+            "inverse-on-surface": "#313032",
+            "surface-variant": "#353437",
+            "inverse-primary": "#855300",
+            "on-surface": "#e5e1e4",
+            "secondary-fixed-dim": "#4edea3",
+            "surface-tint": "#ffb95f",
+            "surface-canvas": "#09090B",
+            "surface-container-lowest": "#0e0e10",
+            "error-container": "#93000a",
+            "on-error-container": "#ffdad6",
+            "primary-fixed": "#ffddb8",
+            "on-surface-variant": "#d8c3ad",
+            "text-secondary": "#A1A1AA",
+            "surface-container-high": "#2a2a2c",
+            "text-tertiary": "#6B6B74",
+            "on-tertiary": "#00354a",
+            "on-background": "#e5e1e4",
+            "on-secondary-fixed-variant": "#005236",
+            "on-secondary": "#003824",
+            "secondary-fixed": "#6ffbbe",
+            "tertiary-fixed-dim": "#7bd0ff",
+            "on-secondary-container": "#00311f",
+            "surface-bright": "#39393b",
+            "on-tertiary-container": "#004965",
+            "secondary": "#4edea3",
+            "signal-coral": "#F43F5E",
+            "on-tertiary-fixed": "#001e2c",
+            "on-error": "#690005",
+            "hairline-strong": "rgba(255, 255, 255, 0.14)",
+            "signal-amber": "#F59E0B",
+            "on-primary": "#472a00",
+            "text-primary": "#F4F4F5",
+            "on-tertiary-fixed-variant": "#004c69",
+            "primary": "#ffc174",
+            "surface-overlay": "#1C1C21",
+            "primary-fixed-dim": "#ffb95f",
+            "signal-sky": "#38BDF8",
+            "outline": "#a08e7a",
+            "surface-raised": "#16161A",
+            "secondary-container": "#00a572",
+            "tertiary-fixed": "#c4e7ff",
+            "on-primary-fixed": "#2a1700",
+            "primary-container": "#f59e0b",
+            "on-secondary-fixed": "#002113",
+            "signal-mint": "#10B981",
+            "outline-variant": "#534434",
+            "surface-well": "#101013",
+            "tertiary": "#8ed5ff",
+            "hairline": "rgba(255, 255, 255, 0.07)",
+            "tertiary-container": "#38bdf8",
+            "error": "#ffb4ab",
+            "on-primary-container": "#613b00",
+            "surface-container-low": "#1c1b1d"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "margin-dock": "5rem",
+            "space-xl": "1.5rem",
+            "space-lg": "1rem",
+            "space-sm": "0.5rem",
+            "space-xs": "0.25rem",
+            "gutter": "1rem",
+            "space-md": "0.75rem",
+            "gutter-dense": "0.5rem",
+            "margin": "1.5rem"
+          },
+          "fontFamily": {
+            "headline-sm": ["Space Grotesk"],
+            "numeric-md": ["JetBrains Mono"],
+            "body-lg": ["Geist"],
+            "headline-lg": ["Space Grotesk"],
+            "body-dense": ["Geist"],
+            "label-micro": ["Geist"],
+            "display-md": ["Newsreader"],
+            "label-md": ["Geist"],
+            "body-md": ["Geist"],
+            "numeric-lg": ["JetBrains Mono"],
+            "headline-md": ["Space Grotesk"],
+            "display-lg-mobile": ["Newsreader"],
+            "display-lg": ["Newsreader"],
+            "numeric-sm": ["JetBrains Mono"]
+          },
+          "fontSize": {
+            "headline-sm": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+            "numeric-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "body-lg": ["14px", { "lineHeight": "21px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.03em", "fontWeight": "600" }],
+            "body-dense": ["13px", { "lineHeight": "13px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "label-micro": ["10px", { "lineHeight": "12px", "letterSpacing": "0.09em", "fontWeight": "500" }],
+            "display-md": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "body-md": ["13px", { "lineHeight": "19px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "numeric-lg": ["15px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "500" }],
+            "headline-md": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+            "display-lg-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "display-lg": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "numeric-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0em", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Dot Matrix Background Effect */
+    .bg-dot-matrix {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+      background-size: 16px 16px;
+    }
+    
+    /* Monospace tabular layout numbers */
+    .font-mono-numbers {
+      font-family: 'JetBrains Mono', monospace;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Subtle custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #09090B;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #201f22;
+      border-radius: 2px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #353437;
+    }
+  </style>
+</head>
+<body class="bg-surface-canvas text-text-primary antialiased min-h-screen flex flex-col font-body-md select-none">
+<!-- TOP APP BAR / GLOBAL NAVIGATION (IMMUTABLE SHARED CONTEXT APPLIED) -->
+<header class="w-full border-b border-hairline bg-surface-well/90 backdrop-blur-md sticky top-0 z-50">
+<div class="max-w-[1720px] mx-auto px-6 h-14 flex items-center justify-between">
+<!-- Left: Logo & Top Level Links -->
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="w-5 h-5 text-signal-amber flex items-center justify-center">
+<svg class="w-full h-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor" fill-rule="evenodd"></path>
+<path clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<span class="font-headline-sm text-sm tracking-tight text-text-primary uppercase font-bold">OneAtlas <span class="text-text-tertiary">/ compare</span></span>
+</div>
+<nav class="hidden md:flex items-center gap-1 font-label-md">
+<a class="px-3 py-1.5 text-text-secondary hover:text-text-primary transition-colors rounded" href="#">Overview</a>
+<a class="px-3 py-1.5 text-text-secondary hover:text-text-primary transition-colors rounded" href="#">Models</a>
+<!-- Sliding pill for Compare active destination -->
+<a class="relative px-3 py-1.5 text-text-primary bg-surface-container-high rounded text-xs font-medium border border-hairline shadow-inner" href="#">
+            Compare
+          </a>
+<a class="px-3 py-1.5 text-text-secondary hover:text-text-primary transition-colors rounded" href="#">Playground</a>
+<a class="px-3 py-1.5 text-text-secondary hover:text-text-primary transition-colors rounded" href="#">Telemetry</a>
+<a class="px-3 py-1.5 text-text-secondary hover:text-text-primary transition-colors rounded" href="#">Settings</a>
+</nav>
+</div>
+<!-- Right: Search, Actions, Profile -->
+<div class="flex items-center gap-4">
+<div class="hidden lg:flex items-center h-8 bg-surface-container-lowest border border-hairline rounded px-2.5 w-64 focus-within:border-outline transition-colors">
+<span class="material-symbols-outlined text-text-tertiary text-base mr-2">search</span>
+<input class="bg-transparent border-none p-0 text-xs text-text-primary placeholder:text-text-tertiary focus:outline-none focus:ring-0 w-full font-body-dense" placeholder="Search parameters or models..." type="text"/>
+<kbd class="text-[10px] text-text-tertiary font-numeric-sm bg-surface-container px-1 py-0.5 rounded border border-hairline">⌘K</kbd>
+</div>
+<div class="flex items-center gap-2">
+<button class="h-8 px-3 rounded bg-signal-amber text-surface-canvas text-xs font-semibold hover:opacity-90 transition-opacity tracking-tight flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm">rocket_launch</span>
+<span>Deploy Endpoint</span>
+</button>
+<button class="h-8 px-3 rounded bg-surface-container border border-hairline text-text-secondary hover:text-text-primary text-xs font-medium transition-colors">
+            Docs
+          </button>
+</div>
+<div class="w-8 h-8 rounded border border-hairline bg-surface-raised flex items-center justify-center text-xs font-semibold text-text-secondary">
+          OA
+        </div>
+</div>
+</div>
+</header>
+<!-- MAIN TERMINAL VIEWPORT -->
+<main class="flex-1 flex flex-col w-full max-w-[1720px] mx-auto px-6 pb-20">
+<!-- TOP SECTION / SLOT STRIP (56px tall, hairline bottom border, dot-matrix pattern) -->
+<section class="relative h-14 mt-4 border-b border-hairline bg-surface-well/40 overflow-hidden flex items-center justify-between px-4">
+<div class="absolute inset-0 bg-dot-matrix opacity-40 pointer-events-none"></div>
+<!-- Subtitle / Micro Header -->
+<div class="relative z-10 flex items-center gap-4">
+<div class="flex flex-col">
+<span class="font-label-micro text-text-tertiary uppercase tracking-wider">
+            UNIFIED MODEL COMPARISON MATRIX // DIVERGENT ROUTING LEDGER
+          </span>
+<span class="font-numeric-sm text-[11px] text-text-secondary flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint animate-pulse"></span> 4 NODES PINNED IN BUFFER
+          </span>
+</div>
+<div class="h-6 w-px bg-hairline mx-2"></div>
+<!-- 4 Model Slots with Monograms & Badges -->
+<div class="flex items-center gap-2 overflow-x-auto py-1">
+<!-- Slot 1 -->
+<div class="h-7 px-2.5 rounded bg-surface-raised border border-hairline flex items-center gap-2 text-xs">
+<span class="w-3.5 h-3.5 rounded bg-[#d97706]/20 text-[#d97706] font-numeric-sm text-[10px] flex items-center justify-center font-bold">A</span>
+<span class="text-text-primary font-medium text-[12px]">Claude 3.5 Sonnet</span>
+<span class="px-1.5 py-0.2 bg-signal-amber/15 text-signal-amber text-[9px] uppercase tracking-wider font-semibold rounded-[2px]">TOP RANK</span>
+<button class="text-text-tertiary hover:text-text-primary ml-1 text-sm leading-none">×</button>
+</div>
+<!-- Slot 2 -->
+<div class="h-7 px-2.5 rounded bg-surface-raised border border-hairline flex items-center gap-2 text-xs">
+<span class="w-3.5 h-3.5 rounded bg-signal-sky/20 text-signal-sky font-numeric-sm text-[10px] flex items-center justify-center font-bold">D</span>
+<span class="text-text-primary font-medium text-[12px]">DeepSeek R1</span>
+<span class="px-1.5 py-0.2 bg-surface-container-highest text-text-secondary text-[9px] uppercase tracking-wider font-semibold rounded-[2px]">OPEN WEIGHT</span>
+<button class="text-text-tertiary hover:text-text-primary ml-1 text-sm leading-none">×</button>
+</div>
+<!-- Slot 3 -->
+<div class="h-7 px-2.5 rounded bg-surface-raised border border-hairline flex items-center gap-2 text-xs">
+<span class="w-3.5 h-3.5 rounded bg-emerald-500/20 text-emerald-400 font-numeric-sm text-[10px] flex items-center justify-center font-bold">O</span>
+<span class="text-text-primary font-medium text-[12px]">GPT-4o</span>
+<span class="px-1.5 py-0.2 bg-surface-container-highest text-text-secondary text-[9px] uppercase tracking-wider font-semibold rounded-[2px]">FRONTIER</span>
+<button class="text-text-tertiary hover:text-text-primary ml-1 text-sm leading-none">×</button>
+</div>
+<!-- Slot 4 -->
+<div class="h-7 px-2.5 rounded bg-surface-raised border border-hairline flex items-center gap-2 text-xs">
+<span class="w-3.5 h-3.5 rounded bg-blue-500/20 text-blue-400 font-numeric-sm text-[10px] flex items-center justify-center font-bold">G</span>
+<span class="text-text-primary font-medium text-[12px]">Gemini 2.0 Flash</span>
+<span class="px-1.5 py-0.2 bg-surface-container-highest text-text-secondary text-[9px] uppercase tracking-wider font-semibold rounded-[2px]">HIGH SPEED</span>
+<button class="text-text-tertiary hover:text-text-primary ml-1 text-sm leading-none">×</button>
+</div>
+</div>
+</div>
+<!-- Quick Actions Right -->
+<div class="relative z-10 flex items-center gap-2 shrink-0">
+<button class="h-8 px-2.5 rounded bg-surface-container border border-hairline text-text-primary text-xs font-medium hover:bg-surface-container-high transition-colors flex items-center gap-1.5">
+<span>+ Add Model Slot</span>
+<span class="font-numeric-sm text-[10px] text-text-tertiary">⌘⇧A</span>
+</button>
+<button class="h-8 px-3 rounded bg-transparent hover:bg-surface-raised border border-hairline text-text-secondary hover:text-text-primary text-xs font-medium transition-colors">
+          Clear All
+        </button>
+<button class="h-8 px-3 rounded bg-transparent hover:bg-surface-raised border border-hairline text-text-secondary hover:text-text-primary text-xs font-medium transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">share</span>
+<span>Share Matrix</span>
+</button>
+</div>
+</section>
+<!-- DIFF MATRIX: SINGLE UNIFIED TABLE -->
+<div class="w-full mt-4 overflow-x-auto border border-hairline rounded bg-surface-well">
+<table class="w-full border-collapse text-left table-fixed min-w-[1100px]">
+<!-- Pinned Sticky Table Header -->
+<thead class="sticky top-14 z-40 bg-surface-well border-b border-hairline shadow-[0_2px_8px_rgba(0,0,0,0.5)]">
+<tr class="h-16">
+<!-- Attribute Spec Column -->
+<th class="w-[280px] p-4 bg-surface-well border-r border-hairline align-middle">
+<div class="font-label-micro text-text-tertiary uppercase tracking-wider">
+                ATTRIBUTE / TELEMETRY SPEC
+              </div>
+<div class="text-[11px] text-text-secondary font-numeric-sm mt-0.5">
+                v2.1 live parity audit
+              </div>
+</th>
+<!-- Claude 3.5 Sonnet -->
+<th class="w-[280px] p-4 bg-surface-well border-r border-hairline align-middle">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-[#d97706]/20 border border-[#d97706]/40 text-[#d97706] font-numeric-sm text-xs flex items-center justify-center font-bold">A</div>
+<div>
+<div class="font-headline-sm text-xs font-semibold text-text-primary">Claude 3.5 Sonnet</div>
+<div class="font-numeric-sm text-[10px] text-text-tertiary">anthropic / claude-3-5-sonnet</div>
+</div>
+</div>
+<a class="text-text-tertiary hover:text-signal-amber transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">open_in_new</span>
+</a>
+</div>
+</th>
+<!-- DeepSeek R1 -->
+<th class="w-[280px] p-4 bg-surface-well border-r border-hairline align-middle">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-signal-sky/20 border border-signal-sky/40 text-signal-sky font-numeric-sm text-xs flex items-center justify-center font-bold">D</div>
+<div>
+<div class="font-headline-sm text-xs font-semibold text-text-primary">DeepSeek R1</div>
+<div class="font-numeric-sm text-[10px] text-text-tertiary">deepseek / deepseek-r1</div>
+</div>
+</div>
+<a class="text-text-tertiary hover:text-signal-sky transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">open_in_new</span>
+</a>
+</div>
+</th>
+<!-- GPT-4o -->
+<th class="w-[280px] p-4 bg-surface-well border-r border-hairline align-middle">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-numeric-sm text-xs flex items-center justify-center font-bold">O</div>
+<div>
+<div class="font-headline-sm text-xs font-semibold text-text-primary">GPT-4o</div>
+<div class="font-numeric-sm text-[10px] text-text-tertiary">openai / gpt-4o</div>
+</div>
+</div>
+<a class="text-text-tertiary hover:text-emerald-400 transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">open_in_new</span>
+</a>
+</div>
+</th>
+<!-- Gemini 2.0 Flash -->
+<th class="w-[280px] p-4 bg-surface-well align-middle">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-blue-500/20 border border-blue-500/40 text-blue-400 font-numeric-sm text-xs flex items-center justify-center font-bold">G</div>
+<div>
+<div class="font-headline-sm text-xs font-semibold text-text-primary">Gemini 2.0 Flash</div>
+<div class="font-numeric-sm text-[10px] text-text-tertiary">google / gemini-2-0-flash</div>
+</div>
+</div>
+<a class="text-text-tertiary hover:text-blue-400 transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">open_in_new</span>
+</a>
+</div>
+</th>
+</tr>
+</thead>
+<tbody>
+<!-- GROUP 1: PRICING & TOKENOMICS -->
+<tr class="bg-surface-canvas/90 border-t border-b border-hairline">
+<td class="py-2 px-4" colspan="5">
+<div class="flex items-center gap-2">
+<span class="font-label-micro text-signal-amber font-semibold tracking-widest uppercase">01 // PRICING &amp; TOKENOMICS</span>
+<div class="h-px bg-hairline flex-1"></div>
+<span class="font-numeric-sm text-[10px] text-text-tertiary">Standardized / 1M Tokens (USD)</span>
+</div>
+</td>
+</tr>
+<!-- Row: Input Price / 1M -->
+<tr class="border-b border-hairline hover:bg-surface-raised transition-colors group">
+<td class="p-4 border-r border-hairline font-body-md text-text-secondary text-xs group-hover:text-text-primary">
+              [PRICING] Input Price / 1M
+            </td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-text-primary">
+              $3.00
+            </td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-signal-mint font-semibold">
+<div class="flex items-center justify-between">
+<span>$0.14</span>
+<span class="h-5 px-1.5 inline-flex items-center justify-center bg-signal-mint/15 text-signal-mint border border-signal-mint/30 rounded text-[9px] uppercase tracking-wider font-semibold">
+                  BEST VALUE
+                </span>
+</div>
+</td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-text-primary">
+              $2.50
+            </td>
+<td class="p-4 font-mono-numbers text-xs text-text-primary">
+              $0.10
+            </td>
+</tr>
+<!-- Row: Output Price / 1M -->
+<tr class="border-b border-hairline hover:bg-surface-raised transition-colors group">
+<td class="p-4 border-r border-hairline font-body-md text-text-secondary text-xs group-hover:text-text-primary">
+              [PRICING] Output Price / 1M
+            </td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-text-primary">
+              $15.00
+            </td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-signal-mint font-semibold">
+<div class="flex items-center justify-between">
+<span>$0.28</span>
+<span class="h-5 px-1.5 inline-flex items-center justify-center bg-signal-mint/15 text-signal-mint border border-signal-mint/30 rounded text-[9px] uppercase tracking-wider font-semibold">
+                  BEST VALUE
+                </span>
+</div>
+</td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-text-primary">
+              $10.00
+            </td>
+<td class="p-4 font-mono-numbers text-xs text-text-primary">
+              $0.40
+            </td>
+</tr>
+<!-- Row: Prompt Caching Discount -->
+<tr class="border-b border-hairline hover:bg-surface-raised transition-colors group">
+<td class="p-4 border-r border-hairline font-body-md text-text-secondary text-xs group-hover:text-text-primary">
+              [PRICING] Prompt Caching Discount
+            </td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-text-secondary">
+              -75% <span class="text-text-tertiary">($0.75 / 1M)</span>
+</td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-text-secondary">
+              -50% <span class="text-text-tertiary">($0.07 / 1M)</span>
+</td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-text-secondary">
+              -50% <span class="text-text-tertiary">($1.25 / 1M)</span>
+</td>
+<td class="p-4 font-mono-numbers text-xs text-text-tertiary">
+              —
+            </td>
+</tr>
+<!-- GROUP 2: ARCHITECTURE & RUNTIME -->
+<tr class="bg-surface-canvas/90 border-t border-b border-hairline">
+<td class="py-2 px-4" colspan="5">
+<div class="flex items-center gap-2">
+<span class="font-label-micro text-signal-sky font-semibold tracking-widest uppercase">02 // ARCHITECTURE &amp; RUNTIME</span>
+<div class="h-px bg-hairline flex-1"></div>
+<span class="font-numeric-sm text-[10px] text-text-tertiary">Telemetry SLA Specs</span>
+</div>
+</td>
+</tr>
+<!-- Row: Context Window -->
+<tr class="border-b border-hairline hover:bg-surface-raised transition-colors group">
+<td class="p-4 border-r border-hairline font-body-md text-text-secondary text-xs group-hover:text-text-primary">
+              [ARCHITECTURE] Context Window
+            </td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-text-primary">
+              200,000 tokens
+            </td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-text-primary">
+              128,000 tokens
+            </td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-text-primary">
+              128,000 tokens
+            </td>
+<td class="p-4 font-mono-numbers text-xs font-semibold text-signal-amber">
+<div class="flex items-center justify-between">
+<span>1,048,576 tokens</span>
+<span class="h-5 px-1.5 inline-flex items-center justify-center bg-signal-amber/15 text-signal-amber border border-signal-amber/30 rounded text-[9px] uppercase tracking-wider font-semibold">
+                  LARGEST CONTEXT
+                </span>
+</div>
+</td>
+</tr>
+<!-- Row: Max Output Tokens -->
+<tr class="border-b border-hairline hover:bg-surface-raised transition-colors group">
+<td class="p-4 border-r border-hairline font-body-md text-text-secondary text-xs group-hover:text-text-primary">
+              [ARCHITECTURE] Max Output Tokens
+            </td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-text-primary">
+              8,192
+            </td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-signal-sky font-medium">
+              64,000
+            </td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-text-primary">
+              16,384
+            </td>
+<td class="p-4 font-mono-numbers text-xs text-text-primary">
+              8,192
+            </td>
+</tr>
+<!-- Row: Latency p50 (TTFT) -->
+<tr class="border-b border-hairline hover:bg-surface-raised transition-colors group">
+<td class="p-4 border-r border-hairline font-body-md text-text-secondary text-xs group-hover:text-text-primary">
+              [RUNTIME] Latency p50 (TTFT)
+            </td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-text-primary">
+              480ms
+            </td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-signal-coral font-medium">
+              920ms <span class="text-[10px] text-signal-coral/80 font-normal">(&gt;800ms alert)</span>
+</td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-text-primary">
+              380ms
+            </td>
+<td class="p-4 font-mono-numbers text-xs font-semibold text-signal-sky">
+<div class="flex items-center justify-between">
+<span>140ms</span>
+<span class="h-5 px-1.5 inline-flex items-center justify-center bg-signal-sky/15 text-signal-sky border border-signal-sky/30 rounded text-[9px] uppercase tracking-wider font-semibold">
+                  FASTEST
+                </span>
+</div>
+</td>
+</tr>
+<!-- Row: Throughput (tps) -->
+<tr class="border-b border-hairline hover:bg-surface-raised transition-colors group">
+<td class="p-4 border-r border-hairline font-body-md text-text-secondary text-xs group-hover:text-text-primary">
+              [RUNTIME] Throughput (tps)
+            </td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-text-primary">
+              64 tps
+            </td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-text-secondary">
+              32 tps
+            </td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-text-primary">
+              88 tps
+            </td>
+<td class="p-4 font-mono-numbers text-xs text-signal-sky font-medium">
+              162 tps
+            </td>
+</tr>
+<!-- Row: Supported Modalities -->
+<tr class="border-b border-hairline hover:bg-surface-raised transition-colors group">
+<td class="p-4 border-r border-hairline font-body-md text-text-secondary text-xs group-hover:text-text-primary">
+              [RUNTIME] Supported Modalities
+            </td>
+<!-- Claude -->
+<td class="p-4 border-r border-hairline text-xs text-text-secondary">
+<div class="flex items-center gap-1.5 mb-1">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="font-numeric-sm text-[10px] text-text-tertiary ml-1">(3)</span>
+</div>
+<span class="text-text-primary">Text, Code, Vision</span>
+</td>
+<!-- DeepSeek -->
+<td class="p-4 border-r border-hairline text-xs text-text-secondary">
+<div class="flex items-center gap-1.5 mb-1">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="font-numeric-sm text-[10px] text-text-tertiary ml-1">(3)</span>
+</div>
+<span class="text-text-primary">Text, Code, Reasoning</span>
+</td>
+<!-- GPT-4o -->
+<td class="p-4 border-r border-hairline text-xs text-text-secondary">
+<div class="flex items-center gap-1.5 mb-1">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="font-numeric-sm text-[10px] text-text-tertiary ml-1">(4)</span>
+</div>
+<span class="text-text-primary">Text, Code, Vision, Audio</span>
+</td>
+<!-- Gemini -->
+<td class="p-4 text-xs text-text-secondary">
+<div class="flex items-center gap-1.5 mb-1">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+<span class="font-numeric-sm text-[10px] text-text-tertiary ml-1">(5)</span>
+</div>
+<span class="text-text-primary">Text, Code, Vision, Audio, Video</span>
+</td>
+</tr>
+<!-- GROUP 3: STANDARDIZED BENCHMARKS -->
+<tr class="bg-surface-canvas/90 border-t border-b border-hairline">
+<td class="py-2 px-4" colspan="5">
+<div class="flex items-center gap-2">
+<span class="font-label-micro text-secondary font-semibold tracking-widest uppercase">03 // STANDARDIZED BENCHMARKS</span>
+<div class="h-px bg-hairline flex-1"></div>
+<span class="font-numeric-sm text-[10px] text-text-tertiary">Verified Industry Evaluations</span>
+</div>
+</td>
+</tr>
+<!-- Row: SWE-bench Verified -->
+<tr class="border-b border-hairline hover:bg-surface-raised transition-colors group">
+<td class="p-4 border-r border-hairline font-body-md text-text-secondary text-xs group-hover:text-text-primary">
+              [BENCHMARK] SWE-bench Verified
+            </td>
+<!-- Claude -->
+<td class="p-4 border-r border-hairline">
+<div class="flex items-center justify-between font-mono-numbers text-xs text-text-primary mb-1.5">
+<span>49.0%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-[1px] overflow-hidden">
+<div class="bg-signal-sky h-full" style="width: 49.0%;"></div>
+</div>
+</td>
+<!-- DeepSeek (Highest) -->
+<td class="p-4 border-r border-hairline">
+<div class="flex items-center justify-between font-mono-numbers text-xs text-signal-mint font-semibold mb-1.5">
+<span>49.2%</span>
+<span class="text-[9px] uppercase tracking-wider">HIGHEST</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-[1px] overflow-hidden">
+<div class="bg-signal-mint h-full" style="width: 49.2%;"></div>
+</div>
+</td>
+<!-- GPT-4o -->
+<td class="p-4 border-r border-hairline">
+<div class="flex items-center justify-between font-mono-numbers text-xs text-text-primary mb-1.5">
+<span>38.8%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-[1px] overflow-hidden">
+<div class="bg-signal-sky h-full" style="width: 38.8%;"></div>
+</div>
+</td>
+<!-- Gemini -->
+<td class="p-4">
+<div class="flex items-center justify-between font-mono-numbers text-xs text-text-primary mb-1.5">
+<span>32.4%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-[1px] overflow-hidden">
+<div class="bg-signal-sky h-full" style="width: 32.4%;"></div>
+</div>
+</td>
+</tr>
+<!-- Row: MMLU-Pro -->
+<tr class="border-b border-hairline hover:bg-surface-raised transition-colors group">
+<td class="p-4 border-r border-hairline font-body-md text-text-secondary text-xs group-hover:text-text-primary">
+              [BENCHMARK] MMLU-Pro
+            </td>
+<!-- Claude -->
+<td class="p-4 border-r border-hairline">
+<div class="flex items-center justify-between font-mono-numbers text-xs text-text-primary mb-1.5">
+<span>78.2%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-[1px] overflow-hidden">
+<div class="bg-signal-sky h-full" style="width: 78.2%;"></div>
+</div>
+</td>
+<!-- DeepSeek (Highest) -->
+<td class="p-4 border-r border-hairline">
+<div class="flex items-center justify-between font-mono-numbers text-xs text-signal-mint font-semibold mb-1.5">
+<span>84.0%</span>
+<span class="text-[9px] uppercase tracking-wider">HIGHEST</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-[1px] overflow-hidden">
+<div class="bg-signal-mint h-full" style="width: 84.0%;"></div>
+</div>
+</td>
+<!-- GPT-4o -->
+<td class="p-4 border-r border-hairline">
+<div class="flex items-center justify-between font-mono-numbers text-xs text-text-primary mb-1.5">
+<span>72.6%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-[1px] overflow-hidden">
+<div class="bg-signal-sky h-full" style="width: 72.6%;"></div>
+</div>
+</td>
+<!-- Gemini -->
+<td class="p-4">
+<div class="flex items-center justify-between font-mono-numbers text-xs text-text-primary mb-1.5">
+<span>68.1%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-[1px] overflow-hidden">
+<div class="bg-signal-sky h-full" style="width: 68.1%;"></div>
+</div>
+</td>
+</tr>
+<!-- Row: LiveCodeBench -->
+<tr class="border-b border-hairline hover:bg-surface-raised transition-colors group">
+<td class="p-4 border-r border-hairline font-body-md text-text-secondary text-xs group-hover:text-text-primary">
+              [BENCHMARK] LiveCodeBench
+            </td>
+<!-- Claude -->
+<td class="p-4 border-r border-hairline">
+<div class="flex items-center justify-between font-mono-numbers text-xs text-text-primary mb-1.5">
+<span>54.3%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-[1px] overflow-hidden">
+<div class="bg-signal-sky h-full" style="width: 54.3%;"></div>
+</div>
+</td>
+<!-- DeepSeek (Highest) -->
+<td class="p-4 border-r border-hairline">
+<div class="flex items-center justify-between font-mono-numbers text-xs text-signal-mint font-semibold mb-1.5">
+<span>65.9%</span>
+<span class="text-[9px] uppercase tracking-wider">HIGHEST</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-[1px] overflow-hidden">
+<div class="bg-signal-mint h-full" style="width: 65.9%;"></div>
+</div>
+</td>
+<!-- GPT-4o -->
+<td class="p-4 border-r border-hairline">
+<div class="flex items-center justify-between font-mono-numbers text-xs text-text-primary mb-1.5">
+<span>43.8%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-[1px] overflow-hidden">
+<div class="bg-signal-sky h-full" style="width: 43.8%;"></div>
+</div>
+</td>
+<!-- Gemini -->
+<td class="p-4">
+<div class="flex items-center justify-between font-mono-numbers text-xs text-text-primary mb-1.5">
+<span>39.5%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-[1px] overflow-hidden">
+<div class="bg-signal-sky h-full" style="width: 39.5%;"></div>
+</div>
+</td>
+</tr>
+<!-- Row: Arena Elo (LMSYS) -->
+<tr class="border-b border-hairline hover:bg-surface-raised transition-colors group">
+<td class="p-4 border-r border-hairline font-body-md text-text-secondary text-xs group-hover:text-text-primary">
+              [BENCHMARK] Arena Elo (LMSYS)
+            </td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-text-primary">
+              1334
+            </td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-signal-mint font-semibold">
+<div class="flex items-center justify-between">
+<span>1362</span>
+<span class="text-[9px] uppercase tracking-wider">HIGHEST</span>
+</div>
+</td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-text-primary">
+              1286
+            </td>
+<td class="p-4 font-mono-numbers text-xs text-text-primary">
+              1248
+            </td>
+</tr>
+<!-- GROUP 4: DEPLOYMENT & GOVERNANCE -->
+<tr class="bg-surface-canvas/90 border-t border-b border-hairline">
+<td class="py-2 px-4" colspan="5">
+<div class="flex items-center gap-2">
+<span class="font-label-micro text-text-secondary font-semibold tracking-widest uppercase">04 // DEPLOYMENT &amp; GOVERNANCE</span>
+<div class="h-px bg-hairline flex-1"></div>
+<span class="font-numeric-sm text-[10px] text-text-tertiary">Operational Bounds</span>
+</div>
+</td>
+</tr>
+<!-- Row: Model License -->
+<tr class="border-b border-hairline hover:bg-surface-raised transition-colors group">
+<td class="p-4 border-r border-hairline font-body-md text-text-secondary text-xs group-hover:text-text-primary">
+              [GOVERNANCE] License
+            </td>
+<td class="p-4 border-r border-hairline text-xs text-text-secondary">
+              Proprietary
+            </td>
+<td class="p-4 border-r border-hairline text-xs text-signal-mint font-medium">
+              MIT (Open Weights)
+            </td>
+<td class="p-4 border-r border-hairline text-xs text-text-secondary">
+              Proprietary
+            </td>
+<td class="p-4 text-xs text-text-secondary">
+              Proprietary
+            </td>
+</tr>
+<!-- Row: Provider Endpoints -->
+<tr class="border-b border-hairline hover:bg-surface-raised transition-colors group">
+<td class="p-4 border-r border-hairline font-body-md text-text-secondary text-xs group-hover:text-text-primary">
+              [GOVERNANCE] Endpoints
+            </td>
+<td class="p-4 border-r border-hairline text-xs text-text-secondary">
+              Anthropic Direct, Bedrock, Vertex
+            </td>
+<td class="p-4 border-r border-hairline text-xs text-text-secondary">
+              DeepSeek, Together, Groq, Fireworks, Ollama
+            </td>
+<td class="p-4 border-r border-hairline text-xs text-text-secondary">
+              OpenAI API, Azure OpenAI
+            </td>
+<td class="p-4 text-xs text-text-secondary">
+              Google AI Studio, Vertex AI
+            </td>
+</tr>
+<!-- Row: Knowledge Cutoff -->
+<tr class="hover:bg-surface-raised transition-colors group">
+<td class="p-4 border-r border-hairline font-body-md text-text-secondary text-xs group-hover:text-text-primary">
+              [GOVERNANCE] Knowledge Cutoff
+            </td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-text-secondary">
+              Apr 2024
+            </td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-text-secondary">
+              Jul 2024
+            </td>
+<td class="p-4 border-r border-hairline font-mono-numbers text-xs text-text-secondary">
+              Oct 2023
+            </td>
+<td class="p-4 font-mono-numbers text-xs text-text-secondary">
+              Aug 2024
+            </td>
+</tr>
+</tbody>
+</table>
+</div>
+</main>
+<!-- BOTTOM TELEMETRY STRIP (§3, 56px, bottom-anchored, hairline border) -->
+<footer class="fixed bottom-0 left-0 right-0 h-14 bg-surface-well/95 backdrop-blur-md border-t border-hairline z-50">
+<div class="max-w-[1720px] mx-auto px-6 h-full flex items-center justify-between">
+<!-- Left: Status & Aggregate metrics -->
+<div class="flex items-center gap-6 font-numeric-sm text-xs">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-signal-mint"></span>
+<span class="text-text-primary">Comparing 4 models</span>
+<span class="text-text-tertiary">·</span>
+<span class="text-text-secondary">avg $0.42/1M</span>
+<span class="text-text-tertiary">·</span>
+<span class="text-text-tertiary">updated 2m ago</span>
+</div>
+<div class="hidden md:flex items-center gap-2 text-text-tertiary text-[11px] border-l border-hairline pl-6">
+<span>PARITY CHECK: <strong class="text-signal-mint font-normal">PASS</strong></span>
+<span>·</span>
+<span>RUNTIME: <strong class="text-text-secondary font-normal">SYNCHRONIZED</strong></span>
+<span>·</span>
+<span>4 / 4 NODES VERIFIED</span>
+</div>
+</div>
+<!-- Right: Export Quick Actions -->
+<div class="flex items-center gap-2">
+<button class="h-8 px-3 rounded bg-surface-container border border-hairline text-text-secondary hover:text-text-primary text-xs font-medium transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm">download</span>
+<span>Export CSV</span>
+</button>
+<button class="h-8 px-3 rounded bg-surface-container border border-hairline text-text-secondary hover:text-text-primary text-xs font-medium transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm">content_copy</span>
+<span>Copy Markdown Diff</span>
+</button>
+<button class="h-8 px-3 rounded bg-surface-raised border border-hairline text-signal-sky hover:bg-surface-container-high text-xs font-numeric-sm transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">code</span>
+<span>JSON API Endpoint</span>
+</button>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"primary-fixed-dim":"#ffb95f","outline":"#a08e7a","surface-container-low":"#1c1b1d","on-background":"#e5e1e4","surface":"#131315","background":"#131315","text-tertiary":"#6B6B74","secondary-fixed-dim":"#4edea3","on-secondary-fixed":"#002113","on-secondary-container":"#00311f","primary":"#ffc174","surface-container-lowest":"#0e0e10","hairline-strong":"rgba(255, 255, 255, 0.14)","inverse-primary":"#855300","tertiary":"#8ed5ff","hairline":"rgba(255, 255, 255, 0.07)","surface-container-highest":"#353437","on-primary-container":"#613b00","tertiary-fixed":"#c4e7ff","on-surface-variant":"#d8c3ad","secondary":"#4edea3","on-tertiary-fixed-variant":"#004c69","secondary-container":"#00a572","text-secondary":"#A1A1AA","signal-coral":"#F43F5E","surface-tint":"#ffb95f","surface-canvas":"#09090B","inverse-surface":"#e5e1e4","on-primary-fixed":"#2a1700","on-secondary-fixed-variant":"#005236","signal-sky":"#38BDF8","surface-raised":"#16161A","primary-fixed":"#ffddb8","error":"#ffb4ab","surface-variant":"#353437","on-primary-fixed-variant":"#653e00","outline-variant":"#534434","tertiary-fixed-dim":"#7bd0ff","on-tertiary":"#00354a","on-tertiary-container":"#004965","error-container":"#93000a","on-error":"#690005","surface-dim":"#131315","inverse-on-surface":"#313032","on-surface":"#e5e1e4","surface-container":"#201f22","signal-amber":"#F59E0B","tertiary-container":"#38bdf8","surface-overlay":"#1C1C21","signal-mint":"#10B981","on-error-container":"#ffdad6","surface-container-high":"#2a2a2c","primary-container":"#f59e0b","text-primary":"#F4F4F5","on-tertiary-fixed":"#001e2c","surface-bright":"#39393b","surface-well":"#101013","on-primary":"#472a00","on-secondary":"#003824","secondary-fixed":"#6ffbbe"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"margin":"1.5rem","space-xs":"0.25rem","space-lg":"1rem","gutter":"1rem","gutter-dense":"0.5rem","space-md":"0.75rem","space-sm":"0.5rem","margin-dock":"5rem","space-xl":"1.5rem"},"fontFamily":{"headline-md":["Space Grotesk"],"display-lg":["Newsreader"],"label-micro":["Geist"],"body-dense":["Geist"],"body-lg":["Geist"],"body-md":["Geist"],"display-md":["Newsreader"],"numeric-sm":["JetBrains Mono"],"display-lg-mobile":["Newsreader"],"numeric-md":["JetBrains Mono"],"headline-lg":["Space Grotesk"],"numeric-lg":["JetBrains Mono"],"label-md":["Geist"],"headline-sm":["Space Grotesk"]},"fontSize":{"headline-md":["22px",{"lineHeight":"30px","letterSpacing":"-0.02em","fontWeight":"500"}],"display-lg":["56px",{"lineHeight":"64px","letterSpacing":"-0.01em","fontWeight":"400"}],"label-micro":["10px",{"lineHeight":"12px","letterSpacing":"0.09em","fontWeight":"500"}],"body-dense":["13px",{"lineHeight":"13px","letterSpacing":"0em","fontWeight":"400"}],"body-lg":["14px",{"lineHeight":"21px","letterSpacing":"-0.01em","fontWeight":"400"}],"body-md":["13px",{"lineHeight":"19px","letterSpacing":"-0.01em","fontWeight":"400"}],"display-md":["40px",{"lineHeight":"48px","letterSpacing":"-0.01em","fontWeight":"400"}],"numeric-sm":["12px",{"lineHeight":"16px","letterSpacing":"0em","fontWeight":"400"}],"display-lg-mobile":["36px",{"lineHeight":"44px","letterSpacing":"-0.01em","fontWeight":"400"}],"numeric-md":["13px",{"lineHeight":"18px","letterSpacing":"0em","fontWeight":"400"}],"headline-lg":["28px",{"lineHeight":"36px","letterSpacing":"-0.03em","fontWeight":"600"}],"numeric-lg":["15px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"500"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"500"}],"headline-sm":["18px",{"lineHeight":"24px","letterSpacing":"-0.02em","fontWeight":"500"}]}}}};</script></head><body class="bg-surface-canvas text-on-surface font-body-md text-body-md antialiased min-h-screen selection:bg-signal-amber/20 selection:text-signal-amber"><header class="fixed top-0 left-0 right-0 z-50 h-14 bg-surface-canvas/90 backdrop-blur-md border-b border-hairline"><div class="w-full h-14 px-gutter flex items-center justify-between"><div class="flex items-center gap-space-xl"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-signal-amber"></div><span class="font-headline-sm text-headline-sm uppercase tracking-tight text-text-primary">ONEATLAS</span></div><nav class="hidden md:flex items-center gap-space-xs" data-active-classes="bg-surface-raised text-text-primary border border-hairline-strong rounded-lg"><a class="px-space-md py-1 text-on-surface-variant hover:text-on-surface transition-colors font-body-dense text-body-dense" data-path="models" href="#">Models</a><a class="px-space-md py-1 text-on-surface-variant hover:text-on-surface transition-colors font-body-dense text-body-dense" data-path="rankings" href="#">Rankings</a><a class="px-space-md py-1 text-on-surface-variant hover:text-on-surface transition-colors font-body-dense text-body-dense" data-path="compare" href="#">Compare</a><a class="px-space-md py-1 text-on-surface-variant hover:text-on-surface transition-colors font-body-dense text-body-dense" data-path="directory" href="#">Directory</a><a aria-current="page" class="px-space-md py-1 transition-colors font-body-dense bg-surface-raised text-text-primary border border-hairline-strong rounded-lg" data-path="labs" href="#">Labs</a></nav></div><div class="flex items-center gap-space-lg"><div class="hidden sm:flex items-center gap-space-sm px-space-sm py-1 bg-surface-well border border-hairline rounded-lg"><span class="material-symbols-outlined text-text-tertiary text-[14px]">search</span><span class="font-body-dense text-body-dense text-text-tertiary">Find telemetry...</span><span class="h-5 px-1.5 flex items-center justify-center font-numeric-sm text-numeric-sm text-text-secondary bg-surface-raised border border-hairline rounded">⌘K</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 border border-hairline rounded-lg bg-surface-well"><span class="w-1.5 h-1.5 rounded-full bg-signal-mint animate-pulse"></span><span class="font-numeric-sm text-numeric-sm text-signal-mint">LIVE</span><span class="font-numeric-sm text-numeric-sm text-text-tertiary ml-space-xs">18ms</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><aside class="fixed left-0 top-14 bottom-0 w-60 bg-surface-canvas border-r border-hairline z-40 overflow-y-auto"><div class="p-space-lg flex flex-col gap-space-xl"><div class="flex items-center justify-between pb-space-sm border-b border-hairline"><span class="font-label-micro text-label-micro text-text-tertiary uppercase">Workstation Filters</span><button class="font-numeric-sm text-numeric-sm text-signal-amber hover:underline">Reset</button></div><div class="flex flex-col gap-space-sm"><span class="font-label-micro text-label-micro text-text-secondary uppercase">Architecture Scope</span><div class="flex flex-col gap-space-xs"><label class="flex items-center justify-between px-space-sm py-1.5 rounded bg-surface-well hover:bg-surface-raised cursor-pointer"><span class="font-body-dense text-body-dense text-text-primary">Dense Transformers</span><input checked="" class="accent-signal-amber" type="checkbox"/></label><label class="flex items-center justify-between px-space-sm py-1.5 rounded bg-surface-well hover:bg-surface-raised cursor-pointer"><span class="font-body-dense text-body-dense text-text-primary">Mixture of Experts</span><input checked="" class="accent-signal-amber" type="checkbox"/></label><label class="flex items-center justify-between px-space-sm py-1.5 rounded bg-surface-well hover:bg-surface-raised cursor-pointer"><span class="font-body-dense text-body-dense text-text-primary">State Space Models</span><input class="accent-signal-amber" type="checkbox"/></label></div></div><div class="flex flex-col gap-space-sm"><span class="font-label-micro text-label-micro text-text-secondary uppercase">Capability Class</span><div class="flex flex-col gap-space-xs"><label class="flex items-center justify-between px-space-sm py-1.5 rounded bg-surface-well hover:bg-surface-raised cursor-pointer"><span class="font-body-dense text-body-dense text-text-primary">Code Generation</span><input checked="" class="accent-signal-amber" type="checkbox"/></label><label class="flex items-center justify-between px-space-sm py-1.5 rounded bg-surface-well hover:bg-surface-raised cursor-pointer"><span class="font-body-dense text-body-dense text-text-primary">Mathematical Logic</span><input class="accent-signal-amber" type="checkbox"/></label><label class="flex items-center justify-between px-space-sm py-1.5 rounded bg-surface-well hover:bg-surface-raised cursor-pointer"><span class="font-body-dense text-body-dense text-text-primary">Long Context (&gt;128k)</span><input class="accent-signal-amber" type="checkbox"/></label></div></div><div class="flex flex-col gap-space-sm"><span class="font-label-micro text-label-micro text-text-secondary uppercase">Compute Footprint</span><div class="p-space-sm bg-surface-well rounded border border-hairline flex flex-col gap-space-xs"><div class="flex justify-between font-numeric-sm text-numeric-sm"><span class="text-text-tertiary">Min Params</span><span class="text-signal-amber">7B</span></div><div class="flex justify-between font-numeric-sm text-numeric-sm"><span class="text-text-tertiary">Max Params</span><span class="text-signal-amber">405B</span></div></div></div></div></aside><div class="pl-60"><main class="w-full min-h-[calc(100vh-3.5rem)] pt-14 bg-surface-canvas"><div class="flex flex-col w-full">
+<!-- NAVIGATION SYNCHRONIZATION (Activates 'Labs' in Top Shell) -->
+<script>
+    (function syncTopNav() {
+      const navLinks = document.querySelectorAll('header nav a');
+      navLinks.forEach(link => {
+        if (link.getAttribute('data-path') === 'labs') {
+          link.className = 'px-space-md py-1 bg-surface-raised text-text-primary border border-hairline-strong rounded-lg font-body-dense text-body-dense';
+        } else {
+          link.className = 'px-space-md py-1 text-on-surface-variant hover:text-on-surface transition-colors font-body-dense text-body-dense';
+        }
+      });
+      // Replace generic shell sidebar content with Anthropic Lab Telemetry Controls
+      const rail = document.querySelector('aside > div');
+      if (rail) {
+        rail.innerHTML = `
+          <div class="flex items-center justify-between pb-space-sm border-b border-hairline">
+            <span class="font-label-micro text-label-micro text-text-tertiary uppercase tracking-wider">LAB PROFILE</span>
+            <span class="font-numeric-sm text-numeric-sm text-signal-amber font-mono">ATH-01</span>
+          </div>
+          
+          <div class="flex flex-col gap-space-xs">
+            <div class="flex items-center justify-between">
+              <span class="font-label-micro text-label-micro text-text-secondary uppercase">FAMILY</span>
+              <span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">12</span>
+            </div>
+            <div class="flex flex-col gap-1 mt-1">
+              <label class="flex items-center justify-between px-space-sm py-1.5 rounded-lg bg-surface-well hover:bg-surface-raised cursor-pointer transition-colors">
+                <span class="font-body-dense text-body-dense text-text-primary">Claude 4</span>
+                <div class="flex items-center gap-2">
+                  <span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">1</span>
+                  <input type="checkbox" checked class="w-3.5 h-3.5 rounded-lg accent-signal-amber bg-surface-canvas border-hairline" />
+                </div>
+              </label>
+              <label class="flex items-center justify-between px-space-sm py-1.5 rounded-lg bg-surface-well hover:bg-surface-raised cursor-pointer transition-colors">
+                <span class="font-body-dense text-body-dense text-text-primary">Claude 3.7</span>
+                <div class="flex items-center gap-2">
+                  <span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">2</span>
+                  <input type="checkbox" checked class="w-3.5 h-3.5 rounded-lg accent-signal-amber bg-surface-canvas border-hairline" />
+                </div>
+              </label>
+              <label class="flex items-center justify-between px-space-sm py-1.5 rounded-lg bg-surface-well hover:bg-surface-raised cursor-pointer transition-colors">
+                <span class="font-body-dense text-body-dense text-text-primary">Claude 3.5</span>
+                <div class="flex items-center gap-2">
+                  <span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">5</span>
+                  <input type="checkbox" checked class="w-3.5 h-3.5 rounded-lg accent-signal-amber bg-surface-canvas border-hairline" />
+                </div>
+              </label>
+              <label class="flex items-center justify-between px-space-sm py-1.5 rounded-lg bg-surface-well hover:bg-surface-raised cursor-pointer transition-colors">
+                <span class="font-body-dense text-body-dense text-text-primary">Claude 3</span>
+                <div class="flex items-center gap-2">
+                  <span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">4</span>
+                  <input type="checkbox" checked class="w-3.5 h-3.5 rounded-lg accent-signal-amber bg-surface-canvas border-hairline" />
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-space-xs">
+            <div class="flex items-center justify-between">
+              <span class="font-label-micro text-label-micro text-text-secondary uppercase">CAPABILITIES</span>
+              <span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">4</span>
+            </div>
+            <div class="flex flex-col gap-1 mt-1">
+              <label class="flex items-center justify-between px-space-sm py-1.5 rounded-lg bg-surface-well hover:bg-surface-raised cursor-pointer transition-colors">
+                <span class="font-body-dense text-body-dense text-text-primary">Reasoning</span>
+                <div class="flex items-center gap-2">
+                  <span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">8</span>
+                  <input type="checkbox" checked class="w-3.5 h-3.5 rounded-lg accent-signal-amber bg-surface-canvas border-hairline" />
+                </div>
+              </label>
+              <label class="flex items-center justify-between px-space-sm py-1.5 rounded-lg bg-surface-well hover:bg-surface-raised cursor-pointer transition-colors">
+                <span class="font-body-dense text-body-dense text-text-primary">Vision</span>
+                <div class="flex items-center gap-2">
+                  <span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">11</span>
+                  <input type="checkbox" checked class="w-3.5 h-3.5 rounded-lg accent-signal-amber bg-surface-canvas border-hairline" />
+                </div>
+              </label>
+              <label class="flex items-center justify-between px-space-sm py-1.5 rounded-lg bg-surface-well hover:bg-surface-raised cursor-pointer transition-colors">
+                <span class="font-body-dense text-body-dense text-text-primary">Long-context</span>
+                <div class="flex items-center gap-2">
+                  <span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">12</span>
+                  <input type="checkbox" checked class="w-3.5 h-3.5 rounded-lg accent-signal-amber bg-surface-canvas border-hairline" />
+                </div>
+              </label>
+              <label class="flex items-center justify-between px-space-sm py-1.5 rounded-lg bg-surface-well hover:bg-surface-raised cursor-pointer transition-colors">
+                <span class="font-body-dense text-body-dense text-text-primary">Agentic</span>
+                <div class="flex items-center gap-2">
+                  <span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">9</span>
+                  <input type="checkbox" checked class="w-3.5 h-3.5 rounded-lg accent-signal-amber bg-surface-canvas border-hairline" />
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-space-xs">
+            <div class="flex items-center justify-between">
+              <span class="font-label-micro text-label-micro text-text-secondary uppercase">RELEASE STATUS</span>
+              <span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">12</span>
+            </div>
+            <div class="flex flex-col gap-1 mt-1">
+              <label class="flex items-center justify-between px-space-sm py-1.5 rounded-lg bg-surface-well hover:bg-surface-raised cursor-pointer transition-colors">
+                <span class="font-body-dense text-body-dense text-text-primary">GA</span>
+                <div class="flex items-center gap-2">
+                  <span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">8</span>
+                  <input type="checkbox" checked class="w-3.5 h-3.5 rounded-lg accent-signal-amber bg-surface-canvas border-hairline" />
+                </div>
+              </label>
+              <label class="flex items-center justify-between px-space-sm py-1.5 rounded-lg bg-surface-well hover:bg-surface-raised cursor-pointer transition-colors">
+                <span class="font-body-dense text-body-dense text-text-primary">Preview</span>
+                <div class="flex items-center gap-2">
+                  <span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">4</span>
+                  <input type="checkbox" checked class="w-3.5 h-3.5 rounded-lg accent-signal-amber bg-surface-canvas border-hairline" />
+                </div>
+              </label>
+              <label class="flex items-center justify-between px-space-sm py-1.5 rounded-lg bg-surface-well hover:bg-surface-raised cursor-pointer transition-colors opacity-50">
+                <span class="font-body-dense text-body-dense text-text-tertiary">Deprecated</span>
+                <div class="flex items-center gap-2">
+                  <span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">0</span>
+                  <input type="checkbox" disabled class="w-3.5 h-3.5 rounded-lg accent-signal-amber bg-surface-canvas border-hairline" />
+                </div>
+              </label>
+            </div>
+          </div>
+        `;
+      }
+    })();
+  </script>
+<!-- MODULE A: LAB MASTHEAD (160px Recessed Terminal Panel) -->
+<section class="relative w-full h-[160px] bg-surface-well border-b border-hairline overflow-hidden flex flex-col justify-between p-space-lg">
+<!-- Masked 24px dot-matrix ambient canvas pattern -->
+<div class="absolute inset-0 pointer-events-none opacity-20 [mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]" style="background-image: radial-gradient(rgba(255,255,255,0.4) 1px, transparent 1px); background-size: 24px 24px;"></div>
+<!-- Top Metadata + Lab Identity -->
+<div class="relative z-10 flex flex-col md:flex-row md:items-start justify-between gap-space-md">
+<div class="flex flex-col gap-1 max-w-3xl">
+<div class="flex items-center gap-space-md">
+<h1 class="font-display-md text-display-md uppercase tracking-tight text-text-primary font-normal leading-none">ANTHROPIC</h1>
+<span class="px-1.5 py-0.5 rounded-lg bg-surface-raised border border-hairline text-text-secondary font-numeric-sm text-numeric-sm">LAB:US-CA</span>
+</div>
+<p class="font-body-lg text-body-lg text-text-secondary mt-1">
+          AI research and public benefit company dedicated to building reliable, interpretable, and steerable AI systems.
+        </p>
+</div>
+<div class="flex flex-col items-start md:items-end gap-1">
+<span class="font-label-micro text-label-micro uppercase text-text-tertiary tracking-wider font-medium">FOUNDED 2021 · SAN FRANCISCO, CA · PBC</span>
+<a class="flex items-center gap-1 font-label-micro text-label-micro text-signal-sky hover:underline tracking-wide uppercase transition-colors" href="#safety-audit">
+<span>SAFETY INDEX AUDIT</span>
+<span class="material-symbols-outlined text-[13px]">arrow_outward</span>
+</a>
+</div>
+</div>
+<!-- Stat Strip / Hairline Ledger Dividers -->
+<div class="relative z-10 grid grid-cols-4 border-t border-hairline -mx-space-lg -mb-space-lg bg-surface-canvas/60">
+<div class="py-2.5 px-space-lg border-r border-hairline flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-text-tertiary uppercase">MODELS REGISTERED</span>
+<span class="font-numeric-sm text-numeric-sm text-text-primary font-mono tabular-nums">12 MODELS</span>
+</div>
+<div class="py-2.5 px-space-lg border-r border-hairline flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-text-tertiary uppercase">DEPLOYMENT PROD</span>
+<span class="font-numeric-sm text-numeric-sm text-signal-mint font-mono tabular-nums">8 GA</span>
+</div>
+<div class="py-2.5 px-space-lg border-r border-hairline flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-text-tertiary uppercase">EVALUATION FLIGHT</span>
+<span class="font-numeric-sm text-numeric-sm text-signal-amber font-mono tabular-nums">4 PREVIEW</span>
+</div>
+<div class="py-2.5 px-space-lg flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-text-tertiary uppercase">AGGREGATE QUALITY</span>
+<span class="font-numeric-sm text-numeric-sm text-text-primary font-mono tabular-nums">AVG INDEX 82.4</span>
+</div>
+</div>
+</section>
+<!-- MODULE B: FLAGSHIP MODEL CARD (280px tall, Opaque Surface-Well, Subtle Radial Amber Wash) -->
+<section class="relative w-full border-b border-hairline bg-surface-well min-h-[280px] p-space-xl flex flex-col justify-between overflow-hidden">
+<!-- 2% Ambient amber radial wash behind entity -->
+<div class="absolute -left-12 -top-12 w-[600px] h-[600px] rounded-full pointer-events-none opacity-40 bg-[radial-gradient(circle,rgba(245,158,11,0.06)_0%,transparent_70%)]"></div>
+<div class="relative z-10 flex flex-col lg:flex-row lg:items-start justify-between gap-space-xl">
+<!-- Left side: Model Specs & Capabilities -->
+<div class="flex flex-col gap-space-md max-w-2xl">
+<div class="flex items-center gap-space-sm">
+<span class="px-2 py-0.5 rounded-lg bg-signal-amber/10 border border-signal-amber/25 text-signal-amber font-label-micro text-label-micro tracking-widest uppercase">LAB FLAGSHIP</span>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">SYSTEM ID: CLAUDE-4.5-OPUS-001</span>
+</div>
+<div>
+<h2 class="font-display-md text-display-md text-text-primary tracking-tight font-normal leading-tight">
+            Claude Opus <span class="italic font-display-md">4.5</span>
+</h2>
+<p class="font-body-lg text-body-lg text-text-secondary mt-1">
+            Frontier multimodal reasoning &amp; autonomous software synthesis architecture.
+          </p>
+</div>
+<!-- Capability Chips (Strict 20px, 4px radius, 1px border at 20% opacity) -->
+<div class="flex flex-wrap items-center gap-space-sm pt-space-xs">
+<div class="h-5 px-2 rounded-lg bg-signal-sky/10 border border-signal-sky/20 flex items-center">
+<span class="font-label-micro text-label-micro text-signal-sky uppercase tracking-wider">REASONING</span>
+</div>
+<div class="h-5 px-2 rounded-lg bg-signal-sky/10 border border-signal-sky/20 flex items-center">
+<span class="font-label-micro text-label-micro text-signal-sky uppercase tracking-wider">VISION</span>
+</div>
+<div class="h-5 px-2 rounded-lg bg-signal-amber/10 border border-signal-amber/20 flex items-center">
+<span class="font-label-micro text-label-micro text-signal-amber uppercase tracking-wider">AGENTIC</span>
+</div>
+<div class="h-5 px-2 rounded-lg bg-surface-raised border border-hairline-strong flex items-center">
+<span class="font-label-micro text-label-micro text-text-secondary uppercase tracking-wider">200K CONTEXT</span>
+</div>
+</div>
+</div>
+<!-- Right side: Composite Metric Block -->
+<div class="flex flex-col lg:items-end justify-between self-stretch gap-space-lg">
+<div class="flex flex-col lg:items-end p-space-md bg-surface-canvas/80 border border-hairline rounded-lg w-full sm:w-auto">
+<div class="flex items-baseline gap-space-sm">
+<span class="font-numeric-lg text-[48px] leading-none text-text-primary font-mono tabular-nums font-bold">94.8</span>
+<span class="font-numeric-sm text-numeric-sm text-signal-mint font-mono tabular-nums">+2.4 pts</span>
+</div>
+<span class="font-label-micro text-label-micro text-text-tertiary uppercase tracking-widest mt-1">SWE BENCH SCORE</span>
+</div>
+<div class="flex flex-col lg:items-end gap-1 font-numeric-sm text-numeric-sm font-mono tabular-nums">
+<span class="text-text-tertiary uppercase font-label-micro text-label-micro">RUNTIME PARITY / 1M TOKENS</span>
+<span class="text-text-secondary"><span class="text-text-primary font-semibold">$15.00</span> IN / <span class="text-text-primary font-semibold">$75.00</span> OUT</span>
+</div>
+</div>
+</div>
+<!-- Flagship Primary Direct Action -->
+<div class="relative z-10 pt-space-lg flex items-center justify-between border-t border-hairline mt-space-md">
+<div class="flex items-center gap-space-lg font-numeric-sm text-numeric-sm text-text-tertiary font-mono">
+<span>ARCH: SPARSE DENSE-TRANSFORMER</span>
+<span class="hidden sm:inline">SAFETY COMPLIANCE: ASL-3 READY</span>
+</div>
+<a class="flex items-center gap-1 font-label-micro text-label-micro text-signal-amber hover:underline tracking-widest font-semibold uppercase transition-colors" href="#claude-opus-4-5">
+<span>OPEN MODEL</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</section>
+<!-- MODULE C: MODEL ROSTER (Ranked Ledger, Asymmetrical Heights, Floating Sparkline Margin) -->
+<section class="w-full flex flex-col bg-surface-canvas">
+<!-- Workstation Table Header -->
+<div class="h-10 bg-surface-canvas border-b border-hairline px-space-lg flex items-center justify-between text-text-tertiary font-label-micro text-label-micro uppercase tracking-wider">
+<div class="flex items-center gap-space-md w-[320px]">
+<span class="w-8">POS</span>
+<span>MODEL SPECIFICATION &amp; REVISION</span>
+</div>
+<div class="hidden md:flex items-center w-32">MODALITY</div>
+<div class="hidden lg:flex items-center w-28">RELEASED</div>
+<div class="flex items-center w-48 justify-end">SWE BENCH VERIFIED</div>
+<div class="flex items-center w-16 justify-center">Δ 7D</div>
+<div class="w-28 text-right hidden sm:block">7D VELOCITY</div>
+</div>
+<!-- Row 1: Rank #1 (64px, Distinct Structure Tier, Subtle Radial Wash) -->
+<div class="relative h-16 border-b border-hairline px-space-lg flex items-center justify-between hover:bg-surface-raised transition-colors group bg-surface-well/40">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-signal-amber"></div>
+<!-- Rank & Name -->
+<div class="flex items-center gap-space-md w-[320px] min-w-0">
+<div class="w-8 flex items-center">
+<span class="h-5 w-6 rounded-lg bg-signal-amber/15 text-signal-amber flex items-center justify-center font-numeric-sm text-numeric-sm font-bold font-mono">01</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-text-primary truncate font-medium">Claude Opus 4.5</span>
+<span class="px-1 py-0.2 rounded-lg bg-surface-raised border border-hairline text-signal-amber font-label-micro text-label-micro">NEW</span>
+</div>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">v4.5-preview</span>
+</div>
+</div>
+<!-- Modality -->
+<div class="hidden md:flex items-center w-32">
+<span class="h-5 px-2 rounded-lg bg-signal-sky/10 border border-signal-sky/20 text-signal-sky font-label-micro text-label-micro uppercase">HYBRID</span>
+</div>
+<!-- Date -->
+<div class="hidden lg:flex items-center w-28 font-numeric-sm text-numeric-sm text-text-secondary font-mono">
+        2025-02-24
+      </div>
+<!-- Benchmark Bar -->
+<div class="flex items-center gap-space-sm w-48 justify-end">
+<div class="w-28 h-1 bg-surface-raised rounded-none overflow-hidden flex items-center">
+<div class="h-1 bg-signal-sky" style="width: 94.8%;"></div>
+</div>
+<span class="font-numeric-sm text-numeric-sm text-text-primary font-mono tabular-nums font-semibold w-10 text-right">94.8</span>
+</div>
+<!-- Delta -->
+<div class="flex items-center w-16 justify-center">
+<span class="h-5 px-1.5 rounded-lg bg-signal-mint/10 border border-signal-mint/20 text-signal-mint font-numeric-sm text-numeric-sm font-mono">+2</span>
+</div>
+<!-- Right Margin Sparkline (80-120px) -->
+<div class="w-28 flex flex-col items-end justify-center hidden sm:flex">
+<svg class="w-20 h-5 text-signal-mint" fill="none" viewbox="0 0 80 20">
+<path d="M2 14 L20 12 L38 13 L56 7 L78 3" stroke="currentColor" stroke-linecap="square" stroke-width="1.5"></path>
+</svg>
+<span class="font-label-micro text-[9px] text-text-tertiary font-mono tracking-tight">AS OF 02:00 UTC</span>
+</div>
+</div>
+<!-- Row 2: Rank #2 (44px) -->
+<div class="h-[44px] border-b border-hairline px-space-lg flex items-center justify-between hover:bg-surface-raised transition-colors group">
+<div class="flex items-center gap-space-md w-[320px] min-w-0">
+<span class="w-8 font-numeric-sm text-numeric-sm text-text-tertiary font-mono">02</span>
+<div class="flex items-center gap-2 min-w-0">
+<span class="font-body-lg text-body-lg text-text-primary truncate font-medium">Claude 3.7 Sonnet</span>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">v1.0-hybrid</span>
+</div>
+</div>
+<div class="hidden md:flex items-center w-32">
+<span class="h-5 px-2 rounded-lg bg-signal-sky/10 border border-signal-sky/20 text-signal-sky font-label-micro text-label-micro uppercase">REASONING</span>
+</div>
+<div class="hidden lg:flex items-center w-28 font-numeric-sm text-numeric-sm text-text-secondary font-mono">
+        2025-02-24
+      </div>
+<div class="flex items-center gap-space-sm w-48 justify-end">
+<div class="w-28 h-1 bg-surface-raised rounded-none overflow-hidden flex items-center">
+<div class="h-1 bg-signal-sky" style="width: 92.4%;"></div>
+</div>
+<span class="font-numeric-sm text-numeric-sm text-text-primary font-mono tabular-nums font-medium w-10 text-right">92.4</span>
+</div>
+<div class="flex items-center w-16 justify-center">
+<span class="h-5 px-1.5 rounded-lg bg-signal-mint/10 border border-signal-mint/20 text-signal-mint font-numeric-sm text-numeric-sm font-mono">+3</span>
+</div>
+<div class="w-28 flex flex-col items-end justify-center hidden sm:flex">
+<svg class="w-20 h-5 text-signal-mint" fill="none" viewbox="0 0 80 20">
+<path d="M2 17 L24 16 L42 10 L60 8 L78 2" stroke="currentColor" stroke-linecap="square" stroke-width="1.2"></path>
+</svg>
+<span class="font-label-micro text-[9px] text-text-tertiary font-mono">T-7D LIVE</span>
+</div>
+</div>
+<!-- Row 3: Rank #3 (44px) -->
+<div class="h-[44px] border-b border-hairline px-space-lg flex items-center justify-between hover:bg-surface-raised transition-colors group">
+<div class="flex items-center gap-space-md w-[320px] min-w-0">
+<span class="w-8 font-numeric-sm text-numeric-sm text-text-tertiary font-mono">03</span>
+<div class="flex items-center gap-2 min-w-0">
+<span class="font-body-lg text-body-lg text-text-primary truncate font-medium">Claude 3.5 Sonnet</span>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">v2.0-oct</span>
+</div>
+</div>
+<div class="hidden md:flex items-center w-32">
+<span class="h-5 px-2 rounded-lg bg-surface-raised border border-hairline text-text-secondary font-label-micro text-label-micro uppercase">MULTIMODAL</span>
+</div>
+<div class="hidden lg:flex items-center w-28 font-numeric-sm text-numeric-sm text-text-secondary font-mono">
+        2024-10-22
+      </div>
+<div class="flex items-center gap-space-sm w-48 justify-end">
+<div class="w-28 h-1 bg-surface-raised rounded-none overflow-hidden flex items-center">
+<div class="h-1 bg-signal-sky" style="width: 87.8%;"></div>
+</div>
+<span class="font-numeric-sm text-numeric-sm text-text-primary font-mono tabular-nums font-medium w-10 text-right">87.8</span>
+</div>
+<div class="flex items-center w-16 justify-center">
+<span class="h-5 px-1.5 rounded-lg bg-surface-raised text-text-tertiary font-numeric-sm text-numeric-sm font-mono">—</span>
+</div>
+<div class="w-28 flex flex-col items-end justify-center hidden sm:flex">
+<svg class="w-20 h-5 text-text-tertiary" fill="none" viewbox="0 0 80 20">
+<path d="M2 10 L26 10 L50 9 L66 11 L78 10" stroke="currentColor" stroke-linecap="square" stroke-width="1.2"></path>
+</svg>
+<span class="font-label-micro text-[9px] text-text-tertiary font-mono">STEADY</span>
+</div>
+</div>
+<!-- Row 4: Rank #4 (44px) -->
+<div class="h-[44px] border-b border-hairline px-space-lg flex items-center justify-between hover:bg-surface-raised transition-colors group">
+<div class="flex items-center gap-space-md w-[320px] min-w-0">
+<span class="w-8 font-numeric-sm text-numeric-sm text-text-tertiary font-mono">04</span>
+<div class="flex items-center gap-2 min-w-0">
+<span class="font-body-lg text-body-lg text-text-primary truncate font-medium">Claude 3.5 Haiku</span>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">v1.0-nov</span>
+</div>
+</div>
+<div class="hidden md:flex items-center w-32">
+<span class="h-5 px-2 rounded-lg bg-surface-raised border border-hairline text-text-secondary font-label-micro text-label-micro uppercase">MULTIMODAL</span>
+</div>
+<div class="hidden lg:flex items-center w-28 font-numeric-sm text-numeric-sm text-text-secondary font-mono">
+        2024-11-04
+      </div>
+<div class="flex items-center gap-space-sm w-48 justify-end">
+<div class="w-28 h-1 bg-surface-raised rounded-none overflow-hidden flex items-center">
+<div class="h-1 bg-signal-sky" style="width: 75.2%;"></div>
+</div>
+<span class="font-numeric-sm text-numeric-sm text-text-primary font-mono tabular-nums font-medium w-10 text-right">75.2</span>
+</div>
+<div class="flex items-center w-16 justify-center">
+<span class="h-5 px-1.5 rounded-lg bg-signal-mint/10 border border-signal-mint/20 text-signal-mint font-numeric-sm text-numeric-sm font-mono">+1</span>
+</div>
+<div class="w-28 flex flex-col items-end justify-center hidden sm:flex">
+<svg class="w-20 h-5 text-signal-mint" fill="none" viewbox="0 0 80 20">
+<path d="M2 16 L24 14 L48 15 L66 8 L78 5" stroke="currentColor" stroke-linecap="square" stroke-width="1.2"></path>
+</svg>
+<span class="font-label-micro text-[9px] text-text-tertiary font-mono">T-7D LIVE</span>
+</div>
+</div>
+<!-- Row 5: Rank #5 (44px) -->
+<div class="h-[44px] border-b border-hairline px-space-lg flex items-center justify-between hover:bg-surface-raised transition-colors group">
+<div class="flex items-center gap-space-md w-[320px] min-w-0">
+<span class="w-8 font-numeric-sm text-numeric-sm text-text-tertiary font-mono">05</span>
+<div class="flex items-center gap-2 min-w-0">
+<span class="font-body-lg text-body-lg text-text-primary truncate font-medium">Claude 3 Opus</span>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">v1.0-mar</span>
+</div>
+</div>
+<div class="hidden md:flex items-center w-32">
+<span class="h-5 px-2 rounded-lg bg-signal-sky/10 border border-signal-sky/20 text-signal-sky font-label-micro text-label-micro uppercase">REASONING</span>
+</div>
+<div class="hidden lg:flex items-center w-28 font-numeric-sm text-numeric-sm text-text-secondary font-mono">
+        2024-03-04
+      </div>
+<div class="flex items-center gap-space-sm w-48 justify-end">
+<div class="w-28 h-1 bg-surface-raised rounded-none overflow-hidden flex items-center">
+<div class="h-1 bg-signal-sky" style="width: 78.4%;"></div>
+</div>
+<span class="font-numeric-sm text-numeric-sm text-text-primary font-mono tabular-nums font-medium w-10 text-right">78.4</span>
+</div>
+<div class="flex items-center w-16 justify-center">
+<span class="h-5 px-1.5 rounded-lg bg-signal-coral/10 border border-signal-coral/20 text-signal-coral font-numeric-sm text-numeric-sm font-mono">-1</span>
+</div>
+<div class="w-28 flex flex-col items-end justify-center hidden sm:flex">
+<svg class="w-20 h-5 text-signal-coral" fill="none" viewbox="0 0 80 20">
+<path d="M2 6 L22 8 L44 8 L62 14 L78 17" stroke="currentColor" stroke-linecap="square" stroke-width="1.2"></path>
+</svg>
+<span class="font-label-micro text-[9px] text-text-tertiary font-mono">DISPLACED</span>
+</div>
+</div>
+<!-- Row 6: Rank #6 (44px) -->
+<div class="h-[44px] border-b border-hairline px-space-lg flex items-center justify-between hover:bg-surface-raised transition-colors group">
+<div class="flex items-center gap-space-md w-[320px] min-w-0">
+<span class="w-8 font-numeric-sm text-numeric-sm text-text-tertiary font-mono">06</span>
+<div class="flex items-center gap-2 min-w-0">
+<span class="font-body-lg text-body-lg text-text-primary truncate font-medium">Claude 3 Sonnet</span>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">v1.0-mar</span>
+</div>
+</div>
+<div class="hidden md:flex items-center w-32">
+<span class="h-5 px-2 rounded-lg bg-surface-raised border border-hairline text-text-secondary font-label-micro text-label-micro uppercase">MULTIMODAL</span>
+</div>
+<div class="hidden lg:flex items-center w-28 font-numeric-sm text-numeric-sm text-text-secondary font-mono">
+        2024-03-04
+      </div>
+<div class="flex items-center gap-space-sm w-48 justify-end">
+<div class="w-28 h-1 bg-surface-raised rounded-none overflow-hidden flex items-center">
+<div class="h-1 bg-signal-sky" style="width: 69.8%;"></div>
+</div>
+<span class="font-numeric-sm text-numeric-sm text-text-primary font-mono tabular-nums font-medium w-10 text-right">69.8</span>
+</div>
+<div class="flex items-center w-16 justify-center">
+<span class="h-5 px-1.5 rounded-lg bg-signal-coral/10 border border-signal-coral/20 text-signal-coral font-numeric-sm text-numeric-sm font-mono">-2</span>
+</div>
+<div class="w-28 flex flex-col items-end justify-center hidden sm:flex">
+<svg class="w-20 h-5 text-signal-coral" fill="none" viewbox="0 0 80 20">
+<path d="M2 4 L26 7 L48 11 L64 15 L78 18" stroke="currentColor" stroke-linecap="square" stroke-width="1.2"></path>
+</svg>
+<span class="font-label-micro text-[9px] text-text-tertiary font-mono">DISPLACED</span>
+</div>
+</div>
+<!-- Row 7: Rank #7 (44px) -->
+<div class="h-[44px] border-b border-hairline px-space-lg flex items-center justify-between hover:bg-surface-raised transition-colors group">
+<div class="flex items-center gap-space-md w-[320px] min-w-0">
+<span class="w-8 font-numeric-sm text-numeric-sm text-text-tertiary font-mono">07</span>
+<div class="flex items-center gap-2 min-w-0">
+<span class="font-body-lg text-body-lg text-text-primary truncate font-medium">Claude 3 Haiku</span>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">v1.0-mar</span>
+</div>
+</div>
+<div class="hidden md:flex items-center w-32">
+<span class="h-5 px-2 rounded-lg bg-surface-raised border border-hairline text-text-secondary font-label-micro text-label-micro uppercase">MULTIMODAL</span>
+</div>
+<div class="hidden lg:flex items-center w-28 font-numeric-sm text-numeric-sm text-text-secondary font-mono">
+        2024-03-04
+      </div>
+<div class="flex items-center gap-space-sm w-48 justify-end">
+<div class="w-28 h-1 bg-surface-raised rounded-none overflow-hidden flex items-center">
+<div class="h-1 bg-signal-sky" style="width: 64.2%;"></div>
+</div>
+<span class="font-numeric-sm text-numeric-sm text-text-primary font-mono tabular-nums font-medium w-10 text-right">64.2</span>
+</div>
+<div class="flex items-center w-16 justify-center">
+<span class="h-5 px-1.5 rounded-lg bg-surface-raised text-text-tertiary font-numeric-sm text-numeric-sm font-mono">—</span>
+</div>
+<div class="w-28 flex flex-col items-end justify-center hidden sm:flex">
+<svg class="w-20 h-5 text-text-tertiary" fill="none" viewbox="0 0 80 20">
+<path d="M2 10 L28 10 L52 11 L68 10 L78 10" stroke="currentColor" stroke-linecap="square" stroke-width="1.2"></path>
+</svg>
+<span class="font-label-micro text-[9px] text-text-tertiary font-mono">STEADY</span>
+</div>
+</div>
+</section>
+<!-- MODULE D: CAPABILITY SPREAD (Recessed 3-Column Ledger Grid, No Cards, Hairline Bounds) -->
+<section class="w-full bg-surface-well border-b border-hairline">
+<div class="p-space-lg border-b border-hairline flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-2 rounded-lg bg-signal-sky"></span>
+<span class="font-label-micro text-label-micro text-text-primary uppercase tracking-widest">LONGITUDINAL CAPABILITY MATRICES</span>
+</div>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">PARITY_SET: V25.1</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-hairline">
+<!-- Column 1: SWE-BENCH VERIFIED -->
+<div class="p-space-lg flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs border-b border-hairline">
+<span class="font-label-micro text-label-micro text-text-secondary uppercase">SWE-BENCH VERIFIED</span>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">N=500</span>
+</div>
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<!-- Opus 4.5 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-numeric-sm text-numeric-sm font-mono">
+<span class="text-text-primary">Claude Opus 4.5</span>
+<span class="text-signal-sky font-semibold">94.8%</span>
+</div>
+<div class="w-full h-1 bg-surface-canvas rounded-none overflow-hidden">
+<div class="h-1 bg-signal-sky" style="width: 94.8%;"></div>
+</div>
+</div>
+<!-- Sonnet 3.7 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-numeric-sm text-numeric-sm font-mono">
+<span class="text-text-secondary">Claude 3.7 Sonnet</span>
+<span class="text-text-primary">92.4%</span>
+</div>
+<div class="w-full h-1 bg-surface-canvas rounded-none overflow-hidden">
+<div class="h-1 bg-signal-sky/80" style="width: 92.4%;"></div>
+</div>
+</div>
+<!-- Sonnet 3.5 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-numeric-sm text-numeric-sm font-mono">
+<span class="text-text-tertiary">Claude 3.5 Sonnet</span>
+<span class="text-text-secondary">87.8%</span>
+</div>
+<div class="w-full h-1 bg-surface-canvas rounded-none overflow-hidden">
+<div class="h-1 bg-signal-sky/60" style="width: 87.8%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 2: MMLU-PRO (REASONING) -->
+<div class="p-space-lg flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs border-b border-hairline">
+<span class="font-label-micro text-label-micro text-text-secondary uppercase">MMLU-PRO (REASONING)</span>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">CO-T 5-SHOT</span>
+</div>
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<!-- Opus 4.5 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-numeric-sm text-numeric-sm font-mono">
+<span class="text-text-primary">Claude Opus 4.5</span>
+<span class="text-signal-sky font-semibold">89.2%</span>
+</div>
+<div class="w-full h-1 bg-surface-canvas rounded-none overflow-hidden">
+<div class="h-1 bg-signal-sky" style="width: 89.2%;"></div>
+</div>
+</div>
+<!-- Sonnet 3.7 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-numeric-sm text-numeric-sm font-mono">
+<span class="text-text-secondary">Claude 3.7 Sonnet</span>
+<span class="text-text-primary">86.4%</span>
+</div>
+<div class="w-full h-1 bg-surface-canvas rounded-none overflow-hidden">
+<div class="h-1 bg-signal-sky/80" style="width: 86.4%;"></div>
+</div>
+</div>
+<!-- Sonnet 3.5 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-numeric-sm text-numeric-sm font-mono">
+<span class="text-text-tertiary">Claude 3.5 Sonnet</span>
+<span class="text-text-secondary">82.0%</span>
+</div>
+<div class="w-full h-1 bg-surface-canvas rounded-none overflow-hidden">
+<div class="h-1 bg-signal-sky/60" style="width: 82.0%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 3: LIVECODEBENCH -->
+<div class="p-space-lg flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs border-b border-hairline">
+<span class="font-label-micro text-label-micro text-text-secondary uppercase">LIVECODEBENCH</span>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary font-mono">LEETCODE HARDS</span>
+</div>
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<!-- Opus 4.5 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-numeric-sm text-numeric-sm font-mono">
+<span class="text-text-primary">Claude Opus 4.5</span>
+<span class="text-signal-sky font-semibold">76.4%</span>
+</div>
+<div class="w-full h-1 bg-surface-canvas rounded-none overflow-hidden">
+<div class="h-1 bg-signal-sky" style="width: 76.4%;"></div>
+</div>
+</div>
+<!-- Sonnet 3.7 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-numeric-sm text-numeric-sm font-mono">
+<span class="text-text-secondary">Claude 3.7 Sonnet</span>
+<span class="text-text-primary">74.8%</span>
+</div>
+<div class="w-full h-1 bg-surface-canvas rounded-none overflow-hidden">
+<div class="h-1 bg-signal-sky/80" style="width: 74.8%;"></div>
+</div>
+</div>
+<!-- Sonnet 3.5 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-numeric-sm text-numeric-sm font-mono">
+<span class="text-text-tertiary">Claude 3.5 Sonnet</span>
+<span class="text-text-secondary">68.2%</span>
+</div>
+<div class="w-full h-1 bg-surface-canvas rounded-none overflow-hidden">
+<div class="h-1 bg-signal-sky/60" style="width: 68.2%;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- MODULE E: BOTTOM TELEMETRY STRIP (56px Height, Full-Bleed Hairline) -->
+<section class="h-14 bg-surface-well border-t border-hairline px-space-lg flex items-center justify-between">
+<div class="flex items-center gap-space-lg font-numeric-sm text-numeric-sm font-mono text-text-tertiary">
+<span class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-lg bg-signal-mint"></span>
+<span class="text-text-secondary">INDEX STATUS:</span>
+<span class="text-signal-mint font-semibold">VERIFIED NOMINAL</span>
+</span>
+<span class="hidden md:inline text-hairline-strong">|</span>
+<span class="hidden md:inline text-text-secondary">12 models · 8 GA · last release 9d ago</span>
+<span class="hidden lg:inline text-hairline-strong">|</span>
+<span class="hidden lg:inline">SOURCE: LAB BLOG (MOCK)</span>
+</div>
+<!-- Export Action -->
+<div class="flex items-center gap-space-md">
+<button class="h-8 px-space-md rounded-lg bg-surface-canvas hover:bg-surface-raised border border-hairline hover:border-hairline-strong text-text-primary font-label-micro text-label-micro uppercase tracking-wider flex items-center gap-1.5 transition-colors" onclick="downloadSpec()">
+<span class="material-symbols-outlined text-[13px] text-signal-amber">file_download</span>
+<span>EXPORT LAB SPEC [JSON]</span>
+</button>
+</div>
+</section>
+<!-- INLINE INTERACTION LOGIC -->
+<script>
+    function downloadSpec() {
+      const spec = {
+        lab: "Anthropic",
+        lab_code: "ATH-01",
+        headquarters: "San Francisco, CA",
+        status: "PBC",
+        flagship: "Claude Opus 4.5",
+        telemetry: {
+          total_models: 12,
+          ga_count: 8,
+          preview_count: 4,
+          avg_index: 82.4
+        },
+        verified_date: new Date().toISOString()
+      };
+      const blob = new Blob([JSON.stringify(spec, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "anthropic-telemetry-spec.json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</div></main><div class="h-14 border-t border-hairline bg-surface-canvas px-gutter flex items-center justify-between font-numeric-sm text-numeric-sm text-text-tertiary"><div class="flex items-center gap-space-lg"><span>TELEMETRY FEED: CONNECTED</span><span>INDEX_REV: 2024.11-BETA</span></div><div class="flex items-center gap-space-lg"><span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-signal-mint"></span>API NOMINAL</span><span>PARITY CHECK: PASS</span></div></div></div></body></html>

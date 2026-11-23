@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OneAtlas — Route to the Fastest Intelligence</title>
+<!-- Google Fonts: Space Grotesk, Instrument Serif, JetBrains Mono, Geist equivalent -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Instrument+Serif:ital@0;1&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN with forms & container-queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "signal-amber": "#F59E0B",
+            "surface-variant": "#353437",
+            "surface-tint": "#ffb95f",
+            "inverse-primary": "#855300",
+            "hairline-strong": "rgba(255, 255, 255, 0.14)",
+            "surface-canvas": "#09090B",
+            "surface-container": "#201f22",
+            "signal-sky": "#38BDF8",
+            "on-surface-variant": "#d8c3ad",
+            "on-secondary-container": "#00311f",
+            "on-error-container": "#ffdad6",
+            "outline-variant": "#534434",
+            "surface-container-highest": "#353437",
+            "surface-well": "#101013",
+            "on-primary-fixed": "#2a1700",
+            "secondary-fixed": "#6ffbbe",
+            "text-primary": "#F4F4F5",
+            "outline": "#a08e7a",
+            "hairline": "rgba(255, 255, 255, 0.07)",
+            "secondary-fixed-dim": "#4edea3",
+            "secondary": "#4edea3",
+            "surface-container-high": "#2a2a2c",
+            "signal-mint": "#10B981",
+            "on-surface": "#e5e1e4",
+            "on-error": "#690005",
+            "surface-container-low": "#1c1b1d",
+            "surface": "#131315",
+            "text-tertiary": "#6B6B74",
+            "text-secondary": "#A1A1AA",
+            "primary-fixed-dim": "#ffb95f",
+            "surface-overlay": "#1C1C21",
+            "inverse-surface": "#e5e1e4",
+            "on-primary-fixed-variant": "#653e00",
+            "on-background": "#e5e1e4",
+            "primary-container": "#f59e0b",
+            "on-secondary-fixed-variant": "#005236",
+            "surface-dim": "#131315",
+            "surface-raised": "#16161A",
+            "tertiary": "#8ed5ff",
+            "inverse-on-surface": "#313032",
+            "on-tertiary-container": "#004965",
+            "on-secondary": "#003824",
+            "error-container": "#93000a",
+            "on-primary": "#472a00",
+            "primary": "#ffc174",
+            "on-tertiary": "#00354a",
+            "tertiary-fixed-dim": "#7bd0ff",
+            "background": "#131315",
+            "error": "#ffb4ab",
+            "on-secondary-fixed": "#002113",
+            "tertiary-container": "#38bdf8",
+            "signal-coral": "#F43F5E",
+            "surface-container-lowest": "#0e0e10",
+            "tertiary-fixed": "#c4e7ff",
+            "on-tertiary-fixed-variant": "#004c69",
+            "on-primary-container": "#613b00",
+            "primary-fixed": "#ffddb8",
+            "secondary-container": "#00a572",
+            "surface-bright": "#39393b",
+            "on-tertiary-fixed": "#001e2c"
+          },
+          borderRadius: {
+            DEFAULT: "0.125rem",
+            lg: "0.25rem",
+            xl: "0.5rem",
+            full: "0.75rem"
+          },
+          fontFamily: {
+            "display": ["'Instrument Serif'", "serif"],
+            "space": ["'Space Grotesk'", "sans-serif"],
+            "sans": ["'Geist'", "'Plus Jakarta Sans'", "sans-serif"],
+            "mono": ["'JetBrains Mono'", "monospace"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 24px-pitch radial dot grid at rgba(255,255,255,0.025) per §2.4 */
+    .hero-dot-grid {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 24px 24px;
+      background-position: 0 0;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
+    }
+
+    /* 2.5% fixed noise grain overlay */
+    .noise-grain {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 40;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* Focus bloom effect: 1px --signal-amber inset border ring and 8% amber blur glow (§2.4) */
+    .search-input-bloom {
+      transition: border-color 160ms cubic-bezier(0.2, 0, 0, 1), box-shadow 160ms cubic-bezier(0.2, 0, 0, 1);
+    }
+    .search-input-bloom:focus-within {
+      border-color: #F59E0B;
+      box-shadow: 0 0 0 1px #F59E0B inset, 0 0 16px 2px rgba(245, 158, 11, 0.08);
+    }
+
+    /* Hero headline entrance animation: --ease-reveal (cubic-bezier(0.16, 1, 0.3, 1), 600ms) */
+    @keyframes heroReveal {
+      0% {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-hero-reveal {
+      animation: heroReveal 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* 2-second ambient breath keyframe for live status indicator dot */
+    @keyframes ambientBreath {
+      0%, 100% {
+        opacity: 0.35;
+        transform: scale(0.9);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.15);
+      }
+    }
+    .animate-ambient-breath {
+      animation: ambientBreath 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    /* Interactive Ledger Rows (§4.1): 120ms cubic-bezier(0.2, 0, 0, 1) ease-snap */
+    .ledger-row {
+      transition: background-color 120ms cubic-bezier(0.2, 0, 0, 1);
+    }
+    .ledger-row .row-glyph {
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity 120ms cubic-bezier(0.2, 0, 0, 1), transform 120ms cubic-bezier(0.2, 0, 0, 1);
+    }
+    .ledger-row:hover .row-glyph {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Navigation Sliding Pill: cubic-bezier(0.2, 0, 0, 1), 160ms */
+    #nav-slider-pill {
+      transition: all 160ms cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    /* Accessibility & Reduced Motion (§5.8) */
+    @media (prefers-reduced-motion: reduce) {
+      .animate-hero-reveal,
+      .animate-ambient-breath,
+      #nav-slider-pill,
+      .ledger-row,
+      .search-input-bloom,
+      .row-glyph {
+        animation: none !important;
+        transition-duration: 100ms !important;
+        transition-timing-function: ease !important;
+        transform: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-surface-canvas text-text-primary min-h-screen selection:bg-signal-amber/20 selection:text-white flex flex-col antialiased overflow-x-hidden relative">
+<!-- 2.5% fixed noise grain overlay -->
+<div class="noise-grain"></div>
+<!-- AMBIENT CANVAS (§5.7): WebGL Shader fixed in background -->
+<div class="fixed inset-0 w-full h-full pointer-events-none z-0">
+<!-- STITCH_SHADER_START:ANIMATION_49 class="absolute inset-0 w-full h-full pointer-events-none z-0" -->
+<div class="absolute inset-0 w-full h-full pointer-events-none z-0" style="display:block;">
+<canvas id="shader-canvas-ANIMATION_49" style="display:block;width:100%;height:100%"></canvas>
+<script>
+(function() {
+  const canvas = document.getElementById('shader-canvas-ANIMATION_49');
+
+  // Sync the WebGL drawing-buffer size with the CSS-driven layout size.
+  // This fires on initial layout and whenever the element is resized.
+  function syncSize() {
+    const w = canvas.clientWidth  || 1280;
+    const h = canvas.clientHeight || 720;
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width  = w;
+      canvas.height = h;
+    }
+  }
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(syncSize).observe(canvas);
+  }
+  syncSize();
+
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+  const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+  const fs = `// WebGL Fragment Shader for OneAtlas Ambient Canvas (model-field mode)
+// Per DESIGN.v3.md §5.7:
+// Scene mode 'model-field': roughly 120 instanced points clustered by provider.
+// Points are --signal-sky (#38BDF8) at subtle opacity. On pointer move, nearby points brighten and draw hairline connections.
+precision highp float;
+
+uniform float u_time;
+uniform vec2 u_resolution;
+uniform vec2 u_mouse;
+
+varying vec2 v_texCoord;
+
+// Pseudo-random hash
+float hash(vec2 p) {
+  p = fract(p * vec2(123.34, 456.21));
+  p += dot(p, p + 45.32);
+  return fract(p.x * p.y);
+}
+
+// Distance to line segment
+float dfLine(vec2 p, vec2 a, vec2 b) {
+  vec2 pa = p - a, ba = b - a;
+  float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+  return length(pa - ba * h);
+}
+
+void main() {
+  vec2 st = gl_FragCoord.xy / u_resolution.xy;
+  vec2 normMouse = u_mouse.xy / u_resolution.xy;
+  normMouse.y = 1.0 - normMouse.y; // invert Y for web coordinates
+  
+  // Aspect ratio correction
+  float aspect = u_resolution.x / u_resolution.y;
+  vec2 uv = st;
+  uv.x *= aspect;
+  vec2 mouseUV = normMouse;
+  mouseUV.x *= aspect;
+
+  vec3 color = vec3(0.035, 0.035, 0.043); // #09090B surface-canvas base
+  
+  // Sky signal: #38BDF8 = (0.22, 0.74, 0.97)
+  // Amber signal: #F59E0B = (0.96, 0.62, 0.04)
+  vec3 sky = vec3(0.22, 0.74, 0.97);
+  vec3 amber = vec3(0.96, 0.62, 0.04);
+
+  // Generate a network of ~24 primary clusters/nodes with slow subtle drift
+  float nodeAcc = 0.0;
+  float lineAcc = 0.0;
+
+  // 16 dynamic nodes
+  vec2 nodes[16];
+  for (int i = 0; i < 16; i++) {
+    float fi = float(i);
+    // Base deterministic positions spread across canvas
+    float seedX = hash(vec2(fi * 1.34, 2.71));
+    float seedY = hash(vec2(3.14, fi * 2.45));
+    
+    // Slow drift using u_time
+    float angle = u_time * 0.15 + fi * 1.5;
+    vec2 offset = vec2(cos(angle), sin(angle)) * 0.035;
+    
+    nodes[i] = vec2(seedX * aspect, seedY) + offset;
+  }
+
+  // Draw nodes & connections
+  for (int i = 0; i < 16; i++) {
+    vec2 p = nodes[i];
+    float d = length(uv - p);
+    
+    // Node glow
+    float glow = 0.0018 / (d + 0.0005);
+    glow = smoothstep(0.0, 1.0, glow);
+
+    // Mouse proximity interaction
+    float distToMouse = length(p - mouseUV);
+    float mouseBoost = smoothstep(0.45, 0.0, distToMouse);
+    
+    nodeAcc += glow * (0.8 + 2.2 * mouseBoost);
+
+    // Connections to adjacent nodes
+    for (int j = i + 1; j < 16; j++) {
+      if (j - i < 4) { // connect neighboring indices
+        vec2 q = nodes[j];
+        float lineDist = dfLine(uv, p, q);
+        float segLen = length(p - q);
+        
+        if (segLen < 0.55) {
+          float lineAlpha = smoothstep(0.0018, 0.0, lineDist) * (1.0 - segLen / 0.55);
+          // Highlight connection if near mouse
+          float lineMouseDist = dfLine(mouseUV, p, q);
+          float lineBoost = smoothstep(0.3, 0.0, lineMouseDist);
+          lineAcc += lineAlpha * (0.2 + 0.8 * lineBoost);
+        }
+      }
+    }
+  }
+
+  // Color blending strictly within the chromatic budget (subdued)
+  vec3 particleColor = mix(sky, amber, 0.12);
+  vec3 finalVisual = particleColor * (nodeAcc * 0.08 + lineAcc * 0.05);
+
+  // Masking: Ambient canvas shows primarily in the hero/header band, fades towards bottom
+  float mask = smoothstep(0.0, 0.45, st.y); // stronger in upper half
+  finalVisual *= mask;
+
+  gl_FragColor = vec4(finalVisual, 1.0);
+}`;
+  function cs(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+  gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const pos = gl.getAttribLocation(prog, 'a_position');
+  gl.enableVertexAttribArray(pos);
+  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes = gl.getUniformLocation(prog, 'u_resolution');
+  const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+  // u_mouse is in pixel coordinates matching u_resolution (ShaderToy convention).
+  // Shaders that need normalized coords should use: u_mouse / u_resolution.
+  let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+  window.addEventListener('mousemove', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width && rect.height) {
+      const nx = (event.clientX - rect.left) / rect.width;
+      const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+      mouse.x = nx * canvas.width;
+      mouse.y = ny * canvas.height;
+    }
+  });
+
+  function render(t) {
+    if (typeof ResizeObserver === 'undefined') syncSize();
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    if (uTime) gl.uniform1f(uTime, t * 0.001);
+    if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+    if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  }
+  render(0);
+})();
+</script>
+</div>
+<!-- STITCH_SHADER_END:ANIMATION_49 -->
+</div>
+<!-- SHELL & TOP NAV (allows subtle constellation to shine through with backdrop-blur) -->
+<header class="h-[56px] w-full border-b border-hairline bg-surface-canvas/80 sticky top-0 z-50 flex items-center px-6 lg:px-12 backdrop-blur-md">
+<div class="flex items-center gap-3 pr-8 border-r border-hairline h-full">
+<div class="w-4 h-4 text-signal-amber flex items-center justify-center">
+<svg class="w-4 h-4" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<span class="font-space font-bold text-base tracking-[-0.015em] text-white">OneAtlas</span>
+</div>
+<!-- Nav Links with Signature 1 Sliding Pill Indicator (§5.1) -->
+<nav class="hidden md:flex items-center h-full px-6 gap-1 relative" id="nav-pill-group">
+<!-- Dynamic sliding pill marker -->
+<div class="absolute h-[28px] rounded pointer-events-none bg-white/[0.06] border border-signal-amber/30 transition-all duration-150" id="nav-slider-pill"></div>
+<a class="nav-item relative z-10 px-3 py-1.5 text-xs font-mono uppercase tracking-wider text-white transition-colors duration-150 rounded" href="#">Models</a>
+<a class="nav-item relative z-10 px-3 py-1.5 text-xs font-mono uppercase tracking-wider text-text-secondary hover:text-white transition-colors duration-150 rounded" href="#">Rankings</a>
+<a class="nav-item relative z-10 px-3 py-1.5 text-xs font-mono uppercase tracking-wider text-text-secondary hover:text-white transition-colors duration-150 rounded" href="#">Compare</a>
+<a class="nav-item relative z-10 px-3 py-1.5 text-xs font-mono uppercase tracking-wider text-text-secondary hover:text-white transition-colors duration-150 rounded" href="#">Directory</a>
+</nav>
+<!-- Right Side Trigger -->
+<div class="ml-auto flex items-center gap-3">
+<div class="hidden sm:flex items-center gap-2 text-xs font-mono text-text-tertiary">
+<span class="relative flex h-2 w-2 items-center justify-center">
+<span class="animate-ambient-breath absolute inline-flex h-2.5 w-2.5 rounded-full bg-signal-mint/50"></span>
+<span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-signal-mint"></span>
+</span>
+<span class="text-[11px] uppercase tracking-wider text-text-secondary">Feed Live</span>
+</div>
+<button class="flex items-center justify-center h-7 px-2.5 rounded bg-surface-well border border-hairline-strong text-text-secondary hover:text-white hover:border-white/30 text-xs font-mono transition-all" id="quick-cmd-btn">
+<span>⌘K</span>
+</button>
+</div>
+</header>
+<!-- CONTENT SPINE STRUCTURE (Left-aligned, bounded by subtle vertical spine hairlines) -->
+<main class="relative z-10 w-full flex-1 border-x border-hairline max-w-[1400px] mx-auto flex flex-col">
+<!-- HERO BAND (Translucent to let WebGL constellation shine through, dot matrix overlay masked) -->
+<section class="relative w-full border-b border-hairline py-10 px-6 lg:px-12 overflow-hidden bg-surface-canvas/60 backdrop-blur-[2px]">
+<!-- Dot-matrix background: 24px-pitch radial dot grid at rgba(255,255,255,0.025) -->
+<div class="absolute inset-0 hero-dot-grid pointer-events-none"></div>
+<div class="relative z-10 max-w-4xl flex flex-col items-start text-left">
+<!-- Display Headline in Instrument Serif with --ease-reveal (cubic-bezier(0.16, 1, 0.3, 1), 600ms) -->
+<h1 class="animate-hero-reveal font-display text-[44px] md:text-[48px] leading-[1.1] tracking-[-0.01em] text-white font-normal mb-3">
+  Route to the <em class="italic text-primary font-normal">fastest</em> intelligence.
+</h1>
+<!-- Subline -->
+<p class="font-sans text-[14px] text-text-secondary leading-[1.45] mb-6 max-w-2xl">
+  Unified model discovery, cross-provider pricing, and benchmark telemetry across 120+ frontier and open-weight models (mock dataset).
+</p>
+<!-- Hero Search Input with Focus Bloom (§2.4) -->
+<div class="w-full max-w-[640px]">
+<div class="search-input-bloom relative flex items-center h-12 w-full rounded bg-surface-well border border-hairline-strong px-4">
+<span class="text-text-tertiary mr-3 flex items-center" data-icon="search">
+<span class="material-symbols-outlined text-[18px]">search</span>
+</span>
+<input class="w-full bg-transparent border-none p-0 text-[13px] font-sans text-text-primary placeholder:text-text-tertiary focus:outline-none focus:ring-0" id="main-search-input" placeholder="Search models, labs, providers, or benchmarks… (Press '/' or ⌘K)" type="text"/>
+<div class="flex items-center gap-1.5 ml-2 text-text-tertiary select-none">
+<kbd class="px-1.5 py-0.5 text-[10px] font-mono border border-hairline rounded bg-surface-canvas/60 text-text-secondary leading-none">⌘K</kbd>
+<kbd class="px-1.5 py-0.5 text-[10px] font-mono border border-hairline rounded bg-surface-canvas/60 text-text-secondary leading-none">↵</kbd>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- LEDGER STRIP (Three columns separated strictly by 1px vertical hairlines, Opaque per §2.5) -->
+<section class="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-hairline bg-surface-canvas border-b border-hairline">
+<!-- COLUMN 1: TRENDING USAGE (7D) -->
+<div class="flex flex-col bg-surface-canvas">
+<div class="h-11 px-5 flex items-center justify-between border-b border-hairline bg-surface-well/90">
+<span class="text-[11px] font-mono uppercase tracking-[0.09em] text-text-tertiary font-medium">TRENDING USAGE (7D)</span>
+<span class="text-[10px] font-mono text-text-tertiary">MKT SHARES</span>
+</div>
+<!-- Dense Tabular Rows (44px height each, 120ms ease-snap to --surface-raised) -->
+<div class="divide-y divide-hairline font-mono text-xs">
+<!-- Row 1 -->
+<div class="ledger-row h-[44px] px-5 flex items-center justify-between hover:bg-surface-raised cursor-pointer group">
+<div class="flex items-center gap-2 truncate pr-2">
+<span class="row-glyph text-signal-amber font-mono text-[11px]">→</span>
+<span class="font-sans text-[13px] text-text-primary group-hover:text-white truncate">Claude 3.5 Sonnet</span>
+</div>
+<div class="flex items-center gap-3 shrink-0">
+<span class="text-[11px] text-text-secondary hidden sm:inline tabular-nums font-mono">$3.00 / 1M in · $15.00 / 1M out</span>
+<span class="text-[12px] font-mono text-signal-mint font-medium tabular-nums">+70%</span>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="ledger-row h-[44px] px-5 flex items-center justify-between hover:bg-surface-raised cursor-pointer group">
+<div class="flex items-center gap-2 truncate pr-2">
+<span class="row-glyph text-signal-amber font-mono text-[11px]">→</span>
+<span class="font-sans text-[13px] text-text-primary group-hover:text-white truncate">GPT-4o</span>
+</div>
+<div class="flex items-center gap-3 shrink-0">
+<span class="text-[11px] text-text-secondary hidden sm:inline tabular-nums font-mono">$2.50 / 1M in · $10.00 / 1M out</span>
+<span class="text-[12px] font-mono text-signal-mint font-medium tabular-nums">+48%</span>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="ledger-row h-[44px] px-5 flex items-center justify-between hover:bg-surface-raised cursor-pointer group">
+<div class="flex items-center gap-2 truncate pr-2">
+<span class="row-glyph text-signal-amber font-mono text-[11px]">→</span>
+<span class="font-sans text-[13px] text-text-primary group-hover:text-white truncate">Llama 3.3 70B Instruct</span>
+</div>
+<div class="flex items-center gap-3 shrink-0">
+<span class="text-[11px] text-text-secondary hidden sm:inline tabular-nums font-mono">$0.18 / 1M in · $0.59 / 1M out</span>
+<span class="text-[12px] font-mono text-signal-mint font-medium tabular-nums">+35%</span>
+</div>
+</div>
+<!-- Row 4 -->
+<div class="ledger-row h-[44px] px-5 flex items-center justify-between hover:bg-surface-raised cursor-pointer group">
+<div class="flex items-center gap-2 truncate pr-2">
+<span class="row-glyph text-signal-amber font-mono text-[11px]">→</span>
+<span class="font-sans text-[13px] text-text-primary group-hover:text-white truncate">DeepSeek V3</span>
+</div>
+<div class="flex items-center gap-3 shrink-0">
+<span class="text-[11px] text-text-secondary hidden sm:inline tabular-nums font-mono">$0.14 / 1M in · $0.28 / 1M out</span>
+<span class="text-[12px] font-mono text-signal-mint font-medium tabular-nums">+112%</span>
+</div>
+</div>
+<!-- Row 5 -->
+<div class="ledger-row h-[44px] px-5 flex items-center justify-between hover:bg-surface-raised cursor-pointer group">
+<div class="flex items-center gap-2 truncate pr-2">
+<span class="row-glyph text-signal-amber font-mono text-[11px]">→</span>
+<span class="font-sans text-[13px] text-text-primary group-hover:text-white truncate">Gemini 1.5 Pro</span>
+</div>
+<div class="flex items-center gap-3 shrink-0">
+<span class="text-[11px] text-text-secondary hidden sm:inline tabular-nums font-mono">$1.25 / 1M in · $5.00 / 1M out</span>
+<span class="text-[12px] font-mono text-signal-mint font-medium tabular-nums">+24%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- COLUMN 2: RECENTLY ADDED -->
+<div class="flex flex-col bg-surface-canvas">
+<div class="h-11 px-5 flex items-center justify-between border-b border-hairline bg-surface-well/90">
+<span class="text-[11px] font-mono uppercase tracking-[0.09em] text-text-tertiary font-medium">RECENTLY ADDED</span>
+<span class="text-[10px] font-mono text-text-tertiary">REGISTRY DATE</span>
+</div>
+<div class="divide-y divide-hairline font-mono text-xs">
+<!-- Row 1 -->
+<div class="ledger-row h-[44px] px-5 flex items-center justify-between hover:bg-surface-raised cursor-pointer group">
+<div class="flex items-center gap-2.5 truncate pr-2">
+<span class="row-glyph text-signal-sky font-mono text-[11px]">→</span>
+<span class="font-sans text-[13px] text-text-primary group-hover:text-white truncate">DeepSeek R1</span>
+<span class="px-1.5 py-0.5 rounded-[2px] text-[10px] font-mono font-medium text-signal-sky bg-signal-sky/10 border border-signal-sky/20">NEW</span>
+</div>
+<div class="shrink-0 text-text-secondary text-[12px] tabular-nums font-mono">
+  2025-01-20
+</div>
+</div>
+<!-- Row 2 -->
+<div class="ledger-row h-[44px] px-5 flex items-center justify-between hover:bg-surface-raised cursor-pointer group">
+<div class="flex items-center gap-2.5 truncate pr-2">
+<span class="row-glyph text-signal-sky font-mono text-[11px]">→</span>
+<span class="font-sans text-[13px] text-text-primary group-hover:text-white truncate">Qwen 2.5 Max</span>
+<span class="px-1.5 py-0.5 rounded-[2px] text-[10px] font-mono font-medium text-signal-sky bg-signal-sky/10 border border-signal-sky/20">NEW</span>
+</div>
+<div class="shrink-0 text-text-secondary text-[12px] tabular-nums font-mono">
+  2025-01-18
+</div>
+</div>
+<!-- Row 3 -->
+<div class="ledger-row h-[44px] px-5 flex items-center justify-between hover:bg-surface-raised cursor-pointer group">
+<div class="flex items-center gap-2.5 truncate pr-2">
+<span class="row-glyph text-signal-sky font-mono text-[11px]">→</span>
+<span class="font-sans text-[13px] text-text-primary group-hover:text-white truncate">Mistral Large 2411</span>
+<span class="px-1.5 py-0.5 rounded-[2px] text-[10px] font-mono font-medium text-signal-sky bg-signal-sky/10 border border-signal-sky/20">NEW</span>
+</div>
+<div class="shrink-0 text-text-secondary text-[12px] tabular-nums font-mono">
+  2024-11-20
+</div>
+</div>
+<!-- Row 4 -->
+<div class="ledger-row h-[44px] px-5 flex items-center justify-between hover:bg-surface-raised cursor-pointer group">
+<div class="flex items-center gap-2.5 truncate pr-2">
+<span class="row-glyph text-signal-sky font-mono text-[11px]">→</span>
+<span class="font-sans text-[13px] text-text-primary group-hover:text-white truncate">Claude 3.5 Haiku</span>
+<span class="px-1.5 py-0.5 rounded-[2px] text-[10px] font-mono font-medium text-signal-sky bg-signal-sky/10 border border-signal-sky/20">NEW</span>
+</div>
+<div class="shrink-0 text-text-secondary text-[12px] tabular-nums font-mono">
+  2024-11-04
+</div>
+</div>
+<!-- Row 5 -->
+<div class="ledger-row h-[44px] px-5 flex items-center justify-between hover:bg-surface-raised cursor-pointer group">
+<div class="flex items-center gap-2.5 truncate pr-2">
+<span class="row-glyph text-signal-sky font-mono text-[11px]">→</span>
+<span class="font-sans text-[13px] text-text-primary group-hover:text-white truncate">Gemini 2.0 Flash Exp</span>
+<span class="px-1.5 py-0.5 rounded-[2px] text-[10px] font-mono font-medium text-signal-sky bg-signal-sky/10 border border-signal-sky/20">NEW</span>
+</div>
+<div class="shrink-0 text-text-secondary text-[12px] tabular-nums font-mono">
+  2024-12-11
+</div>
+</div>
+</div>
+</div>
+<!-- COLUMN 3: PARETO VALUE LEADERS -->
+<div class="flex flex-col bg-surface-canvas">
+<div class="h-11 px-5 flex items-center justify-between border-b border-hairline bg-surface-well/90">
+<span class="text-[11px] font-mono uppercase tracking-[0.09em] text-text-tertiary font-medium">PARETO VALUE LEADERS</span>
+<span class="text-[10px] font-mono text-text-tertiary">EFFICIENCY INDEX</span>
+</div>
+<div class="divide-y divide-hairline font-mono text-xs">
+<!-- Row 1 -->
+<div class="ledger-row h-[44px] px-5 flex items-center justify-between hover:bg-surface-raised cursor-pointer group">
+<div class="flex items-center gap-2.5 truncate pr-2">
+<span class="row-glyph text-signal-mint font-mono text-[11px]">→</span>
+<span class="font-sans text-[13px] text-text-primary group-hover:text-white truncate">DeepSeek V3</span>
+<span class="px-1.5 py-0.5 rounded-[2px] text-[10px] font-mono font-medium text-signal-mint bg-signal-mint/10 border border-signal-mint/20">Best Value</span>
+</div>
+<div class="shrink-0 text-text-secondary text-[12px] tabular-nums font-mono">
+  Elo 1318 · $0.21 blended
+</div>
+</div>
+<!-- Row 2 -->
+<div class="ledger-row h-[44px] px-5 flex items-center justify-between hover:bg-surface-raised cursor-pointer group">
+<div class="flex items-center gap-2.5 truncate pr-2">
+<span class="row-glyph text-signal-mint font-mono text-[11px]">→</span>
+<span class="font-sans text-[13px] text-text-primary group-hover:text-white truncate">Llama 3.3 70B</span>
+<span class="px-1.5 py-0.5 rounded-[2px] text-[10px] font-mono font-medium text-signal-mint bg-signal-mint/10 border border-signal-mint/20">Best Value</span>
+</div>
+<div class="shrink-0 text-text-secondary text-[12px] tabular-nums font-mono">
+  Elo 1284 · $0.38 blended
+</div>
+</div>
+<!-- Row 3 -->
+<div class="ledger-row h-[44px] px-5 flex items-center justify-between hover:bg-surface-raised cursor-pointer group">
+<div class="flex items-center gap-2.5 truncate pr-2">
+<span class="row-glyph text-signal-mint font-mono text-[11px]">→</span>
+<span class="font-sans text-[13px] text-text-primary group-hover:text-white truncate">Qwen 2.5 72B</span>
+<span class="px-1.5 py-0.5 rounded-[2px] text-[10px] font-mono font-medium text-signal-mint bg-signal-mint/10 border border-signal-mint/20">Best Value</span>
+</div>
+<div class="shrink-0 text-text-secondary text-[12px] tabular-nums font-mono">
+  Elo 1276 · $0.42 blended
+</div>
+</div>
+<!-- Row 4 -->
+<div class="ledger-row h-[44px] px-5 flex items-center justify-between hover:bg-surface-raised cursor-pointer group">
+<div class="flex items-center gap-2.5 truncate pr-2">
+<span class="row-glyph text-signal-mint font-mono text-[11px]">→</span>
+<span class="font-sans text-[13px] text-text-primary group-hover:text-white truncate">Claude 3.5 Haiku</span>
+<span class="px-1.5 py-0.5 rounded-[2px] text-[10px] font-mono font-medium text-signal-mint bg-signal-mint/10 border border-signal-mint/20">Best Value</span>
+</div>
+<div class="shrink-0 text-text-secondary text-[12px] tabular-nums font-mono">
+  Elo 1260 · $1.00 blended
+</div>
+</div>
+<!-- Row 5 -->
+<div class="ledger-row h-[44px] px-5 flex items-center justify-between hover:bg-surface-raised cursor-pointer group">
+<div class="flex items-center gap-2.5 truncate pr-2">
+<span class="row-glyph text-signal-mint font-mono text-[11px]">→</span>
+<span class="font-sans text-[13px] text-text-primary group-hover:text-white truncate">GPT-4o-mini</span>
+<span class="px-1.5 py-0.5 rounded-[2px] text-[10px] font-mono font-medium text-signal-mint bg-signal-mint/10 border border-signal-mint/20">Best Value</span>
+</div>
+<div class="shrink-0 text-text-secondary text-[12px] tabular-nums font-mono">
+  Elo 1240 · $0.30 blended
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- LIVE TELEMETRY STRIP (Dynamic live latency ticker & clock/packet stream) -->
+<div class="w-full bg-surface-canvas py-3 px-6 lg:px-12 flex items-center justify-between text-xs font-mono text-text-secondary border-b border-hairline">
+<div class="flex items-center gap-3">
+<span class="relative flex h-2 w-2 items-center justify-center">
+<span class="animate-ambient-breath absolute inline-flex h-full w-full rounded-full bg-signal-mint opacity-75"></span>
+<span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-signal-mint"></span>
+</span>
+<span class="text-[12px] tracking-tight text-text-secondary font-mono">
+  Indexed 128 models · 9 providers · updated <span class="tabular-nums" id="telemetry-updated">4m ago</span>
+</span>
+</div>
+<div class="hidden sm:flex items-center gap-4 text-[11px] text-text-tertiary font-mono">
+<span class="flex items-center gap-1.5">
+<span>SYS LATENCY:</span>
+<span class="text-text-primary font-medium tabular-nums" id="telemetry-latency">22ms</span>
+</span>
+<span class="text-hairline">|</span>
+<span class="flex items-center gap-1.5">
+<span>CACHE HIT:</span>
+<span class="text-text-primary font-medium tabular-nums">99.4%</span>
+</span>
+<span class="text-hairline">|</span>
+<span class="flex items-center gap-1.5">
+<span>SYNC:</span>
+<span class="text-text-secondary tabular-nums" id="telemetry-clock">--:--:-- UTC</span>
+</span>
+</div>
+</div>
+</main>
+<!-- MICRO FOOTER -->
+<footer class="relative z-10 w-full border-t border-hairline py-4 px-6 lg:px-12 bg-surface-canvas text-text-tertiary text-xs font-mono flex flex-col sm:flex-row items-center justify-between gap-2">
+<div>OneAtlas Routing Engine · Build 2025.2-preview</div>
+<div class="flex items-center gap-4">
+<a class="hover:text-text-secondary transition-colors" href="#">API Docs</a>
+<a class="hover:text-text-secondary transition-colors" href="#">Methodology</a>
+<a class="hover:text-text-secondary transition-colors" href="#">Status</a>
+</div>
+</footer>
+<script>
+  // Signature 1: Navigation Sliding Pill (§5.1)
+  (function initNavPill() {
+    const navGroup = document.getElementById('nav-pill-group');
+    const pill = document.getElementById('nav-slider-pill');
+    if (!navGroup || !pill) return;
+
+    const items = navGroup.querySelectorAll('.nav-item');
+    let activeItem = items[0]; // default 'Models'
+
+    function updatePill(target) {
+      if (!target) return;
+      pill.style.left = target.offsetLeft + 'px';
+      pill.style.width = target.offsetWidth + 'px';
+      pill.style.top = target.offsetTop + 'px';
+    }
+
+    // Set initial position
+    window.addEventListener('DOMContentLoaded', () => updatePill(activeItem));
+    updatePill(activeItem);
+
+    items.forEach((item) => {
+      item.addEventListener('mouseenter', () => updatePill(item));
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        items.forEach(i => {
+          i.classList.remove('text-white');
+          i.classList.add('text-text-secondary');
+        });
+        item.classList.remove('text-text-secondary');
+        item.classList.add('text-white');
+        activeItem = item;
+        updatePill(item);
+      });
+    });
+
+    navGroup.addEventListener('mouseleave', () => updatePill(activeItem));
+    window.addEventListener('resize', () => updatePill(activeItem));
+  })();
+
+  // Keyboard shortcut: '/' or '⌘K' / 'Ctrl+K' focuses search (§2.4)
+  const searchInput = document.getElementById('main-search-input');
+  const quickCmdBtn = document.getElementById('quick-cmd-btn');
+
+  function focusSearch() {
+    if (searchInput) {
+      searchInput.focus();
+      searchInput.select();
+    }
+  }
+
+  if (quickCmdBtn) {
+    quickCmdBtn.addEventListener('click', focusSearch);
+  }
+
+  window.addEventListener('keydown', (e) => {
+    // Check if user is typing inside an input/textarea
+    if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+      if (e.key === 'Escape') {
+        document.activeElement.blur();
+      }
+      return;
+    }
+    if ((e.key === 'k' && (e.metaKey || e.ctrlKey)) || e.key === '/') {
+      e.preventDefault();
+      focusSearch();
+    }
+  });
+
+  // Dynamic Live Telemetry Odometer / Ticker (§5.7)
+  (function initTelemetry() {
+    const latencyEl = document.getElementById('telemetry-latency');
+    const clockEl = document.getElementById('telemetry-clock');
+
+    // Live clock in UTC
+    function updateClock() {
+      if (!clockEl) return;
+      const now = new Date();
+      const h = String(now.getUTCHours()).padStart(2, '0');
+      const m = String(now.getUTCMinutes()).padStart(2, '0');
+      const s = String(now.getUTCSeconds()).padStart(2, '0');
+      clockEl.textContent = `${h}:${m}:${s} UTC`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Latency fluctuation between 21ms - 24ms every 3 seconds
+    if (latencyEl) {
+      const latencies = ['21ms', '22ms', '24ms', '22ms', '23ms', '21ms'];
+      let latIdx = 0;
+      setInterval(() => {
+        latIdx = (latIdx + 1) % latencies.length;
+        latencyEl.textContent = latencies[latIdx];
+      }, 3000);
+    }
+  })();
+</script>
+</body></html>

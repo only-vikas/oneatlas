@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "error-container": "#93000a", "on-secondary-container": "#00311f", "tertiary-container": "#38bdf8", "primary-fixed-dim": "#ffb95f", "inverse-primary": "#855300", "signal-sky": "#38BDF8", "text-primary": "#F4F4F5", "inverse-surface": "#e5e1e4", "surface-raised": "#16161A", "secondary-container": "#00a572", "surface-dim": "#131315", "primary-container": "#f59e0b", "surface-well": "#101013", "surface-container-high": "#2a2a2c", "on-error-container": "#ffdad6", "on-secondary": "#003824", "background": "#131315", "surface-container-highest": "#353437", "on-primary": "#472a00", "text-secondary": "#A1A1AA", "on-error": "#690005", "hairline-strong": "rgba(255, 255, 255, 0.14)", "primary-fixed": "#ffddb8", "tertiary": "#8ed5ff", "secondary-fixed-dim": "#4edea3", "on-tertiary": "#00354a", "inverse-on-surface": "#313032", "signal-mint": "#10B981", "surface": "#131315", "on-background": "#e5e1e4", "hairline": "rgba(255, 255, 255, 0.07)", "primary": "#ffc174", "secondary-fixed": "#6ffbbe", "on-tertiary-container": "#004965", "surface-tint": "#ffb95f", "on-primary-container": "#613b00", "outline": "#a08e7a", "on-primary-fixed-variant": "#653e00", "surface-variant": "#353437", "surface-container-lowest": "#0e0e10", "on-surface-variant": "#d8c3ad", "error": "#ffb4ab", "on-tertiary-fixed-variant": "#004c69", "tertiary-fixed-dim": "#7bd0ff", "on-secondary-fixed-variant": "#005236", "text-tertiary": "#6B6B74", "surface-container": "#201f22", "on-tertiary-fixed": "#001e2c", "tertiary-fixed": "#c4e7ff", "secondary": "#4edea3", "surface-container-low": "#1c1b1d", "on-secondary-fixed": "#002113", "on-surface": "#e5e1e4", "outline-variant": "#534434", "surface-overlay": "#1C1C21", "on-primary-fixed": "#2a1700", "surface-bright": "#39393b", "signal-coral": "#F43F5E", "signal-amber": "#F59E0B", "surface-canvas": "#09090B" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-md": "0.75rem", "gutter-dense": "0.5rem", "margin-dock": "5rem", "space-xs": "0.25rem", "space-xl": "1.5rem", "gutter": "1rem", "space-sm": "0.5rem", "space-lg": "1rem", "margin": "1.5rem" }, "fontFamily": { "display-md": [ "Newsreader" ], "numeric-sm": [ "JetBrains Mono" ], "headline-lg": [ "Space Grotesk" ], "headline-md": [ "Space Grotesk" ], "body-lg": [ "Geist" ], "numeric-lg": [ "JetBrains Mono" ], "label-md": [ "Geist" ], "display-lg-mobile": [ "Newsreader" ], "display-lg": [ "Newsreader" ], "numeric-md": [ "JetBrains Mono" ], "body-dense": [ "Geist" ], "body-md": [ "Geist" ], "label-micro": [ "Geist" ], "headline-sm": [ "Space Grotesk" ] }, "fontSize": { "display-md": [ "40px", { "lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "numeric-sm": [ "12px", { "lineHeight": "16px", "letterSpacing": "0em", "fontWeight": "400" } ], "headline-lg": [ "28px", { "lineHeight": "36px", "letterSpacing": "-0.03em", "fontWeight": "600" } ], "headline-md": [ "22px", { "lineHeight": "30px", "letterSpacing": "-0.02em", "fontWeight": "500" } ], "body-lg": [ "14px", { "lineHeight": "21px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "numeric-lg": [ "15px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "500" } ], "label-md": [ "12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" } ], "display-lg-mobile": [ "36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "display-lg": [ "56px", { "lineHeight": "64px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "numeric-md": [ "13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" } ], "body-dense": [ "13px", { "lineHeight": "13px", "letterSpacing": "0em", "fontWeight": "400" } ], "body-md": [ "13px", { "lineHeight": "19px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "label-micro": [ "10px", { "lineHeight": "12px", "letterSpacing": "0.09em", "fontWeight": "500" } ], "headline-sm": [ "18px", { "lineHeight": "24px", "letterSpacing": "-0.02em", "fontWeight": "500" } ] } } } };</script></head><body class="bg-surface-canvas text-on-surface font-body-md text-body-md antialiased relative selection:bg-primary-container selection:text-on-primary-container min-h-screen"><div class="pointer-events-none fixed inset-0 z-50 opacity-[0.025] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div><header class="fixed top-0 left-0 right-0 h-14 z-40 bg-surface-canvas/90 backdrop-blur-md border-b border-hairline"><div class="w-full h-14 px-gutter flex items-center justify-between"><div class="flex items-center gap-space-xl"><div class="flex items-center gap-space-xs tracking-tight select-none"><span class="w-2 h-2 rounded bg-primary-container inline-block"></span><span class="font-headline-sm text-headline-sm uppercase tracking-wider text-text-primary">OneAtlas</span><span class="font-numeric-sm text-numeric-sm text-text-tertiary px-space-xs py-0.5 bg-surface-raised border border-hairline rounded">TM-01</span></div><nav class="hidden md:flex items-center gap-space-xs" data-active-classes="bg-surface-raised text-text-primary font-medium rounded-lg"><a aria-current="page" class="px-space-md py-1.5 uppercase tracking-wider transition-colors bg-surface-raised text-text-primary font-medium rounded-lg" data-path="models" href="#">Models</a><a class="px-space-md py-1.5 font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-raised transition-colors" data-path="rankings" href="#">Rankings</a><a class="px-space-md py-1.5 font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-raised transition-colors" data-path="compare" href="#">Compare</a><a class="px-space-md py-1.5 font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-raised transition-colors" data-path="directory" href="#">Directory</a></nav></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-well border border-hairline cursor-pointer hover:border-hairline-strong transition-colors"><span class="material-symbols-outlined text-[16px] text-text-tertiary">search</span><span class="font-numeric-sm text-numeric-sm text-text-tertiary hidden sm:inline">Quick Find</span><kbd class="font-numeric-sm text-numeric-sm text-primary px-1 py-0.5 bg-surface-raised rounded border border-hairline">⌘K</kbd></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-14 bg-surface-canvas min-h-screen"><div class="flex flex-col w-full relative">
+<div class="w-full bg-surface-canvas text-on-surface flex flex-col relative select-none">
+<div class="w-full bg-surface-well/80 px-gutter py-space-xs flex items-center justify-between">
+<div class="flex items-center gap-space-sm font-label-micro text-label-micro uppercase tracking-widest text-text-tertiary">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-primary-container/10 text-primary-container font-label-micro">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-amber animate-pulse"></span>
+          FETCHING TELEMETRY STREAM
+        </span>
+<span class="text-hairline-strong">/</span>
+<span class="font-numeric-sm text-numeric-sm text-text-secondary">SYNC_TARGET: 128 NODES</span>
+<span class="text-hairline-strong">/</span>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary">LATENCY: EST 18MS</span>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1.5">
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary">BUF</span>
+<div class="w-16 h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-signal-amber w-2/3 animate-pulse"></div>
+</div>
+</div>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary">SOCKET: TM-WS-09</span>
+</div>
+</div>
+<div class="w-full px-gutter py-space-xl bg-surface-canvas flex flex-col gap-space-md">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary">FEED 01 //</span>
+<span class="font-label-micro text-label-micro uppercase tracking-widest text-signal-amber">LIVE LEDGER BUFFERING</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg uppercase text-text-primary tracking-tight">Discovery Catalog</h1>
+<p class="font-body-md text-body-md text-text-secondary">Quantitative intelligence &amp; benchmark telemetry across 128+ frontier models</p>
+</div>
+<div class="flex items-center gap-space-xs">
+<div class="flex items-center gap-2 px-space-md py-1.5 rounded bg-surface-well text-text-tertiary">
+<span class="material-symbols-outlined text-[16px]">sync</span>
+<span class="font-numeric-sm text-numeric-sm">LIVE STREAM</span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint"></span>
+</div>
+<div class="flex items-center gap-2 px-space-md py-1.5 rounded bg-surface-raised text-text-secondary">
+<span class="font-numeric-sm text-numeric-sm">VIEW: COMPACT (44PX)</span>
+</div>
+</div>
+</div>
+<div class="w-full flex flex-wrap items-center justify-between gap-space-md pt-space-xs">
+<div class="flex-1 min-w-[280px] max-w-xl relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-text-tertiary text-[18px]">search</span>
+<div class="w-full h-9 pl-9 pr-24 rounded bg-surface-well flex items-center">
+<div class="h-1.5 w-40 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+</div>
+<div class="absolute right-3 flex items-center gap-1">
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary">FILTER</span>
+<kbd class="font-numeric-sm text-numeric-sm text-text-tertiary px-1 py-0.2 rounded bg-surface-raised">/</kbd>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<div class="h-9 px-space-md rounded bg-surface-well flex items-center gap-space-xs text-text-tertiary">
+<span class="font-numeric-sm text-numeric-sm">BENCHMARK: SWE-BENCH</span>
+<span class="material-symbols-outlined text-[14px]">expand_more</span>
+</div>
+<div class="h-9 px-space-md rounded bg-surface-well flex items-center gap-space-xs text-text-tertiary">
+<span class="font-numeric-sm text-numeric-sm">SORT: COMPUTE SCORE</span>
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+</div>
+<div class="h-9 w-9 rounded bg-surface-well flex items-center justify-center text-text-tertiary">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+</div>
+</div>
+</div>
+</div>
+<div class="w-full flex flex-1 min-h-[720px] relative">
+<aside class="w-[240px] shrink-0 bg-surface-canvas p-space-md flex flex-col gap-space-lg select-none">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro uppercase tracking-widest text-text-tertiary">STREAM REGIME</span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-sky"></span>
+</div>
+<div class="h-7 w-full rounded bg-surface-well px-space-sm flex items-center justify-between text-text-secondary">
+<span class="font-numeric-sm text-numeric-sm">ALL REPOSITORIES</span>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary">128</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro uppercase tracking-widest text-text-tertiary">MODALITY</span>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary">04</span>
+</div>
+<div class="flex flex-col gap-1 opacity-40">
+<div class="h-7 px-space-sm rounded bg-surface-well flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded bg-surface-raised"></span>
+<span class="font-body-md text-body-md text-text-secondary">Text / Code</span>
+</div>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary">84</span>
+</div>
+<div class="h-7 px-space-sm rounded bg-surface-well flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded bg-surface-raised"></span>
+<span class="font-body-md text-body-md text-text-secondary">Vision Multimodal</span>
+</div>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary">31</span>
+</div>
+<div class="h-7 px-space-sm rounded bg-surface-well flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded bg-surface-raised"></span>
+<span class="font-body-md text-body-md text-text-secondary">Audio &amp; Speech</span>
+</div>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary">09</span>
+</div>
+<div class="h-7 px-space-sm rounded bg-surface-well flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded bg-surface-raised"></span>
+<span class="font-body-md text-body-md text-text-secondary">Embedding Nodes</span>
+</div>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary">04</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro uppercase tracking-widest text-text-tertiary">LEAD PROVIDERS</span>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary">SYNC</span>
+</div>
+<div class="flex flex-col gap-1.5 opacity-40">
+<div class="flex items-center justify-between px-space-sm py-1">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-surface-raised"></span>
+<span class="font-body-md text-body-md text-text-secondary">Anthropic</span>
+</div>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary">14</span>
+</div>
+<div class="flex items-center justify-between px-space-sm py-1">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-surface-raised"></span>
+<span class="font-body-md text-body-md text-text-secondary">OpenAI</span>
+</div>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary">22</span>
+</div>
+<div class="flex items-center justify-between px-space-sm py-1">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-surface-raised"></span>
+<span class="font-body-md text-body-md text-text-secondary">Google DeepMind</span>
+</div>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary">18</span>
+</div>
+<div class="flex items-center justify-between px-space-sm py-1">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-surface-raised"></span>
+<span class="font-body-md text-body-md text-text-secondary">Meta AI</span>
+</div>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary">16</span>
+</div>
+<div class="flex items-center justify-between px-space-sm py-1">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-surface-raised"></span>
+<span class="font-body-md text-body-md text-text-secondary">Mistral AI</span>
+</div>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary">12</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro uppercase tracking-widest text-text-tertiary">REASONING ARCH</span>
+<span class="font-numeric-sm text-numeric-sm text-text-tertiary">LOCK</span>
+</div>
+<div class="flex flex-col gap-1.5 opacity-30">
+<div class="h-6 rounded bg-surface-well flex items-center px-space-sm justify-between">
+<span class="font-numeric-sm text-numeric-sm text-text-secondary">Chain-of-Thought (CoT)</span>
+<span class="w-2 h-2 rounded-full bg-signal-amber/40"></span>
+</div>
+<div class="h-6 rounded bg-surface-well flex items-center px-space-sm justify-between">
+<span class="font-numeric-sm text-numeric-sm text-text-secondary">Standard Inference</span>
+<span class="w-2 h-2 rounded-full bg-surface-raised"></span>
+</div>
+</div>
+</div>
+<div class="mt-auto p-space-sm rounded bg-surface-well flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro uppercase tracking-widest text-text-tertiary">INGESTION CYCLE</span>
+<span class="font-numeric-sm text-numeric-sm text-signal-amber">1400MS</span>
+</div>
+<div class="w-full h-1 bg-surface-raised rounded-full overflow-hidden">
+<div class="h-full bg-signal-amber/50 w-full animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite] bg-[length:200%_100%] bg-gradient-to-r from-transparent via-signal-amber to-transparent"></div>
+</div>
+</div>
+</aside>
+<div class="flex-1 flex flex-col min-w-[720px] bg-surface-canvas overflow-x-auto">
+<div class="h-10 w-full bg-surface-well flex items-center px-gutter text-text-tertiary select-none">
+<div class="w-12 shrink-0 font-numeric-sm text-numeric-sm">#</div>
+<div class="w-64 shrink-0 font-label-micro text-label-micro uppercase tracking-wider text-text-secondary">MODEL</div>
+<div class="w-36 shrink-0 font-label-micro text-label-micro uppercase tracking-wider text-text-secondary">LAB</div>
+<div class="w-28 shrink-0 text-right font-numeric-sm text-numeric-sm">INPUT / 1M</div>
+<div class="w-28 shrink-0 text-right font-numeric-sm text-numeric-sm">OUTPUT / 1M</div>
+<div class="w-28 shrink-0 text-right font-numeric-sm text-numeric-sm">CONTEXT</div>
+<div class="w-32 shrink-0 text-right font-numeric-sm text-numeric-sm">SWE-BENCH</div>
+<div class="flex-1 min-w-[120px] text-right font-label-micro text-label-micro uppercase tracking-wider text-text-secondary">STATUS</div>
+</div>
+<div class="flex flex-col w-full divide-y divide-hairline">
+<div class="h-[44px] w-full px-gutter flex items-center hover:bg-surface-raised transition-colors">
+<div class="w-12 shrink-0"><div class="h-[2px] w-4 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-64 shrink-0 flex items-center gap-2">
+<div class="h-[3px] w-32 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+<div class="h-3 w-8 rounded bg-surface-well"></div>
+</div>
+<div class="w-36 shrink-0"><div class="h-[2px] w-20 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-14 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-16 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-12 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-32 shrink-0 flex justify-end"><div class="h-[3px] w-14 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="flex-1 min-w-[120px] flex justify-end items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint/40"></span>
+<div class="h-[2px] w-12 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+</div>
+</div>
+<div class="h-[44px] w-full px-gutter flex items-center hover:bg-surface-raised transition-colors">
+<div class="w-12 shrink-0"><div class="h-[2px] w-4 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-64 shrink-0 flex items-center gap-2">
+<div class="h-[3px] w-40 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+</div>
+<div class="w-36 shrink-0"><div class="h-[2px] w-16 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-12 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-14 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-10 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-32 shrink-0 flex justify-end"><div class="h-[3px] w-16 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="flex-1 min-w-[120px] flex justify-end items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint/40"></span>
+<div class="h-[2px] w-10 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+</div>
+</div>
+<div class="h-[44px] w-full px-gutter flex items-center hover:bg-surface-raised transition-colors">
+<div class="w-12 shrink-0"><div class="h-[2px] w-4 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-64 shrink-0 flex items-center gap-2">
+<div class="h-[3px] w-28 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+<div class="h-3 w-6 rounded bg-surface-well"></div>
+</div>
+<div class="w-36 shrink-0"><div class="h-[2px] w-24 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-16 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-12 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-14 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-32 shrink-0 flex justify-end"><div class="h-[3px] w-12 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="flex-1 min-w-[120px] flex justify-end items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint/40"></span>
+<div class="h-[2px] w-14 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+</div>
+</div>
+<div class="h-[44px] w-full px-gutter flex items-center hover:bg-surface-raised transition-colors">
+<div class="w-12 shrink-0"><div class="h-[2px] w-4 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-64 shrink-0 flex items-center gap-2">
+<div class="h-[3px] w-36 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+</div>
+<div class="w-36 shrink-0"><div class="h-[2px] w-14 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-14 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-16 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-12 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-32 shrink-0 flex justify-end"><div class="h-[3px] w-14 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="flex-1 min-w-[120px] flex justify-end items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint/40"></span>
+<div class="h-[2px] w-12 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+</div>
+</div>
+<div class="h-[44px] w-full px-gutter flex items-center hover:bg-surface-raised transition-colors">
+<div class="w-12 shrink-0"><div class="h-[2px] w-4 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-64 shrink-0 flex items-center gap-2">
+<div class="h-[3px] w-48 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+</div>
+<div class="w-36 shrink-0"><div class="h-[2px] w-18 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-10 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-12 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-14 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-32 shrink-0 flex justify-end"><div class="h-[3px] w-16 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="flex-1 min-w-[120px] flex justify-end items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint/40"></span>
+<div class="h-[2px] w-10 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+</div>
+</div>
+<div class="h-[44px] w-full px-gutter flex items-center hover:bg-surface-raised transition-colors">
+<div class="w-12 shrink-0"><div class="h-[2px] w-4 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-64 shrink-0 flex items-center gap-2">
+<div class="h-[3px] w-32 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+<div class="h-3 w-10 rounded bg-surface-well"></div>
+</div>
+<div class="w-36 shrink-0"><div class="h-[2px] w-20 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-12 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-14 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-10 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-32 shrink-0 flex justify-end"><div class="h-[3px] w-14 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="flex-1 min-w-[120px] flex justify-end items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-amber/40"></span>
+<div class="h-[2px] w-12 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+</div>
+</div>
+<div class="h-[44px] w-full px-gutter flex items-center hover:bg-surface-raised transition-colors">
+<div class="w-12 shrink-0"><div class="h-[2px] w-4 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-64 shrink-0 flex items-center gap-2">
+<div class="h-[3px] w-44 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+</div>
+<div class="w-36 shrink-0"><div class="h-[2px] w-16 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-16 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-16 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-14 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-32 shrink-0 flex justify-end"><div class="h-[3px] w-12 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="flex-1 min-w-[120px] flex justify-end items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint/40"></span>
+<div class="h-[2px] w-10 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+</div>
+</div>
+<div class="h-[44px] w-full px-gutter flex items-center hover:bg-surface-raised transition-colors">
+<div class="w-12 shrink-0"><div class="h-[2px] w-4 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-64 shrink-0 flex items-center gap-2">
+<div class="h-[3px] w-36 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+</div>
+<div class="w-36 shrink-0"><div class="h-[2px] w-24 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-12 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-14 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-12 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-32 shrink-0 flex justify-end"><div class="h-[3px] w-14 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="flex-1 min-w-[120px] flex justify-end items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint/40"></span>
+<div class="h-[2px] w-12 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+</div>
+</div>
+<div class="h-[44px] w-full px-gutter flex items-center hover:bg-surface-raised transition-colors">
+<div class="w-12 shrink-0"><div class="h-[2px] w-4 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-64 shrink-0 flex items-center gap-2">
+<div class="h-[3px] w-40 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+<div class="h-3 w-8 rounded bg-surface-well"></div>
+</div>
+<div class="w-36 shrink-0"><div class="h-[2px] w-16 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-14 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-12 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-16 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-32 shrink-0 flex justify-end"><div class="h-[3px] w-14 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="flex-1 min-w-[120px] flex justify-end items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint/40"></span>
+<div class="h-[2px] w-14 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+</div>
+</div>
+<div class="h-[44px] w-full px-gutter flex items-center hover:bg-surface-raised transition-colors">
+<div class="w-12 shrink-0"><div class="h-[2px] w-4 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-64 shrink-0 flex items-center gap-2">
+<div class="h-[3px] w-28 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+</div>
+<div class="w-36 shrink-0"><div class="h-[2px] w-20 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-12 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-16 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-10 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-32 shrink-0 flex justify-end"><div class="h-[3px] w-16 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="flex-1 min-w-[120px] flex justify-end items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint/40"></span>
+<div class="h-[2px] w-10 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+</div>
+</div>
+<div class="h-[44px] w-full px-gutter flex items-center hover:bg-surface-raised transition-colors">
+<div class="w-12 shrink-0"><div class="h-[2px] w-4 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-64 shrink-0 flex items-center gap-2">
+<div class="h-[3px] w-36 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+</div>
+<div class="w-36 shrink-0"><div class="h-[2px] w-18 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-16 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-14 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-12 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-32 shrink-0 flex justify-end"><div class="h-[3px] w-12 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="flex-1 min-w-[120px] flex justify-end items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint/40"></span>
+<div class="h-[2px] w-12 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+</div>
+</div>
+<div class="h-[44px] w-full px-gutter flex items-center hover:bg-surface-raised transition-colors">
+<div class="w-12 shrink-0"><div class="h-[2px] w-4 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-64 shrink-0 flex items-center gap-2">
+<div class="h-[3px] w-48 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+<div class="h-3 w-8 rounded bg-surface-well"></div>
+</div>
+<div class="w-36 shrink-0"><div class="h-[2px] w-16 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-10 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-12 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-28 shrink-0 flex justify-end"><div class="h-[2px] w-14 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="w-32 shrink-0 flex justify-end"><div class="h-[3px] w-14 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div></div>
+<div class="flex-1 min-w-[120px] flex justify-end items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint/40"></span>
+<div class="h-[2px] w-10 rounded-full bg-gradient-to-r from-white/[0.03] via-white/[0.12] to-white/[0.03] bg-[length:200%_100%] animate-[shimmer_1400ms_cubic-bezier(0.65,0,0.35,1)_infinite]"></div>
+</div>
+</div>
+</div>
+<div class="w-full p-gutter flex items-center justify-between text-text-tertiary">
+<div class="flex items-center gap-space-xs font-numeric-sm text-numeric-sm">
+<span class="inline-block w-2 h-2 rounded-full bg-signal-amber animate-ping"></span>
+<span>STREAM SYNCHRONIZATION RUNNING (PASS 1/3)</span>
+</div>
+<div class="flex items-center gap-space-sm font-numeric-sm text-numeric-sm">
+<span>PACKETS: 4,120 / 12,800</span>
+<span class="text-hairline-strong">|</span>
+<span>DROPPED: 0.00%</span>
+</div>
+</div>
+</div>
+<aside class="hidden xl:flex w-[100px] shrink-0 bg-surface-canvas p-space-sm flex-col items-center justify-between select-none">
+<div class="flex flex-col items-center gap-space-sm">
+<span class="font-label-micro text-label-micro uppercase tracking-widest text-text-tertiary [writing-mode:vertical-rl] rotate-180">INDEX TELEMETRY</span>
+<div class="w-px h-12 bg-hairline"></div>
+</div>
+<div class="flex flex-col items-center gap-space-xs">
+<div class="w-6 h-6 rounded bg-surface-well flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-text-tertiary">swap_vert</span>
+</div>
+<div class="w-6 h-6 rounded bg-surface-well flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-text-tertiary">analytics</span>
+</div>
+<div class="w-6 h-6 rounded bg-surface-well flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-text-tertiary">terminal</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-space-xs font-numeric-sm text-numeric-sm text-text-tertiary">
+<span>01</span>
+<div class="w-1.5 h-1.5 rounded-full bg-signal-mint"></div>
+</div>
+</aside>
+</div>
+<div class="w-full h-14 bg-surface-well px-gutter flex items-center justify-between select-none">
+<div class="flex items-center gap-space-lg font-numeric-sm text-numeric-sm text-text-secondary">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded bg-signal-amber"></span>
+<span>COMPARE BUFFER: EMPTY (0/4)</span>
+</div>
+<div class="hidden sm:flex items-center gap-space-xs text-text-tertiary">
+<span>PIN NODES VIA</span>
+<kbd class="px-1.5 py-0.5 rounded bg-surface-raised font-numeric-sm text-numeric-sm text-text-secondary">SPACE</kbd>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-2 font-numeric-sm text-numeric-sm text-text-tertiary">
+<span>PAGE 01 OF 11</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="h-8 w-8 rounded bg-surface-raised flex items-center justify-center text-text-tertiary hover:text-text-primary">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="h-8 w-8 rounded bg-surface-raised flex items-center justify-center text-text-tertiary hover:text-text-primary">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div></main><footer class="w-full border-t border-hairline bg-surface-canvas py-space-lg"><div class="w-full px-gutter flex flex-col sm:flex-row items-center justify-between gap-space-sm"><div class="flex items-center gap-space-md font-numeric-sm text-numeric-sm text-text-tertiary"><span>FEED_ACTIVE: TELEMETRY-STABLE</span><span class="w-1 h-1 rounded-full bg-signal-mint"></span><span>99.98% UP</span></div><div class="font-numeric-sm text-numeric-sm text-text-tertiary">© ONEATLAS SYSTEMS TERMINAL. ALL TELEMETRY LOGGED.</div></div></footer></body></html>

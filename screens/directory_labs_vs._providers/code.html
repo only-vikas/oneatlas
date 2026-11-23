@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OneAtlas — Frontier Research Labs &amp; Provider Directory</title>
+<!-- Google Fonts: Space Grotesk, JetBrains Mono, Geist -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-well": "#101013",
+            "surface-canvas": "#09090B",
+            "secondary-fixed-dim": "#4edea3",
+            "primary": "#ffc174",
+            "on-error": "#690005",
+            "surface-container-high": "#2a2a2c",
+            "on-primary-fixed-variant": "#653e00",
+            "on-tertiary-fixed": "#001e2c",
+            "on-background": "#e5e1e4",
+            "surface": "#131315",
+            "inverse-on-surface": "#313032",
+            "error": "#ffb4ab",
+            "on-surface-variant": "#d8c3ad",
+            "signal-sky": "#38BDF8",
+            "text-tertiary": "#6B6B74",
+            "surface-bright": "#39393b",
+            "signal-mint": "#10B981",
+            "surface-container-highest": "#353437",
+            "primary-fixed-dim": "#ffb95f",
+            "signal-coral": "#F43F5E",
+            "on-tertiary": "#00354a",
+            "primary-fixed": "#ffddb8",
+            "on-tertiary-fixed-variant": "#004c69",
+            "text-secondary": "#A1A1AA",
+            "secondary-container": "#00a572",
+            "secondary": "#4edea3",
+            "inverse-surface": "#e5e1e4",
+            "surface-dim": "#131315",
+            "surface-container-lowest": "#0e0e10",
+            "on-primary": "#472a00",
+            "tertiary-fixed-dim": "#7bd0ff",
+            "on-secondary-fixed-variant": "#005236",
+            "on-primary-container": "#613b00",
+            "hairline": "rgba(255, 255, 255, 0.07)",
+            "on-secondary": "#003824",
+            "primary-container": "#f59e0b",
+            "surface-variant": "#353437",
+            "surface-overlay": "#1C1C21",
+            "surface-raised": "#16161A",
+            "background": "#131315",
+            "signal-amber": "#F59E0B",
+            "on-tertiary-container": "#004965",
+            "hairline-strong": "rgba(255, 255, 255, 0.14)",
+            "outline": "#a08e7a",
+            "on-secondary-fixed": "#002113",
+            "on-secondary-container": "#00311f",
+            "text-primary": "#F4F4F5",
+            "surface-container-low": "#1c1b1d",
+            "inverse-primary": "#855300",
+            "outline-variant": "#534434",
+            "surface-tint": "#ffb95f",
+            "on-surface": "#e5e1e4",
+            "tertiary-fixed": "#c4e7ff",
+            "surface-container": "#201f22",
+            "error-container": "#93000a",
+            "tertiary": "#8ed5ff",
+            "on-primary-fixed": "#2a1700",
+            "tertiary-container": "#38bdf8",
+            "secondary-fixed": "#6ffbbe",
+            "on-error-container": "#ffdad6"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "fontFamily": {
+            "numeric-md": ["JetBrains Mono", "monospace"],
+            "numeric-lg": ["JetBrains Mono", "monospace"],
+            "numeric-sm": ["JetBrains Mono", "monospace"],
+            "headline-lg": ["Space Grotesk", "sans-serif"],
+            "display-lg": ["Newsreader", "serif"],
+            "headline-sm": ["Space Grotesk", "sans-serif"],
+            "headline-md": ["Space Grotesk", "sans-serif"],
+            "body-dense": ["Space Grotesk", "sans-serif"],
+            "display-md": ["Newsreader", "serif"],
+            "display-lg-mobile": ["Newsreader", "serif"],
+            "body-md": ["Space Grotesk", "sans-serif"],
+            "body-lg": ["Space Grotesk", "sans-serif"],
+            "label-micro": ["Space Grotesk", "sans-serif"],
+            "label-md": ["Space Grotesk", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .font-mono-tabular {
+      font-family: 'JetBrains Mono', monospace;
+      font-feature-settings: 'tnum' on, 'zero' on;
+    }
+    .grid-matrix-bg {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 16px 16px;
+    }
+    /* Minimal custom scrollbars */
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #09090B;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+    }
+  </style>
+</head>
+<body class="bg-surface-canvas text-text-primary antialiased selection:bg-signal-amber selection:text-surface-canvas min-h-screen flex flex-col font-body-md overflow-x-hidden">
+<!-- Top Global Navigation Bar (Carbon Ledger Strict Anchor Alignment) -->
+<header class="w-full border-b border-hairline bg-surface-canvas/90 backdrop-blur-md sticky top-0 z-50">
+<div class="max-w-[1440px] mx-auto px-6 h-14 flex items-center justify-between">
+<!-- Left Identity -->
+<div class="flex items-center gap-6">
+<a class="flex items-center gap-2.5 text-text-primary group" href="#">
+<div class="w-4 h-4 text-signal-amber flex items-center justify-center">
+<svg class="w-full h-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<span class="font-headline-sm font-semibold tracking-tight text-sm text-text-primary uppercase">OneAtlas</span>
+<span class="font-mono-tabular text-[10px] text-text-tertiary px-1.5 py-0.5 border border-hairline rounded">LEDGER_v3.2</span>
+</a>
+<!-- Main Nav Routes -->
+<nav class="hidden md:flex items-center gap-1 pl-4 border-l border-hairline">
+<!-- Active route: Directory with Signature 1 sliding pill -->
+<a class="relative px-3 py-1.5 text-xs font-medium text-text-primary bg-surface-raised border border-hairline-strong rounded flex items-center gap-1.5" href="#">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-amber"></span>
+            Directory
+          </a>
+<a class="px-3 py-1.5 text-xs font-medium text-text-secondary hover:text-text-primary transition-colors" href="#">Models</a>
+<a class="px-3 py-1.5 text-xs font-medium text-text-secondary hover:text-text-primary transition-colors" href="#">Benchmarks</a>
+<a class="px-3 py-1.5 text-xs font-medium text-text-secondary hover:text-text-primary transition-colors" href="#">Routing</a>
+<a class="px-3 py-1.5 text-xs font-medium text-text-secondary hover:text-text-primary transition-colors" href="#">API Sync</a>
+</nav>
+</div>
+<!-- Right Controls -->
+<div class="flex items-center gap-4">
+<div class="hidden lg:flex items-center gap-2 font-mono-tabular text-[11px] text-text-tertiary">
+<span class="w-2 h-2 rounded-full bg-signal-mint animate-pulse"></span>
+<span>LATENCY: 18ms</span>
+</div>
+<div class="h-4 w-[1px] bg-hairline hidden lg:block"></div>
+<button class="h-8 px-3 text-xs font-mono-tabular font-medium text-surface-canvas bg-signal-amber hover:bg-primary transition-colors rounded flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px]" style="font-size: 15px;">key</span>
+<span>CONNECT KEY</span>
+</button>
+<div class="w-8 h-8 rounded border border-hairline overflow-hidden bg-surface-well flex items-center justify-center text-text-secondary text-xs font-mono-tabular">
+          0x7F
+        </div>
+</div>
+</div>
+</header>
+<!-- Main Container: Terminal Ledger with Asymmetric Right Margin (§3) -->
+<div class="max-w-[1440px] mx-auto w-full px-6 flex-1 flex flex-col pt-6 pb-20">
+<!-- Top Sub-Header & Dot Matrix Band -->
+<div class="w-full relative border border-hairline rounded bg-surface-well p-6 mb-6 overflow-hidden">
+<div class="absolute inset-0 grid-matrix-bg opacity-30 pointer-events-none"></div>
+<div class="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<div class="flex items-center gap-2 mb-1.5">
+<span class="font-mono-tabular text-[10px] tracking-widest text-signal-amber uppercase">DIRECTORY LEDGER // ENTITY MATRIX</span>
+<span class="text-hairline-strong text-[10px]">·</span>
+<span class="font-mono-tabular text-[10px] text-text-tertiary">INDEX STATUS: OPTIMAL</span>
+</div>
+<h1 class="text-2xl md:text-3xl font-headline-lg font-semibold tracking-tight text-text-primary">
+            Frontier Labs &amp; Inference Infrastructure
+          </h1>
+<p class="text-text-secondary text-xs md:text-sm mt-1 max-w-2xl">
+            Live catalog tracking model releases, blended token economics, and direct telemetry benchmarks across primary compute laboratories.
+          </p>
+</div>
+<!-- Telemetry Pill in Header -->
+<div class="flex items-center gap-3">
+<div class="border border-hairline bg-surface-canvas px-3 py-1.5 rounded flex items-center gap-2.5 font-mono-tabular text-xs">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-signal-mint"></span>
+<span class="text-text-secondary text-[11px]">SYNC REVISION:</span>
+<span class="text-text-primary text-[11px] font-semibold">2025.02-FRONTIER</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Layout & Controls (§1) -->
+<div class="w-full flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 pb-4 border-b border-hairline">
+<!-- Left: Segmented Control with Signature 1 Sliding Pill -->
+<div class="flex items-center bg-surface-well p-1 border border-hairline rounded">
+<button class="px-4 py-1.5 text-xs font-headline-sm font-medium rounded text-text-primary bg-surface-raised border border-hairline-strong shadow-none transition-all flex items-center gap-2" id="toggle-labs">
+<span>Research Labs</span>
+<span class="font-mono-tabular text-[10px] px-1.5 py-0.2 border border-hairline rounded bg-surface-canvas text-signal-amber">14</span>
+</button>
+<button class="px-4 py-1.5 text-xs font-headline-sm font-medium rounded text-text-secondary hover:text-text-primary transition-all flex items-center gap-2" id="toggle-providers">
+<span>Inference Providers</span>
+<span class="font-mono-tabular text-[10px] px-1.5 py-0.2 border border-hairline rounded text-text-tertiary">9</span>
+</button>
+</div>
+<!-- Right: Entity counter, secondary search, PIN toggle indicator -->
+<div class="flex flex-wrap items-center gap-3">
+<!-- Entity Counter in tabular numbers -->
+<div class="font-mono-tabular text-xs text-text-secondary px-2">
+<span class="text-text-primary font-medium">14</span> labs <span class="text-text-tertiary">·</span> <span class="text-text-primary font-medium">9</span> providers
+        </div>
+<!-- Secondary Search Input -->
+<div class="relative min-w-[260px] md:min-w-[320px]">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-tertiary text-base select-none pointer-events-none">search</span>
+<input class="w-full h-8 pl-9 pr-3 text-xs bg-surface-well border border-hairline rounded text-text-primary placeholder:text-text-tertiary focus:border-hairline-strong focus:outline-none focus:ring-0 font-body-dense" placeholder="Filter labs or providers..." type="text"/>
+</div>
+<!-- PIN OPEN Indicator -->
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-well border border-hairline text-text-secondary">
+<span class="material-symbols-outlined text-signal-amber text-xs">push_pin</span>
+<span class="font-mono-tabular text-[10px] tracking-wider uppercase">PIN OPEN (MAX 2):</span>
+<span class="font-mono-tabular text-[10px] text-text-primary font-semibold">1/2</span>
+</div>
+</div>
+</div>
+<!-- Asymmetric Layout Wrapper: Central Ledger + 100px Annotations Rail (§3) -->
+<div class="flex items-start gap-6 mt-4 w-full">
+<!-- Ledger Table (Main Workspace) -->
+<div class="flex-1 w-full min-w-0 border-l border-r border-hairline">
+<!-- Ledger Table Header (Micro-label tier, uppercase, tracked) (§2) -->
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface-well/60 border-t border-b border-hairline font-mono-tabular text-[10px] tracking-wider text-text-tertiary uppercase">
+<div class="col-span-1 text-center">IDX</div>
+<div class="col-span-4 pl-2">ENTITY / LAB</div>
+<div class="col-span-2">METADATA / STATUS</div>
+<div class="col-span-2 text-right">PORTFOLIO / INDEXED</div>
+<div class="col-span-2 text-right">AVG BLENDED COST</div>
+<div class="col-span-1 text-right pr-2">ACTION</div>
+</div>
+<!-- Expandable Entity Rows Container -->
+<div class="divide-y divide-hairline">
+<!-- ROW 1: ANTHROPIC (EXPANDED BY DEFAULT) -->
+<div class="bg-surface-raised/40 transition-colors">
+<!-- Row Header Trigger -->
+<div class="grid grid-cols-12 items-center px-4 h-14 hover:bg-surface-raised cursor-pointer transition-colors group">
+<!-- Chevron & Index -->
+<div class="col-span-1 flex items-center justify-center gap-1.5">
+<span class="font-mono-tabular text-xs text-text-tertiary group-hover:text-text-primary transition-transform rotate-90 inline-block">∨</span>
+<span class="font-mono-tabular text-[11px] text-text-tertiary">01</span>
+</div>
+<!-- Logo & Lab Name -->
+<div class="col-span-4 pl-2 flex items-center gap-3">
+<!-- 24px clean unframed SVG logo mark (minimalist geometric 'A' in amber/bone tones) -->
+<div class="w-6 h-6 flex-shrink-0 flex items-center justify-center text-primary">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+<polygon points="12,2 4,22 8,22 12,12 16,12 20,22 24,22 12,2"></polygon>
+<rect fill="#09090B" height="2" width="4" x="10" y="14"></rect>
+</svg>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-sm font-semibold text-text-primary group-hover:text-primary transition-colors">Anthropic</span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint" title="Direct API Nominal"></span>
+</div>
+<span class="text-[11px] text-text-secondary font-body-dense block">San Francisco, CA</span>
+</div>
+</div>
+<!-- Metadata Chip -->
+<div class="col-span-2 flex items-center">
+<span class="font-mono-tabular text-[10px] tracking-tight px-2 py-0.5 rounded border border-hairline bg-surface-well text-on-surface-variant">
+                  FOUNDED 2021 · PBC
+                </span>
+</div>
+<!-- Model Count in Geist Mono -->
+<div class="col-span-2 text-right">
+<span class="font-mono-tabular text-xs text-text-primary">14 models indexed</span>
+</div>
+<!-- Avg Cost in Geist Mono -->
+<div class="col-span-2 text-right">
+<span class="font-mono-tabular text-xs font-medium text-text-primary">$2.40</span>
+<span class="font-mono-tabular text-[11px] text-text-tertiary"> / 1M blended</span>
+</div>
+<!-- Margin Action / Link -->
+<div class="col-span-1 text-right pr-2 flex items-center justify-end gap-2">
+<span class="font-mono-tabular text-[9px] px-1 py-0.5 rounded bg-signal-amber/10 border border-signal-amber/30 text-signal-amber" title="Pinned to top ledger">PIN</span>
+<a class="font-mono-tabular text-[10px] text-primary hover:underline flex items-center" href="#">
+                  PROFILE<span class="ml-0.5">→</span>
+</a>
+</div>
+</div>
+<!-- NESTED COMPACT TABLE (Indented 24px with subtle 1px vertical hairline connector) -->
+<div class="pl-8 pr-4 pb-4 pt-1 bg-surface-well/70 border-t border-hairline relative">
+<!-- Vertical Hairline Connector -->
+<div class="absolute left-6 top-0 bottom-4 w-[1px] bg-hairline-strong"></div>
+<!-- Nested Table Header -->
+<div class="grid grid-cols-12 items-center py-2 border-b border-hairline font-mono-tabular text-[9px] tracking-wider text-text-tertiary uppercase">
+<div class="col-span-4">MODEL STRUCTURAL ID</div>
+<div class="col-span-2">MODALITY</div>
+<div class="col-span-1 text-right">INPUT / 1M</div>
+<div class="col-span-1 text-right">OUTPUT / 1M</div>
+<div class="col-span-2 text-right">CONTEXT</div>
+<div class="col-span-1 text-right">TELEMETRY</div>
+<div class="col-span-1 text-right">COMPARE</div>
+</div>
+<!-- Nested Rows (36px compact height) -->
+<!-- Nested Item 1 -->
+<div class="grid grid-cols-12 items-center h-9 border-b border-hairline/50 hover:bg-surface-raised/40 transition-colors font-mono-tabular text-xs">
+<div class="col-span-4 flex items-center gap-2">
+<span class="text-text-primary font-medium">Claude 3.5 Sonnet</span>
+<span class="text-[9px] text-text-tertiary font-normal">claude-3-5-sonnet-20241022</span>
+</div>
+<div class="col-span-2 text-[11px] text-text-secondary font-body-dense">Text, Code, Vision</div>
+<div class="col-span-1 text-right text-text-primary">$3.00</div>
+<div class="col-span-1 text-right text-text-primary">$15.00</div>
+<div class="col-span-2 text-right text-text-secondary">200,000</div>
+<div class="col-span-1 text-right text-signal-mint font-medium text-[11px]">87.8 SWE</div>
+<div class="col-span-1 flex items-center justify-end">
+<input class="w-3.5 h-3.5 bg-surface-canvas border-hairline-strong rounded text-signal-amber focus:ring-0 focus:ring-offset-0 cursor-pointer" type="checkbox"/>
+</div>
+</div>
+<!-- Nested Item 2 -->
+<div class="grid grid-cols-12 items-center h-9 border-b border-hairline/50 hover:bg-surface-raised/40 transition-colors font-mono-tabular text-xs">
+<div class="col-span-4 flex items-center gap-2">
+<span class="text-text-primary font-medium">Claude 3.5 Haiku</span>
+<span class="text-[9px] text-text-tertiary font-normal">claude-3-5-haiku-20241022</span>
+</div>
+<div class="col-span-2 text-[11px] text-text-secondary font-body-dense">Text, Code, Vision</div>
+<div class="col-span-1 text-right text-text-primary">$0.80</div>
+<div class="col-span-1 text-right text-text-primary">$4.00</div>
+<div class="col-span-2 text-right text-text-secondary">200,000</div>
+<div class="col-span-1 text-right text-signal-mint font-medium text-[11px]">75.2 SWE</div>
+<div class="col-span-1 flex items-center justify-end">
+<input class="w-3.5 h-3.5 bg-surface-canvas border-hairline-strong rounded text-signal-amber focus:ring-0 focus:ring-offset-0 cursor-pointer" type="checkbox"/>
+</div>
+</div>
+<!-- Nested Item 3 -->
+<div class="grid grid-cols-12 items-center h-9 border-b border-hairline/50 hover:bg-surface-raised/40 transition-colors font-mono-tabular text-xs">
+<div class="col-span-4 flex items-center gap-2">
+<span class="text-text-primary font-medium">Claude 3 Opus</span>
+<span class="text-[9px] text-text-tertiary font-normal">claude-3-opus-20240229</span>
+</div>
+<div class="col-span-2 text-[11px] text-text-secondary font-body-dense">Text, Code, Vision</div>
+<div class="col-span-1 text-right text-text-primary">$15.00</div>
+<div class="col-span-1 text-right text-text-primary">$75.00</div>
+<div class="col-span-2 text-right text-text-secondary">200,000</div>
+<div class="col-span-1 text-right text-text-secondary font-medium text-[11px]">78.4 SWE</div>
+<div class="col-span-1 flex items-center justify-end">
+<input class="w-3.5 h-3.5 bg-surface-canvas border-hairline-strong rounded text-signal-amber focus:ring-0 focus:ring-offset-0 cursor-pointer" type="checkbox"/>
+</div>
+</div>
+<!-- Nested Item 4 -->
+<div class="grid grid-cols-12 items-center h-9 hover:bg-surface-raised/40 transition-colors font-mono-tabular text-xs">
+<div class="col-span-4 flex items-center gap-2">
+<span class="text-text-primary font-medium">Claude 3.7 Sonnet (Hybrid)</span>
+<span class="px-1.5 py-0.2 rounded text-[9px] bg-signal-sky/15 text-signal-sky border border-signal-sky/30">NEW</span>
+</div>
+<div class="col-span-2 text-[11px] text-text-secondary font-body-dense">Text, Code, Reasoning</div>
+<div class="col-span-1 text-right text-text-primary">$3.00</div>
+<div class="col-span-1 text-right text-text-primary">$15.00</div>
+<div class="col-span-2 text-right text-text-secondary">200,000</div>
+<div class="col-span-1 text-right text-signal-mint font-semibold text-[11px]">92.4 SWE</div>
+<div class="col-span-1 flex items-center justify-end">
+<input checked="" class="w-3.5 h-3.5 bg-surface-canvas border-hairline-strong rounded text-signal-amber focus:ring-0 focus:ring-offset-0 cursor-pointer" type="checkbox"/>
+</div>
+</div>
+</div>
+</div>
+<!-- ROW 2: DEEPSEEK AI (COLLAPSED) -->
+<div class="grid grid-cols-12 items-center px-4 h-14 hover:bg-surface-raised cursor-pointer transition-colors group">
+<div class="col-span-1 flex items-center justify-center gap-1.5">
+<span class="font-mono-tabular text-xs text-text-tertiary group-hover:text-text-primary transition-transform">›</span>
+<span class="font-mono-tabular text-[11px] text-text-tertiary">02</span>
+</div>
+<div class="col-span-4 pl-2 flex items-center gap-3">
+<!-- Unframed DeepSeek whale/geometric tail mark -->
+<div class="w-6 h-6 flex-shrink-0 flex items-center justify-center text-signal-sky">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+<path d="M12 2C6.48 2 2 6.48 2 12c0 3.31 1.61 6.24 4.09 8.04l.91-.71C5.12 17.84 4 15.08 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8c0 3.08-1.12 5.84-3 7.33l.91.71C20.39 18.24 22 15.31 22 12c0-5.52-4.48-10-10-10zm0 4a6 6 0 100 12 6 6 0 000-12zm-1 2h2v5h-2V8zm0 6h2v2h-2v-2z"></path>
+</svg>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-sm font-semibold text-text-primary group-hover:text-signal-sky transition-colors">DeepSeek</span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint"></span>
+</div>
+<span class="text-[11px] text-text-secondary font-body-dense block">Hangzhou, CN</span>
+</div>
+</div>
+<div class="col-span-2 flex items-center gap-1.5">
+<span class="font-mono-tabular text-[10px] tracking-tight px-2 py-0.5 rounded border border-hairline bg-surface-well text-on-surface-variant">
+                OPEN WEIGHTS · HANGZHOU
+              </span>
+</div>
+<div class="col-span-2 text-right">
+<span class="font-mono-tabular text-xs text-text-primary">8 models indexed</span>
+</div>
+<div class="col-span-2 text-right flex items-center justify-end gap-2">
+<span class="font-mono-tabular text-[9px] px-1.5 py-0.2 rounded bg-signal-mint/15 text-signal-mint border border-signal-mint/30">LOWEST BLENDED</span>
+<span class="font-mono-tabular text-xs font-medium text-text-primary">$0.24</span>
+<span class="font-mono-tabular text-[11px] text-text-tertiary">/ 1M</span>
+</div>
+<div class="col-span-1 text-right pr-2">
+<a class="font-mono-tabular text-[10px] text-text-secondary hover:text-text-primary flex items-center justify-end" href="#">
+                PROFILE<span class="ml-0.5">→</span>
+</a>
+</div>
+</div>
+<!-- ROW 3: OPENAI (COLLAPSED) -->
+<div class="grid grid-cols-12 items-center px-4 h-14 hover:bg-surface-raised cursor-pointer transition-colors group">
+<div class="col-span-1 flex items-center justify-center gap-1.5">
+<span class="font-mono-tabular text-xs text-text-tertiary group-hover:text-text-primary transition-transform">›</span>
+<span class="font-mono-tabular text-[11px] text-text-tertiary">03</span>
+</div>
+<div class="col-span-4 pl-2 flex items-center gap-3">
+<!-- Unframed OpenAI geometric flower mark -->
+<div class="w-6 h-6 flex-shrink-0 flex items-center justify-center text-text-primary">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+<path d="M20.5 10.3c-.2-1.3-.9-2.4-2-3.1-.4-.3-.9-.5-1.4-.6-.2-.7-.6-1.4-1.2-1.9-1.1-1-2.6-1.5-4.1-1.3-.5.1-1 .3-1.4.6-.6-.7-1.5-1.2-2.5-1.4-1.5-.3-3 .1-4.2 1.1-.9.8-1.5 1.9-1.7 3.1-.7.2-1.4.6-1.9 1.2-1 1.1-1.5 2.6-1.3 4.1.1.5.3 1 .6 1.4-.7.6-1.2 1.5-1.4 2.5-.3 1.5.1 3 1.1 4.2.8.9 1.9 1.5 3.1 1.7.2.7.6 1.4 1.2 1.9 1.1 1 2.6 1.5 4.1 1.3.5-.1 1-.3 1.4-.6.6.7 1.5 1.2 2.5 1.4 1.5.3 3-.1 4.2-1.1.9-.8 1.5-1.9 1.7-3.1.7-.2 1.4-.6 1.9-1.2 1-1.1 1.5-2.6 1.3-4.1-.1-.5-.3-1-.6-1.4.7-.6 1.2-1.5 1.4-2.5.3-1.6-.1-3.1-1.1-4.2zm-7.7 9.8c-.8 0-1.6-.3-2.3-.8l2.9-1.7c.3-.2.5-.4.5-.7v-4.1l2.4 1.4v2.7c0 1.8-1.5 3.2-3.5 3.2zm-6.6-3.8c-.4-.7-.6-1.5-.6-2.3 0-.8.2-1.6.6-2.3l2.9 1.7c.3.2.5.4.7.4v4.1l-2.4-1.4c-.6-.7-1-1.4-1.2-2.2zm1.2-7.5c.4-.7 1-1.2 1.7-1.5.7-.3 1.5-.4 2.3-.2l-2.9 1.7c-.3.2-.4.4-.5.7L6.6 9.4l1.8-2.6zm9.3 2.5l-2.9-1.7c-.3-.2-.5-.4-.7-.4V5.4l2.4 1.4c.8.9 1.2 2 1.2 3.1 0 .5-.1 1-.3 1.4l-.7-.4z"></path>
+</svg>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-sm font-semibold text-text-primary group-hover:text-primary transition-colors">OpenAI</span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint"></span>
+</div>
+<span class="text-[11px] text-text-secondary font-body-dense block">San Francisco, CA</span>
+</div>
+</div>
+<div class="col-span-2 flex items-center">
+<span class="font-mono-tabular text-[10px] tracking-tight px-2 py-0.5 rounded border border-hairline bg-surface-well text-on-surface-variant">
+                FOUNDED 2015 · CAP-PROFIT
+              </span>
+</div>
+<div class="col-span-2 text-right">
+<span class="font-mono-tabular text-xs text-text-primary">22 models indexed</span>
+</div>
+<div class="col-span-2 text-right">
+<span class="font-mono-tabular text-xs font-medium text-text-primary">$2.10</span>
+<span class="font-mono-tabular text-[11px] text-text-tertiary"> / 1M blended</span>
+</div>
+<div class="col-span-1 text-right pr-2">
+<a class="font-mono-tabular text-[10px] text-text-secondary hover:text-text-primary flex items-center justify-end" href="#">
+                PROFILE<span class="ml-0.5">→</span>
+</a>
+</div>
+</div>
+<!-- ROW 4: META AI (FAIR) (COLLAPSED) -->
+<div class="grid grid-cols-12 items-center px-4 h-14 hover:bg-surface-raised cursor-pointer transition-colors group">
+<div class="col-span-1 flex items-center justify-center gap-1.5">
+<span class="font-mono-tabular text-xs text-text-tertiary group-hover:text-text-primary transition-transform">›</span>
+<span class="font-mono-tabular text-[11px] text-text-tertiary">04</span>
+</div>
+<div class="col-span-4 pl-2 flex items-center gap-3">
+<!-- Unframed Meta infinity loop mark -->
+<div class="w-6 h-6 flex-shrink-0 flex items-center justify-center text-signal-sky">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+<path d="M16.96 5.86c-1.85 0-3.5 1.07-4.96 2.65-1.46-1.58-3.11-2.65-4.96-2.65C3.21 5.86 0 8.92 0 12.87c0 4.19 3.49 7.27 7.04 7.27 2.11 0 3.86-1.07 5.04-2.58 1.18 1.51 2.93 2.58 5.04 2.58 3.55 0 7.04-3.08 7.04-7.27 0-3.95-3.21-7.01-7.16-7.01zm-9.92 12.3c-2.42 0-4.88-2.12-4.88-5.29 0-2.99 2.29-5.32 4.88-5.32 1.58 0 3.05.99 4.16 2.37-1.41 1.77-2.9 5.24-4.16 8.24zm9.84 0c-1.26-3-2.75-6.47-4.16-8.24 1.11-1.38 2.58-2.37 4.16-2.37 2.59 0 4.88 2.33 4.88 5.32 0 3.17-2.46 5.29-4.88 5.29z"></path>
+</svg>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-sm font-semibold text-text-primary group-hover:text-primary transition-colors">Meta FAIR</span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint"></span>
+</div>
+<span class="text-[11px] text-text-secondary font-body-dense block">Menlo Park, CA</span>
+</div>
+</div>
+<div class="col-span-2 flex items-center">
+<span class="font-mono-tabular text-[10px] tracking-tight px-2 py-0.5 rounded border border-hairline bg-surface-well text-on-surface-variant">
+                OPEN SCIENCE · MENLO PARK
+              </span>
+</div>
+<div class="col-span-2 text-right">
+<span class="font-mono-tabular text-xs text-text-primary">16 models indexed</span>
+</div>
+<div class="col-span-2 text-right">
+<span class="font-mono-tabular text-xs font-medium text-text-primary">$0.38</span>
+<span class="font-mono-tabular text-[11px] text-text-tertiary"> / 1M blended</span>
+</div>
+<div class="col-span-1 text-right pr-2">
+<a class="font-mono-tabular text-[10px] text-text-secondary hover:text-text-primary flex items-center justify-end" href="#">
+                PROFILE<span class="ml-0.5">→</span>
+</a>
+</div>
+</div>
+<!-- ROW 5: GOOGLE DEEPMIND (COLLAPSED) -->
+<div class="grid grid-cols-12 items-center px-4 h-14 hover:bg-surface-raised cursor-pointer transition-colors group">
+<div class="col-span-1 flex items-center justify-center gap-1.5">
+<span class="font-mono-tabular text-xs text-text-tertiary group-hover:text-text-primary transition-transform">›</span>
+<span class="font-mono-tabular text-[11px] text-text-tertiary">05</span>
+</div>
+<div class="col-span-4 pl-2 flex items-center gap-3">
+<!-- Unframed Google DeepMind quad-gem constellation mark -->
+<div class="w-6 h-6 flex-shrink-0 flex items-center justify-center text-signal-amber">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+<path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"></path>
+</svg>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-sm font-semibold text-text-primary group-hover:text-primary transition-colors">Google DeepMind</span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint"></span>
+</div>
+<span class="text-[11px] text-text-secondary font-body-dense block">Mountain View &amp; London</span>
+</div>
+</div>
+<div class="col-span-2 flex items-center">
+<span class="font-mono-tabular text-[10px] tracking-tight px-2 py-0.5 rounded border border-hairline bg-surface-well text-on-surface-variant">
+                MOUNTAIN VIEW · MULTIMODAL FIRST
+              </span>
+</div>
+<div class="col-span-2 text-right">
+<span class="font-mono-tabular text-xs text-text-primary">18 models indexed</span>
+</div>
+<div class="col-span-2 text-right">
+<span class="font-mono-tabular text-xs font-medium text-text-primary">$0.85</span>
+<span class="font-mono-tabular text-[11px] text-text-tertiary"> / 1M blended</span>
+</div>
+<div class="col-span-1 text-right pr-2">
+<a class="font-mono-tabular text-[10px] text-text-secondary hover:text-text-primary flex items-center justify-end" href="#">
+                PROFILE<span class="ml-0.5">→</span>
+</a>
+</div>
+</div>
+<!-- ROW 6: MISTRAL AI (COLLAPSED) -->
+<div class="grid grid-cols-12 items-center px-4 h-14 hover:bg-surface-raised cursor-pointer transition-colors group">
+<div class="col-span-1 flex items-center justify-center gap-1.5">
+<span class="font-mono-tabular text-xs text-text-tertiary group-hover:text-text-primary transition-transform">›</span>
+<span class="font-mono-tabular text-[11px] text-text-tertiary">06</span>
+</div>
+<div class="col-span-4 pl-2 flex items-center gap-3">
+<!-- Unframed Mistral orange step pyramid mark -->
+<div class="w-6 h-6 flex-shrink-0 flex items-center justify-center text-[#ff7000]">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+<rect height="4" width="20" x="2" y="16"></rect>
+<rect height="4" width="12" x="6" y="10"></rect>
+<rect height="4" width="4" x="10" y="4"></rect>
+</svg>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-sm font-semibold text-text-primary group-hover:text-primary transition-colors">Mistral AI</span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint"></span>
+</div>
+<span class="text-[11px] text-text-secondary font-body-dense block">Paris, FR</span>
+</div>
+</div>
+<div class="col-span-2 flex items-center">
+<span class="font-mono-tabular text-[10px] tracking-tight px-2 py-0.5 rounded border border-hairline bg-surface-well text-on-surface-variant">
+                FOUNDED 2023 · PARIS
+              </span>
+</div>
+<div class="col-span-2 text-right">
+<span class="font-mono-tabular text-xs text-text-primary">11 models indexed</span>
+</div>
+<div class="col-span-2 text-right">
+<span class="font-mono-tabular text-xs font-medium text-text-primary">$0.92</span>
+<span class="font-mono-tabular text-[11px] text-text-tertiary"> / 1M blended</span>
+</div>
+<div class="col-span-1 text-right pr-2">
+<a class="font-mono-tabular text-[10px] text-text-secondary hover:text-text-primary flex items-center justify-end" href="#">
+                PROFILE<span class="ml-0.5">→</span>
+</a>
+</div>
+</div>
+<!-- ROW 7: ALIBABA CLOUD / QWEN (COLLAPSED) -->
+<div class="grid grid-cols-12 items-center px-4 h-14 hover:bg-surface-raised cursor-pointer transition-colors group">
+<div class="col-span-1 flex items-center justify-center gap-1.5">
+<span class="font-mono-tabular text-xs text-text-tertiary group-hover:text-text-primary transition-transform">›</span>
+<span class="font-mono-tabular text-[11px] text-text-tertiary">07</span>
+</div>
+<div class="col-span-4 pl-2 flex items-center gap-3">
+<!-- Unframed Qwen hex mark -->
+<div class="w-6 h-6 flex-shrink-0 flex items-center justify-center text-primary-fixed-dim">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+<polygon fill="none" points="12,2 21,7.5 21,16.5 12,22 3,16.5 3,7.5" stroke="currentColor" stroke-width="2.5"></polygon>
+<circle cx="12" cy="12" r="3"></circle>
+</svg>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-sm font-semibold text-text-primary group-hover:text-primary transition-colors">Qwen Team</span>
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint"></span>
+</div>
+<span class="text-[11px] text-text-secondary font-body-dense block">Singapore &amp; Hangzhou</span>
+</div>
+</div>
+<div class="col-span-2 flex items-center">
+<span class="font-mono-tabular text-[10px] tracking-tight px-2 py-0.5 rounded border border-hairline bg-surface-well text-on-surface-variant">
+                OPEN WEIGHTS · SINGAPORE
+              </span>
+</div>
+<div class="col-span-2 text-right">
+<span class="font-mono-tabular text-xs text-text-primary">9 models indexed</span>
+</div>
+<div class="col-span-2 text-right">
+<span class="font-mono-tabular text-xs font-medium text-text-primary">$0.45</span>
+<span class="font-mono-tabular text-[11px] text-text-tertiary"> / 1M blended</span>
+</div>
+<div class="col-span-1 text-right pr-2">
+<a class="font-mono-tabular text-[10px] text-text-secondary hover:text-text-primary flex items-center justify-end" href="#">
+                PROFILE<span class="ml-0.5">→</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Ledger Footer Summary Micro-strip -->
+<div class="px-4 py-3 bg-surface-well border-t border-hairline flex flex-wrap items-center justify-between gap-4 font-mono-tabular text-[11px] text-text-tertiary">
+<div class="flex items-center gap-4">
+<span>SHOWING 7 OF 14 LABS</span>
+<span class="text-hairline-strong">|</span>
+<span class="text-text-secondary">ESTIMATED RUNTIME WEIGHTED AVERAGE: <span class="text-signal-amber font-medium">$1.05 / 1M</span></span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-2 py-1 rounded border border-hairline bg-surface-canvas hover:text-text-primary transition-colors">EXPORT JSON</button>
+<button class="px-2 py-1 rounded border border-hairline bg-surface-canvas hover:text-text-primary transition-colors">CSV SPEC</button>
+</div>
+</div>
+</div>
+<!-- Right Margin & Asymmetric Annotations Rail (100px-140px fixed width rail) (§3 & §4) -->
+<aside class="hidden xl:flex flex-col gap-6 w-32 flex-shrink-0 pt-2 font-mono-tabular select-none">
+<!-- Live status telemetry capsule -->
+<div class="border-l border-hairline pl-3 py-1 flex flex-col gap-1">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-signal-mint animate-ping"></span>
+<span class="text-[9px] font-semibold text-text-primary uppercase tracking-wider">SYNC OK</span>
+</div>
+<span class="text-[9px] text-text-tertiary leading-tight">Rev: 2025.02</span>
+<span class="text-[9px] text-text-tertiary">14 Labs Nominal</span>
+</div>
+<!-- Asymmetric layout annotation 1 -->
+<div class="border-l border-hairline pl-3 py-1 flex flex-col gap-1">
+<span class="text-[9px] text-signal-amber uppercase tracking-wider font-semibold">PINNED SLOT</span>
+<span class="text-[10px] text-text-primary">01 / ANTHROPIC</span>
+<span class="text-[9px] text-text-tertiary">Nested catalog expanded</span>
+</div>
+<!-- Asymmetric layout annotation 2 -->
+<div class="border-l border-hairline pl-3 py-1 flex flex-col gap-1">
+<span class="text-[9px] text-text-tertiary uppercase tracking-wider">ROUTING RADAR</span>
+<div class="flex items-baseline gap-1">
+<span class="text-xs text-text-primary font-medium">99.98%</span>
+<span class="text-[8px] text-signal-mint">UP</span>
+</div>
+<span class="text-[9px] text-text-tertiary leading-tight">Global endpoint availability</span>
+</div>
+<!-- Asymmetric layout annotation 3 -->
+<div class="border-l border-hairline pl-3 py-1 flex flex-col gap-1">
+<span class="text-[9px] text-text-tertiary uppercase tracking-wider">WEIGHT TYPE</span>
+<span class="text-[9px] text-text-secondary">4 Open Source</span>
+<span class="text-[9px] text-text-secondary">10 Proprietary</span>
+</div>
+<!-- Micro QR or Carbon Ledger signature stamp -->
+<div class="border border-hairline p-2 rounded bg-surface-well flex flex-col gap-1.5 items-center justify-center text-center">
+<div class="w-8 h-8 opacity-40">
+<svg class="w-full h-full fill-current text-text-secondary" viewbox="0 0 32 32">
+<rect height="10" width="10" x="2" y="2"></rect>
+<rect height="10" width="10" x="20" y="2"></rect>
+<rect height="10" width="10" x="2" y="20"></rect>
+<rect height="4" width="4" x="14" y="6"></rect>
+<rect height="4" width="4" x="14" y="14"></rect>
+<rect height="4" width="4" x="6" y="14"></rect>
+<rect height="4" width="4" x="22" y="14"></rect>
+<rect height="4" width="4" x="14" y="22"></rect>
+<rect height="4" width="4" x="22" y="22"></rect>
+</svg>
+</div>
+<span class="text-[8px] text-text-tertiary">LEDGER_SIG_3A</span>
+</div>
+</aside>
+</div>
+</div>
+<!-- Micro Interaction Script for Tab Toggle & Row Accordion Logic -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggleLabs = document.getElementById('toggle-labs');
+      const toggleProviders = document.getElementById('toggle-providers');
+
+      toggleLabs?.addEventListener('click', () => {
+        toggleLabs.className = "px-4 py-1.5 text-xs font-headline-sm font-medium rounded text-text-primary bg-surface-raised border border-hairline-strong shadow-none transition-all flex items-center gap-2";
+        toggleProviders.className = "px-4 py-1.5 text-xs font-headline-sm font-medium rounded text-text-secondary hover:text-text-primary transition-all flex items-center gap-2";
+      });
+
+      toggleProviders?.addEventListener('click', () => {
+        toggleProviders.className = "px-4 py-1.5 text-xs font-headline-sm font-medium rounded text-text-primary bg-surface-raised border border-hairline-strong shadow-none transition-all flex items-center gap-2";
+        toggleLabs.className = "px-4 py-1.5 text-xs font-headline-sm font-medium rounded text-text-secondary hover:text-text-primary transition-all flex items-center gap-2";
+      });
+    });
+  </script>
+</body></html>
