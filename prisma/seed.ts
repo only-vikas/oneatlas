@@ -1,10 +1,49 @@
-import {
-  ProviderType,
-  Modality,
-  ModelType,
-  BenchmarkCategory,
-} from "@/generated/prisma";
-import { prisma } from "../src/lib/prisma";
+import { randomUUID } from "node:crypto";
+import "dotenv/config";
+import postgres from "@prisma/orm-postgres/runtime";
+import { and } from "@prisma/orm-postgres/orm-client";
+import { contractFromJson } from "@prisma/orm-postgres/static";
+import type { Contract } from "../src/prisma/contract";
+import contractJson from "../src/prisma/contract.json" with { type: "json" };
+
+const ProviderType = {
+  FIRST_PARTY: "FIRST_PARTY",
+  INFERENCE_CLOUD: "INFERENCE_CLOUD",
+} as const;
+type ProviderType = (typeof ProviderType)[keyof typeof ProviderType];
+const Modality = {
+  TEXT: "TEXT",
+  MULTIMODAL: "MULTIMODAL",
+  IMAGE: "IMAGE",
+  EMBEDDING: "EMBEDDING",
+} as const;
+type Modality = (typeof Modality)[keyof typeof Modality];
+const ModelType = {
+  CHAT: "CHAT",
+  REASONING: "REASONING",
+  CODE: "CODE",
+} as const;
+type ModelType = (typeof ModelType)[keyof typeof ModelType];
+const BenchmarkCategory = {
+  REASONING: "REASONING",
+  CODING: "CODING",
+  GENERAL: "GENERAL",
+  AGENTIC: "AGENTIC",
+} as const;
+type BenchmarkCategory = (typeof BenchmarkCategory)[keyof typeof BenchmarkCategory];
+
+const db = postgres({
+  contract: contractFromJson<Contract>(contractJson),
+  url: process.env["DATABASE_URL"]!,
+});
+
+let idCounter = 0;
+function createId(): string {
+  idCounter += 1;
+  return `c${Date.now().toString(36)}${idCounter.toString(36)}${randomUUID()
+    .replace(/-/g, "")
+    .slice(0, 8)}`;
+}
 
 // ============================================================================
 // 1. 8 AI RESEARCH LABS
@@ -1284,19 +1323,21 @@ async function main() {
     console.log(`[1/5] Seeding ${LABS.length} AI Research Labs...`);
     const labMap = new Map<string, string>();
     for (const lab of LABS) {
-      const record = await prisma.lab.upsert({
-        where: { slug: lab.slug },
-        update: {
-          name: lab.name,
-          logoSlug: lab.logoSlug,
-          description: lab.description,
-          website: lab.website,
-          headquarters: lab.headquarters,
-          foundedYear: lab.foundedYear,
-          verified: lab.verified,
-        },
-        create: lab,
-      });
+      const values = {
+        name: lab.name,
+        logoSlug: lab.logoSlug,
+        description: lab.description,
+        website: lab.website,
+        headquarters: lab.headquarters,
+        foundedYear: lab.foundedYear,
+        verified: lab.verified,
+        updatedAt: new Date(),
+      };
+      const existing = await db.orm.public.Lab.where((l) => l.slug.eq(lab.slug)).first();
+      const record = existing
+        ? ((await db.orm.public.Lab.where((l) => l.slug.eq(lab.slug)).update(values)) ??
+          existing)
+        : await db.orm.public.Lab.create({ ...values, slug: lab.slug, id: createId() });
       labMap.set(lab.slug, record.id);
     }
     console.log(`  ✓ ${labMap.size} Labs successfully upserted.`);
@@ -1305,20 +1346,28 @@ async function main() {
     console.log(`\n[2/5] Seeding ${PROVIDERS.length} Inference Providers...`);
     const providerMap = new Map<string, string>();
     for (const provider of PROVIDERS) {
-      const record = await prisma.provider.upsert({
-        where: { slug: provider.slug },
-        update: {
-          name: provider.name,
-          logoSlug: provider.logoSlug,
-          type: provider.type,
-          description: provider.description,
-          website: provider.website,
-          regions: provider.regions,
-          slaTier: provider.slaTier,
-          uptime30d: provider.uptime30d,
-        },
-        create: provider,
-      });
+      const values = {
+        name: provider.name,
+        logoSlug: provider.logoSlug,
+        type: provider.type,
+        description: provider.description,
+        website: provider.website,
+        regions: provider.regions,
+        slaTier: provider.slaTier,
+        uptime30d: provider.uptime30d,
+        updatedAt: new Date(),
+      };
+      const existing = await db.orm.public.Provider.where((p) =>
+        p.slug.eq(provider.slug)
+      ).first();
+      const record = existing
+        ? ((await db.orm.public.Provider.where((p) => p.slug.eq(provider.slug)).update(values)) ??
+          existing)
+        : await db.orm.public.Provider.create({
+            ...values,
+            slug: provider.slug,
+            id: createId(),
+          });
       providerMap.set(provider.slug, record.id);
     }
     console.log(`  ✓ ${providerMap.size} Providers successfully upserted.`);
@@ -1334,50 +1383,38 @@ async function main() {
         throw new Error(`Missing labId for labSlug '${modelData.labSlug}' on model '${modelData.slug}'`);
       }
 
-      const modelRecord = await prisma.model.upsert({
-        where: { slug: modelData.slug },
-        update: {
-          name: modelData.name,
-          labId,
-          modality: modelData.modality,
-          modelType: modelData.modelType,
-          isOpenWeights: modelData.isOpenWeights,
-          license: modelData.license,
-          contextWindow: modelData.contextWindow,
-          maxOutputTokens: modelData.maxOutputTokens,
-          trainingCutoff: modelData.trainingCutoff,
-          capabilities: modelData.capabilities,
-          supportsCaching: modelData.supportsCaching,
-          releaseDate: new Date(modelData.releaseDate),
-          description: modelData.description,
-          compositeScore: modelData.compositeScore,
-          rankCurrent: modelData.rankCurrent,
-          rankPrevious: modelData.rankPrevious,
-          usageDelta7d: modelData.usageDelta7d,
-          sparkline7d: modelData.sparkline7d,
-        },
-        create: {
-          slug: modelData.slug,
-          name: modelData.name,
-          labId,
-          modality: modelData.modality,
-          modelType: modelData.modelType,
-          isOpenWeights: modelData.isOpenWeights,
-          license: modelData.license,
-          contextWindow: modelData.contextWindow,
-          maxOutputTokens: modelData.maxOutputTokens,
-          trainingCutoff: modelData.trainingCutoff,
-          capabilities: modelData.capabilities,
-          supportsCaching: modelData.supportsCaching,
-          releaseDate: new Date(modelData.releaseDate),
-          description: modelData.description,
-          compositeScore: modelData.compositeScore,
-          rankCurrent: modelData.rankCurrent,
-          rankPrevious: modelData.rankPrevious,
-          usageDelta7d: modelData.usageDelta7d,
-          sparkline7d: modelData.sparkline7d,
-        },
-      });
+      const values = {
+        name: modelData.name,
+        labId,
+        modality: modelData.modality,
+        modelType: modelData.modelType,
+        isOpenWeights: modelData.isOpenWeights,
+        license: modelData.license,
+        contextWindow: modelData.contextWindow,
+        maxOutputTokens: modelData.maxOutputTokens,
+        trainingCutoff: modelData.trainingCutoff,
+        capabilities: modelData.capabilities,
+        supportsCaching: modelData.supportsCaching,
+        releaseDate: new Date(modelData.releaseDate),
+        description: modelData.description,
+        compositeScore: modelData.compositeScore,
+        rankCurrent: modelData.rankCurrent,
+        rankPrevious: modelData.rankPrevious,
+        usageDelta7d: modelData.usageDelta7d,
+        sparkline7d: modelData.sparkline7d,
+        updatedAt: new Date(),
+      };
+      const existing = await db.orm.public.Model.where((m) =>
+        m.slug.eq(modelData.slug)
+      ).first();
+      const modelRecord = existing
+        ? ((await db.orm.public.Model.where((m) => m.slug.eq(modelData.slug)).update(values)) ??
+          existing)
+        : await db.orm.public.Model.create({
+            ...values,
+            slug: modelData.slug,
+            id: createId(),
+          });
 
       // 4. Seed ModelProviderEndpoints
       for (const ep of modelData.endpoints) {
@@ -1386,62 +1423,59 @@ async function main() {
           throw new Error(`Missing providerId for providerSlug '${ep.providerSlug}' on model '${modelData.slug}'`);
         }
 
-        await prisma.modelProviderEndpoint.upsert({
-          where: {
-            modelId_providerId: {
-              modelId: modelRecord.id,
-              providerId,
-            },
-          },
-          update: {
-            inputPricePer1M: ep.inputPrice,
-            outputPricePer1M: ep.outputPrice,
-            cacheInputPricePer1M: ep.cachePrice ?? null,
-            latencyMs: ep.latencyMs,
-            throughputTps: ep.throughputTps,
-            uptimePct: ep.uptimePct,
-            contextLimit: ep.contextLimit,
-            isDefault: ep.isDefault,
-          },
-          create: {
+        const endpointValues = {
+          inputPricePer1M: ep.inputPrice,
+          outputPricePer1M: ep.outputPrice,
+          cacheInputPricePer1M: ep.cachePrice ?? null,
+          latencyMs: ep.latencyMs,
+          throughputTps: ep.throughputTps,
+          uptimePct: ep.uptimePct,
+          contextLimit: ep.contextLimit,
+          isDefault: ep.isDefault,
+          updatedAt: new Date(),
+        };
+        const endpointExists = await db.orm.public.ModelProviderEndpoint
+          .where((e) => and(e.modelId.eq(modelRecord.id), e.providerId.eq(providerId)))
+          .first();
+        if (endpointExists) {
+          await db.orm.public.ModelProviderEndpoint
+            .where((e) => and(e.modelId.eq(modelRecord.id), e.providerId.eq(providerId)))
+            .update(endpointValues);
+        } else {
+          await db.orm.public.ModelProviderEndpoint.create({
+            ...endpointValues,
+            id: createId(),
             modelId: modelRecord.id,
             providerId,
-            inputPricePer1M: ep.inputPrice,
-            outputPricePer1M: ep.outputPrice,
-            cacheInputPricePer1M: ep.cachePrice ?? null,
-            latencyMs: ep.latencyMs,
-            throughputTps: ep.throughputTps,
-            uptimePct: ep.uptimePct,
-            contextLimit: ep.contextLimit,
-            isDefault: ep.isDefault,
-          },
-        });
+          });
+        }
         totalEndpoints++;
       }
 
       // 5. Seed BenchmarkScores
       if (modelData.benchmarks) {
         for (const bm of modelData.benchmarks) {
-          await prisma.benchmarkScore.upsert({
-            where: {
-              modelId_benchmarkName: {
-                modelId: modelRecord.id,
-                benchmarkName: bm.name,
-              },
-            },
-            update: {
-              category: bm.category,
-              score: bm.score,
-              maxScore: bm.maxScore,
-            },
-            create: {
+          const benchmarkValues = {
+            category: bm.category,
+            score: bm.score,
+            maxScore: bm.maxScore,
+            updatedAt: new Date(),
+          };
+          const benchmarkExists = await db.orm.public.BenchmarkScore
+            .where((b) => and(b.modelId.eq(modelRecord.id), b.benchmarkName.eq(bm.name)))
+            .first();
+          if (benchmarkExists) {
+            await db.orm.public.BenchmarkScore
+              .where((b) => and(b.modelId.eq(modelRecord.id), b.benchmarkName.eq(bm.name)))
+              .update(benchmarkValues);
+          } else {
+            await db.orm.public.BenchmarkScore.create({
+              ...benchmarkValues,
+              id: createId(),
               modelId: modelRecord.id,
               benchmarkName: bm.name,
-              category: bm.category,
-              score: bm.score,
-              maxScore: bm.maxScore,
-            },
-          });
+            });
+          }
           totalBenchmarks++;
         }
       }
@@ -1453,11 +1487,11 @@ async function main() {
     // Final Counts Verification
     const [finalLabs, finalProviders, finalModels, finalEndpoints, finalBenchmarks] =
       await Promise.all([
-        prisma.lab.count(),
-        prisma.provider.count(),
-        prisma.model.count(),
-        prisma.modelProviderEndpoint.count(),
-        prisma.benchmarkScore.count(),
+        db.orm.public.Lab.aggregate((aggregate) => ({ count: aggregate.count() })).then((r) => r.count),
+        db.orm.public.Provider.aggregate((aggregate) => ({ count: aggregate.count() })).then((r) => r.count),
+        db.orm.public.Model.aggregate((aggregate) => ({ count: aggregate.count() })).then((r) => r.count),
+        db.orm.public.ModelProviderEndpoint.aggregate((aggregate) => ({ count: aggregate.count() })).then((r) => r.count),
+        db.orm.public.BenchmarkScore.aggregate((aggregate) => ({ count: aggregate.count() })).then((r) => r.count),
       ]);
 
     console.log("\n========================================================");
@@ -1489,7 +1523,7 @@ async function main() {
     console.error("Seed execution error:", error);
     throw error;
   } finally {
-    await prisma.$disconnect();
+    await db.close();
   }
 }
 

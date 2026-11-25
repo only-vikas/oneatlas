@@ -1,0 +1,1424 @@
+[
+  {
+    "id": "schema.public",
+    "label": "Create schema \"public\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres"
+    },
+    "precheck": [],
+    "execute": [
+      {
+        "description": "Create schema \"public\"",
+        "sql": "CREATE SCHEMA IF NOT EXISTS \"public\"",
+        "params": []
+      }
+    ],
+    "postcheck": []
+  },
+  {
+    "id": "createNativeEnumType.BenchmarkCategory",
+    "label": "Create enum type \"BenchmarkCategory\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "type",
+        "name": "BenchmarkCategory"
+      }
+    },
+    "precheck": [],
+    "execute": [
+      {
+        "description": "create enum type \"BenchmarkCategory\"",
+        "sql": "CREATE TYPE \"public\".\"BenchmarkCategory\" AS ENUM ('REASONING', 'CODING', 'GENERAL', 'AGENTIC')",
+        "params": []
+      }
+    ],
+    "postcheck": []
+  },
+  {
+    "id": "createNativeEnumType.Modality",
+    "label": "Create enum type \"Modality\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "type",
+        "name": "Modality"
+      }
+    },
+    "precheck": [],
+    "execute": [
+      {
+        "description": "create enum type \"Modality\"",
+        "sql": "CREATE TYPE \"public\".\"Modality\" AS ENUM ('TEXT', 'MULTIMODAL', 'IMAGE', 'EMBEDDING')",
+        "params": []
+      }
+    ],
+    "postcheck": []
+  },
+  {
+    "id": "createNativeEnumType.ModelType",
+    "label": "Create enum type \"ModelType\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "type",
+        "name": "ModelType"
+      }
+    },
+    "precheck": [],
+    "execute": [
+      {
+        "description": "create enum type \"ModelType\"",
+        "sql": "CREATE TYPE \"public\".\"ModelType\" AS ENUM ('CHAT', 'REASONING', 'CODE')",
+        "params": []
+      }
+    ],
+    "postcheck": []
+  },
+  {
+    "id": "createNativeEnumType.ProviderType",
+    "label": "Create enum type \"ProviderType\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "type",
+        "name": "ProviderType"
+      }
+    },
+    "precheck": [],
+    "execute": [
+      {
+        "description": "create enum type \"ProviderType\"",
+        "sql": "CREATE TYPE \"public\".\"ProviderType\" AS ENUM ('FIRST_PARTY', 'INFERENCE_CLOUD')",
+        "params": []
+      }
+    ],
+    "postcheck": []
+  },
+  {
+    "id": "table.BenchmarkScore",
+    "label": "Create table \"BenchmarkScore\"",
+    "summary": "Creates table \"BenchmarkScore\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "BenchmarkScore"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"BenchmarkScore\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"BenchmarkScore\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"BenchmarkScore\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"BenchmarkScore\"",
+        "sql": "CREATE TABLE \"public\".\"BenchmarkScore\" (\n  \"benchmarkName\" text NOT NULL,\n  \"category\" \"BenchmarkCategory\" NOT NULL,\n  \"createdAt\" timestamp(3) DEFAULT (now()) NOT NULL,\n  \"id\" text NOT NULL,\n  \"maxScore\" float8 NOT NULL,\n  \"modelId\" text NOT NULL,\n  \"score\" float8 NOT NULL,\n  \"updatedAt\" timestamp(3) NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"BenchmarkScore\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"BenchmarkScore\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"BenchmarkScore\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "table.Lab",
+    "label": "Create table \"Lab\"",
+    "summary": "Creates table \"Lab\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "Lab"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Lab\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Lab\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"Lab\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"Lab\"",
+        "sql": "CREATE TABLE \"public\".\"Lab\" (\n  \"createdAt\" timestamp(3) DEFAULT (now()) NOT NULL,\n  \"description\" text NOT NULL,\n  \"foundedYear\" int4 NOT NULL,\n  \"headquarters\" text NOT NULL,\n  \"id\" text NOT NULL,\n  \"logoSlug\" text NOT NULL,\n  \"name\" text NOT NULL,\n  \"slug\" text NOT NULL,\n  \"updatedAt\" timestamp(3) NOT NULL,\n  \"verified\" bool DEFAULT true NOT NULL,\n  \"website\" text NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Lab\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"Lab\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Lab\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "table.Model",
+    "label": "Create table \"Model\"",
+    "summary": "Creates table \"Model\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "Model"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Model\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Model\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"Model\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"Model\"",
+        "sql": "CREATE TABLE \"public\".\"Model\" (\n  \"capabilities\" text[],\n  \"compositeScore\" float8 NOT NULL,\n  \"contextWindow\" int4 NOT NULL,\n  \"createdAt\" timestamp(3) DEFAULT (now()) NOT NULL,\n  \"description\" text NOT NULL,\n  \"id\" text NOT NULL,\n  \"isOpenWeights\" bool NOT NULL,\n  \"labId\" text NOT NULL,\n  \"license\" text NOT NULL,\n  \"maxOutputTokens\" int4 NOT NULL,\n  \"modality\" \"Modality\" NOT NULL,\n  \"modelType\" \"ModelType\" NOT NULL,\n  \"name\" text NOT NULL,\n  \"rankCurrent\" int4 NOT NULL,\n  \"rankPrevious\" int4 NOT NULL,\n  \"releaseDate\" timestamp(3) NOT NULL,\n  \"slug\" text NOT NULL,\n  \"sparkline7d\" float8[],\n  \"supportsCaching\" bool NOT NULL,\n  \"trainingCutoff\" text NOT NULL,\n  \"updatedAt\" timestamp(3) NOT NULL,\n  \"usageDelta7d\" float8 NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Model\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"Model\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Model\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "table.ModelProviderEndpoint",
+    "label": "Create table \"ModelProviderEndpoint\"",
+    "summary": "Creates table \"ModelProviderEndpoint\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "ModelProviderEndpoint"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"ModelProviderEndpoint\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"ModelProviderEndpoint\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"ModelProviderEndpoint\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"ModelProviderEndpoint\"",
+        "sql": "CREATE TABLE \"public\".\"ModelProviderEndpoint\" (\n  \"cacheInputPricePer1M\" float8,\n  \"contextLimit\" int4 NOT NULL,\n  \"createdAt\" timestamp(3) DEFAULT (now()) NOT NULL,\n  \"id\" text NOT NULL,\n  \"inputPricePer1M\" float8 NOT NULL,\n  \"isDefault\" bool NOT NULL,\n  \"latencyMs\" int4 NOT NULL,\n  \"modelId\" text NOT NULL,\n  \"outputPricePer1M\" float8 NOT NULL,\n  \"providerId\" text NOT NULL,\n  \"throughputTps\" int4 NOT NULL,\n  \"updatedAt\" timestamp(3) NOT NULL,\n  \"uptimePct\" float8 NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"ModelProviderEndpoint\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"ModelProviderEndpoint\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"ModelProviderEndpoint\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "table.Provider",
+    "label": "Create table \"Provider\"",
+    "summary": "Creates table \"Provider\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "Provider"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Provider\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Provider\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"Provider\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"Provider\"",
+        "sql": "CREATE TABLE \"public\".\"Provider\" (\n  \"createdAt\" timestamp(3) DEFAULT (now()) NOT NULL,\n  \"description\" text NOT NULL,\n  \"id\" text NOT NULL,\n  \"logoSlug\" text NOT NULL,\n  \"name\" text NOT NULL,\n  \"regions\" text[],\n  \"slaTier\" text NOT NULL,\n  \"slug\" text NOT NULL,\n  \"type\" \"ProviderType\" NOT NULL,\n  \"updatedAt\" timestamp(3) NOT NULL,\n  \"uptime30d\" float8 NOT NULL,\n  \"website\" text NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Provider\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"Provider\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Provider\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "index.BenchmarkScore.BenchmarkScore_category_idx",
+    "label": "Create index \"BenchmarkScore_category_idx\" on \"BenchmarkScore\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "BenchmarkScore_category_idx",
+        "table": "BenchmarkScore"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"BenchmarkScore_category_idx\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"BenchmarkScore_category_idx\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"BenchmarkScore_category_idx\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"BenchmarkScore_category_idx\"",
+        "sql": "CREATE INDEX \"BenchmarkScore_category_idx\" ON \"public\".\"BenchmarkScore\" (\"category\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"BenchmarkScore_category_idx\" exists on \"BenchmarkScore\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"BenchmarkScore_category_idx\"",
+          "i",
+          "I",
+          "\"public\".\"BenchmarkScore\"",
+          "btree",
+          "[\"category\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.BenchmarkScore.BenchmarkScore_modelId_benchmarkName_key",
+    "label": "Create index \"BenchmarkScore_modelId_benchmarkName_key\" on \"BenchmarkScore\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "BenchmarkScore_modelId_benchmarkName_key",
+        "table": "BenchmarkScore"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"BenchmarkScore_modelId_benchmarkName_key\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"BenchmarkScore_modelId_benchmarkName_key\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"BenchmarkScore_modelId_benchmarkName_key\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"BenchmarkScore_modelId_benchmarkName_key\"",
+        "sql": "CREATE UNIQUE INDEX \"BenchmarkScore_modelId_benchmarkName_key\" ON \"public\".\"BenchmarkScore\" (\"modelId\", \"benchmarkName\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"BenchmarkScore_modelId_benchmarkName_key\" exists on \"BenchmarkScore\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND \"i\".\"indisunique\" AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"BenchmarkScore_modelId_benchmarkName_key\"",
+          "i",
+          "I",
+          "\"public\".\"BenchmarkScore\"",
+          "btree",
+          "[\"modelId\",\"benchmarkName\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.BenchmarkScore.BenchmarkScore_modelId_idx",
+    "label": "Create index \"BenchmarkScore_modelId_idx\" on \"BenchmarkScore\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "BenchmarkScore_modelId_idx",
+        "table": "BenchmarkScore"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"BenchmarkScore_modelId_idx\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"BenchmarkScore_modelId_idx\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"BenchmarkScore_modelId_idx\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"BenchmarkScore_modelId_idx\"",
+        "sql": "CREATE INDEX \"BenchmarkScore_modelId_idx\" ON \"public\".\"BenchmarkScore\" (\"modelId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"BenchmarkScore_modelId_idx\" exists on \"BenchmarkScore\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"BenchmarkScore_modelId_idx\"",
+          "i",
+          "I",
+          "\"public\".\"BenchmarkScore\"",
+          "btree",
+          "[\"modelId\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.Lab.Lab_name_idx",
+    "label": "Create index \"Lab_name_idx\" on \"Lab\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "Lab_name_idx",
+        "table": "Lab"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Lab_name_idx\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Lab_name_idx\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Lab_name_idx\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Lab_name_idx\"",
+        "sql": "CREATE INDEX \"Lab_name_idx\" ON \"public\".\"Lab\" (\"name\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Lab_name_idx\" exists on \"Lab\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"Lab_name_idx\"",
+          "i",
+          "I",
+          "\"public\".\"Lab\"",
+          "btree",
+          "[\"name\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.Lab.Lab_slug_key",
+    "label": "Create index \"Lab_slug_key\" on \"Lab\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "Lab_slug_key",
+        "table": "Lab"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Lab_slug_key\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Lab_slug_key\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Lab_slug_key\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Lab_slug_key\"",
+        "sql": "CREATE UNIQUE INDEX \"Lab_slug_key\" ON \"public\".\"Lab\" (\"slug\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Lab_slug_key\" exists on \"Lab\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND \"i\".\"indisunique\" AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"Lab_slug_key\"",
+          "i",
+          "I",
+          "\"public\".\"Lab\"",
+          "btree",
+          "[\"slug\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.Model.Model_compositeScore_idx",
+    "label": "Create index \"Model_compositeScore_idx\" on \"Model\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "Model_compositeScore_idx",
+        "table": "Model"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Model_compositeScore_idx\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Model_compositeScore_idx\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Model_compositeScore_idx\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Model_compositeScore_idx\"",
+        "sql": "CREATE INDEX \"Model_compositeScore_idx\" ON \"public\".\"Model\" (\"compositeScore\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Model_compositeScore_idx\" exists on \"Model\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"Model_compositeScore_idx\"",
+          "i",
+          "I",
+          "\"public\".\"Model\"",
+          "btree",
+          "[\"compositeScore\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.Model.Model_labId_idx",
+    "label": "Create index \"Model_labId_idx\" on \"Model\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "Model_labId_idx",
+        "table": "Model"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Model_labId_idx\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Model_labId_idx\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Model_labId_idx\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Model_labId_idx\"",
+        "sql": "CREATE INDEX \"Model_labId_idx\" ON \"public\".\"Model\" (\"labId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Model_labId_idx\" exists on \"Model\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"Model_labId_idx\"",
+          "i",
+          "I",
+          "\"public\".\"Model\"",
+          "btree",
+          "[\"labId\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.Model.Model_modality_idx",
+    "label": "Create index \"Model_modality_idx\" on \"Model\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "Model_modality_idx",
+        "table": "Model"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Model_modality_idx\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Model_modality_idx\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Model_modality_idx\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Model_modality_idx\"",
+        "sql": "CREATE INDEX \"Model_modality_idx\" ON \"public\".\"Model\" (\"modality\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Model_modality_idx\" exists on \"Model\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"Model_modality_idx\"",
+          "i",
+          "I",
+          "\"public\".\"Model\"",
+          "btree",
+          "[\"modality\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.Model.Model_modelType_idx",
+    "label": "Create index \"Model_modelType_idx\" on \"Model\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "Model_modelType_idx",
+        "table": "Model"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Model_modelType_idx\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Model_modelType_idx\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Model_modelType_idx\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Model_modelType_idx\"",
+        "sql": "CREATE INDEX \"Model_modelType_idx\" ON \"public\".\"Model\" (\"modelType\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Model_modelType_idx\" exists on \"Model\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"Model_modelType_idx\"",
+          "i",
+          "I",
+          "\"public\".\"Model\"",
+          "btree",
+          "[\"modelType\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.Model.Model_rankCurrent_idx",
+    "label": "Create index \"Model_rankCurrent_idx\" on \"Model\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "Model_rankCurrent_idx",
+        "table": "Model"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Model_rankCurrent_idx\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Model_rankCurrent_idx\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Model_rankCurrent_idx\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Model_rankCurrent_idx\"",
+        "sql": "CREATE INDEX \"Model_rankCurrent_idx\" ON \"public\".\"Model\" (\"rankCurrent\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Model_rankCurrent_idx\" exists on \"Model\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"Model_rankCurrent_idx\"",
+          "i",
+          "I",
+          "\"public\".\"Model\"",
+          "btree",
+          "[\"rankCurrent\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.Model.Model_slug_key",
+    "label": "Create index \"Model_slug_key\" on \"Model\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "Model_slug_key",
+        "table": "Model"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Model_slug_key\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Model_slug_key\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Model_slug_key\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Model_slug_key\"",
+        "sql": "CREATE UNIQUE INDEX \"Model_slug_key\" ON \"public\".\"Model\" (\"slug\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Model_slug_key\" exists on \"Model\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND \"i\".\"indisunique\" AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"Model_slug_key\"",
+          "i",
+          "I",
+          "\"public\".\"Model\"",
+          "btree",
+          "[\"slug\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.ModelProviderEndpoint.ModelProviderEndpoint_inputPricePer1M_idx",
+    "label": "Create index \"ModelProviderEndpoint_inputPricePer1M_idx\" on \"ModelProviderEndpoint\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "ModelProviderEndpoint_inputPricePer1M_idx",
+        "table": "ModelProviderEndpoint"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"ModelProviderEndpoint_inputPricePer1M_idx\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"ModelProviderEndpoint_inputPricePer1M_idx\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"ModelProviderEndpoint_inputPricePer1M_idx\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"ModelProviderEndpoint_inputPricePer1M_idx\"",
+        "sql": "CREATE INDEX \"ModelProviderEndpoint_inputPricePer1M_idx\" ON \"public\".\"ModelProviderEndpoint\" (\"inputPricePer1M\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"ModelProviderEndpoint_inputPricePer1M_idx\" exists on \"ModelProviderEndpoint\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"ModelProviderEndpoint_inputPricePer1M_idx\"",
+          "i",
+          "I",
+          "\"public\".\"ModelProviderEndpoint\"",
+          "btree",
+          "[\"inputPricePer1M\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.ModelProviderEndpoint.ModelProviderEndpoint_latencyMs_idx",
+    "label": "Create index \"ModelProviderEndpoint_latencyMs_idx\" on \"ModelProviderEndpoint\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "ModelProviderEndpoint_latencyMs_idx",
+        "table": "ModelProviderEndpoint"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"ModelProviderEndpoint_latencyMs_idx\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"ModelProviderEndpoint_latencyMs_idx\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"ModelProviderEndpoint_latencyMs_idx\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"ModelProviderEndpoint_latencyMs_idx\"",
+        "sql": "CREATE INDEX \"ModelProviderEndpoint_latencyMs_idx\" ON \"public\".\"ModelProviderEndpoint\" (\"latencyMs\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"ModelProviderEndpoint_latencyMs_idx\" exists on \"ModelProviderEndpoint\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"ModelProviderEndpoint_latencyMs_idx\"",
+          "i",
+          "I",
+          "\"public\".\"ModelProviderEndpoint\"",
+          "btree",
+          "[\"latencyMs\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.ModelProviderEndpoint.ModelProviderEndpoint_modelId_idx",
+    "label": "Create index \"ModelProviderEndpoint_modelId_idx\" on \"ModelProviderEndpoint\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "ModelProviderEndpoint_modelId_idx",
+        "table": "ModelProviderEndpoint"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"ModelProviderEndpoint_modelId_idx\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"ModelProviderEndpoint_modelId_idx\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"ModelProviderEndpoint_modelId_idx\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"ModelProviderEndpoint_modelId_idx\"",
+        "sql": "CREATE INDEX \"ModelProviderEndpoint_modelId_idx\" ON \"public\".\"ModelProviderEndpoint\" (\"modelId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"ModelProviderEndpoint_modelId_idx\" exists on \"ModelProviderEndpoint\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"ModelProviderEndpoint_modelId_idx\"",
+          "i",
+          "I",
+          "\"public\".\"ModelProviderEndpoint\"",
+          "btree",
+          "[\"modelId\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.ModelProviderEndpoint.ModelProviderEndpoint_modelId_providerId_key",
+    "label": "Create index \"ModelProviderEndpoint_modelId_providerId_key\" on \"ModelProviderEndpoint\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "ModelProviderEndpoint_modelId_providerId_key",
+        "table": "ModelProviderEndpoint"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"ModelProviderEndpoint_modelId_providerId_key\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"ModelProviderEndpoint_modelId_providerId_key\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"ModelProviderEndpoint_modelId_providerId_key\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"ModelProviderEndpoint_modelId_providerId_key\"",
+        "sql": "CREATE UNIQUE INDEX \"ModelProviderEndpoint_modelId_providerId_key\" ON \"public\".\"ModelProviderEndpoint\" (\"modelId\", \"providerId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"ModelProviderEndpoint_modelId_providerId_key\" exists on \"ModelProviderEndpoint\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND \"i\".\"indisunique\" AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"ModelProviderEndpoint_modelId_providerId_key\"",
+          "i",
+          "I",
+          "\"public\".\"ModelProviderEndpoint\"",
+          "btree",
+          "[\"modelId\",\"providerId\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.ModelProviderEndpoint.ModelProviderEndpoint_providerId_idx",
+    "label": "Create index \"ModelProviderEndpoint_providerId_idx\" on \"ModelProviderEndpoint\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "ModelProviderEndpoint_providerId_idx",
+        "table": "ModelProviderEndpoint"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"ModelProviderEndpoint_providerId_idx\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"ModelProviderEndpoint_providerId_idx\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"ModelProviderEndpoint_providerId_idx\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"ModelProviderEndpoint_providerId_idx\"",
+        "sql": "CREATE INDEX \"ModelProviderEndpoint_providerId_idx\" ON \"public\".\"ModelProviderEndpoint\" (\"providerId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"ModelProviderEndpoint_providerId_idx\" exists on \"ModelProviderEndpoint\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"ModelProviderEndpoint_providerId_idx\"",
+          "i",
+          "I",
+          "\"public\".\"ModelProviderEndpoint\"",
+          "btree",
+          "[\"providerId\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.Provider.Provider_slug_key",
+    "label": "Create index \"Provider_slug_key\" on \"Provider\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "Provider_slug_key",
+        "table": "Provider"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Provider_slug_key\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Provider_slug_key\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Provider_slug_key\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Provider_slug_key\"",
+        "sql": "CREATE UNIQUE INDEX \"Provider_slug_key\" ON \"public\".\"Provider\" (\"slug\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Provider_slug_key\" exists on \"Provider\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND \"i\".\"indisunique\" AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"Provider_slug_key\"",
+          "i",
+          "I",
+          "\"public\".\"Provider\"",
+          "btree",
+          "[\"slug\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.Provider.Provider_type_idx",
+    "label": "Create index \"Provider_type_idx\" on \"Provider\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "Provider_type_idx",
+        "table": "Provider"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Provider_type_idx\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Provider_type_idx\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Provider_type_idx\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Provider_type_idx\"",
+        "sql": "CREATE INDEX \"Provider_type_idx\" ON \"public\".\"Provider\" (\"type\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Provider_type_idx\" exists on \"Provider\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"Provider_type_idx\"",
+          "i",
+          "I",
+          "\"public\".\"Provider\"",
+          "btree",
+          "[\"type\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.BenchmarkScore.BenchmarkScore_modelId_fkey",
+    "label": "Add foreign key \"BenchmarkScore_modelId_fkey\" on \"BenchmarkScore\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "BenchmarkScore_modelId_fkey",
+        "table": "BenchmarkScore"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"BenchmarkScore_modelId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "BenchmarkScore_modelId_fkey",
+          "public",
+          "\"public\".\"BenchmarkScore\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"BenchmarkScore_modelId_fkey\" on \"BenchmarkScore\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"BenchmarkScore_modelId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"BenchmarkScore\"\nADD CONSTRAINT \"BenchmarkScore_modelId_fkey\"\nFOREIGN KEY (\"modelId\")\nREFERENCES \"public\".\"Model\" (\"id\")\nON DELETE CASCADE\nON UPDATE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"BenchmarkScore_modelId_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "BenchmarkScore_modelId_fkey",
+          "public",
+          "\"public\".\"BenchmarkScore\"",
+          "f",
+          "[\"modelId\"]",
+          "\"public\".\"Model\"",
+          "[\"id\"]",
+          "c",
+          "c"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.Model.Model_labId_fkey",
+    "label": "Add foreign key \"Model_labId_fkey\" on \"Model\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "Model_labId_fkey",
+        "table": "Model"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"Model_labId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "Model_labId_fkey",
+          "public",
+          "\"public\".\"Model\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"Model_labId_fkey\" on \"Model\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"Model_labId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"Model\"\nADD CONSTRAINT \"Model_labId_fkey\"\nFOREIGN KEY (\"labId\")\nREFERENCES \"public\".\"Lab\" (\"id\")\nON DELETE CASCADE\nON UPDATE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"Model_labId_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "Model_labId_fkey",
+          "public",
+          "\"public\".\"Model\"",
+          "f",
+          "[\"labId\"]",
+          "\"public\".\"Lab\"",
+          "[\"id\"]",
+          "c",
+          "c"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.ModelProviderEndpoint.ModelProviderEndpoint_modelId_fkey",
+    "label": "Add foreign key \"ModelProviderEndpoint_modelId_fkey\" on \"ModelProviderEndpoint\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "ModelProviderEndpoint_modelId_fkey",
+        "table": "ModelProviderEndpoint"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"ModelProviderEndpoint_modelId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "ModelProviderEndpoint_modelId_fkey",
+          "public",
+          "\"public\".\"ModelProviderEndpoint\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"ModelProviderEndpoint_modelId_fkey\" on \"ModelProviderEndpoint\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"ModelProviderEndpoint_modelId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"ModelProviderEndpoint\"\nADD CONSTRAINT \"ModelProviderEndpoint_modelId_fkey\"\nFOREIGN KEY (\"modelId\")\nREFERENCES \"public\".\"Model\" (\"id\")\nON DELETE CASCADE\nON UPDATE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"ModelProviderEndpoint_modelId_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "ModelProviderEndpoint_modelId_fkey",
+          "public",
+          "\"public\".\"ModelProviderEndpoint\"",
+          "f",
+          "[\"modelId\"]",
+          "\"public\".\"Model\"",
+          "[\"id\"]",
+          "c",
+          "c"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.ModelProviderEndpoint.ModelProviderEndpoint_providerId_fkey",
+    "label": "Add foreign key \"ModelProviderEndpoint_providerId_fkey\" on \"ModelProviderEndpoint\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "ModelProviderEndpoint_providerId_fkey",
+        "table": "ModelProviderEndpoint"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"ModelProviderEndpoint_providerId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "ModelProviderEndpoint_providerId_fkey",
+          "public",
+          "\"public\".\"ModelProviderEndpoint\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"ModelProviderEndpoint_providerId_fkey\" on \"ModelProviderEndpoint\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"ModelProviderEndpoint_providerId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"ModelProviderEndpoint\"\nADD CONSTRAINT \"ModelProviderEndpoint_providerId_fkey\"\nFOREIGN KEY (\"providerId\")\nREFERENCES \"public\".\"Provider\" (\"id\")\nON DELETE CASCADE\nON UPDATE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"ModelProviderEndpoint_providerId_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "ModelProviderEndpoint_providerId_fkey",
+          "public",
+          "\"public\".\"ModelProviderEndpoint\"",
+          "f",
+          "[\"providerId\"]",
+          "\"public\".\"Provider\"",
+          "[\"id\"]",
+          "c",
+          "c"
+        ]
+      }
+    ]
+  }
+]

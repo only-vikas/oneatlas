@@ -1,4 +1,5 @@
-import { prisma } from "@/lib/prisma";
+import { getDb } from "@/lib/prisma";
+import { or } from "@prisma/orm-postgres/orm-client";
 import {
   STATIC_MODELS,
   STATIC_LABS,
@@ -79,8 +80,10 @@ async function isPrismaReady(): Promise<boolean> {
   }
 
   try {
-    const count = await prisma.model.count();
-    if (count > 0) {
+    const result = await getDb().orm.public.Model.aggregate((aggregate) => ({
+      count: aggregate.count(),
+    }));
+    if (result.count > 0) {
       cachedPrismaReady = true;
       lastCheckTime = now;
       return true;
@@ -222,45 +225,64 @@ function fetchModelsFromMemory(query: ModelsQuery) {
 }
 
 async function fetchModelsFromDb(query: ModelsQuery) {
-  const where: Record<string, unknown> = {};
+  const Model = getDb().orm.public.Model;
+
+  let collection = Model;
 
   if (query.q) {
-    where.OR = [
-      { name: { contains: query.q, mode: "insensitive" } },
-      { slug: { contains: query.q, mode: "insensitive" } },
-      { description: { contains: query.q, mode: "insensitive" } },
-      { lab: { name: { contains: query.q, mode: "insensitive" } } },
-    ];
+    const pattern = `%${query.q}%`;
+    collection = collection.where((m) =>
+      or(
+        m.name.ilike(pattern),
+        m.slug.ilike(pattern),
+        m.description.ilike(pattern),
+        m.lab.some((l) => l.name.ilike(pattern))
+      )
+    );
   }
 
   if (query.lab) {
     const labSlugs = query.lab.split(",").map((s) => s.trim());
-    where.lab = { slug: { in: labSlugs } };
+    collection = collection.where((m) => m.lab.some((l) => l.slug.in(labSlugs)));
   }
 
   if (query.provider) {
     const provSlugs = query.provider.split(",").map((s) => s.trim());
-    where.endpoints = { some: { provider: { slug: { in: provSlugs } } } };
+    collection = collection.where((m) =>
+      m.endpoints.some((ep) => ep.provider.some((p) => p.slug.in(provSlugs)))
+    );
   }
 
-  if (query.modality) where.modality = query.modality;
-  if (query.modelType) where.modelType = query.modelType;
-  if (query.openWeights !== undefined) where.isOpenWeights = query.openWeights;
-  if (query.minContext !== undefined) where.contextWindow = { gte: query.minContext };
+  if (query.modality) {
+    const modality = query.modality;
+    collection = collection.where((m) => m.modality.eq(modality));
+  }
+  if (query.modelType) {
+    const modelType = query.modelType;
+    collection = collection.where((m) => m.modelType.eq(modelType));
+  }
+  if (query.openWeights !== undefined) {
+    const openWeights = query.openWeights;
+    collection = collection.where((m) => m.isOpenWeights.eq(openWeights));
+  }
+  if (query.minContext !== undefined) {
+    const minContext = query.minContext;
+    collection = collection.where((m) => m.contextWindow.gte(minContext));
+  }
+
+  let rawModels = await collection
+    .include("lab")
+    .include("endpoints", (ep) => ep.include("provider"))
+    .include("benchmarks")
+    .all();
 
   if (query.capability) {
     const caps = query.capability.split(",").map((c) => c.trim());
-    where.capabilities = { hasEvery: caps };
+    rawModels = rawModels.filter((m) => {
+      const modelCapabilities = m.capabilities ?? [];
+      return caps.every((cap) => modelCapabilities.includes(cap));
+    });
   }
-
-  const rawModels = await prisma.model.findMany({
-    where,
-    include: {
-      lab: true,
-      endpoints: { include: { provider: true } },
-      benchmarks: true,
-    },
-  });
 
   const enriched = rawModels.map((m) => ({
     ...m,
@@ -310,14 +332,12 @@ export async function fetchModelBySlug(slug: string) {
   const useDb = await isPrismaReady();
 
   if (useDb) {
-    const model = await prisma.model.findUnique({
-      where: { slug },
-      include: {
-        lab: true,
-        endpoints: { include: { provider: true } },
-        benchmarks: true,
-      },
-    });
+    const model = await getDb()
+      .orm.public.Model.where((m) => m.slug.eq(slug))
+      .include("lab")
+      .include("endpoints", (ep) => ep.include("provider"))
+      .include("benchmarks")
+      .first();
     if (!model) return null;
     return {
       ...model,
@@ -378,7 +398,7 @@ export async function fetchModelBenchmarks(slug: string) {
   if (!model) return null;
 
   const allModels = (await isPrismaReady())
-    ? await prisma.model.findMany({ include: { benchmarks: true } })
+    ? await getDb().orm.public.Model.include("benchmarks").all()
     : STATIC_MODELS;
 
   // Category averages across all models with benchmarks
@@ -513,9 +533,10 @@ export async function fetchCompareModels(slugs: string[]) {
 // ----------------------------------------------------------------------------
 export async function fetchRankings(query: RankingsQuery) {
   const allModels = (await isPrismaReady())
-    ? await prisma.model.findMany({
-        include: { lab: true, benchmarks: true },
-      })
+    ? await getDb()
+        .orm.public.Model.include("lab")
+        .include("benchmarks")
+        .all()
     : STATIC_MODELS;
 
   let filtered = [...allModels];
@@ -530,7 +551,10 @@ export async function fetchRankings(query: RankingsQuery) {
       filtered = filtered.filter((m) => m.modality === "MULTIMODAL");
     } else if (query.category === "AGENTIC") {
       filtered = filtered.filter((m) =>
-        m.capabilities.map((c) => c.toLowerCase()).includes("tool_calling")
+        (m.capabilities ?? [])
+          .filter((c): c is string => c !== null)
+          .map((c) => c.toLowerCase())
+          .includes("tool_calling")
       );
     }
   }
@@ -587,9 +611,10 @@ export async function fetchRankings(query: RankingsQuery) {
 // ----------------------------------------------------------------------------
 export async function fetchPareto(query: ParetoQuery) {
   const allModels = (await isPrismaReady())
-    ? await prisma.model.findMany({
-        include: { lab: true, endpoints: true },
-      })
+    ? await getDb()
+        .orm.public.Model.include("lab")
+        .include("endpoints")
+        .all()
     : STATIC_MODELS;
 
   let filtered = [...allModels];
@@ -667,13 +692,9 @@ export async function fetchDirectory(type: "lab" | "provider") {
 
   if (type === "lab") {
     const labs = useDb
-      ? await prisma.lab.findMany({
-          include: {
-            models: {
-              include: { endpoints: true },
-            },
-          },
-        })
+      ? await getDb()
+          .orm.public.Lab.include("models", (m) => m.include("endpoints"))
+          .all()
       : STATIC_LABS.map((l) => ({
           ...l,
           models: STATIC_MODELS.filter((m) => m.labId === l.id),
@@ -723,13 +744,9 @@ export async function fetchDirectory(type: "lab" | "provider") {
     return { type: "lab", count: items.length, items };
   } else {
     const providers = useDb
-      ? await prisma.provider.findMany({
-          include: {
-            endpoints: {
-              include: { model: true },
-            },
-          },
-        })
+      ? await getDb()
+          .orm.public.Provider.include("endpoints", (ep) => ep.include("model"))
+          .all()
       : STATIC_PROVIDERS.map((p) => {
           const endpoints = STATIC_MODELS.flatMap((m) =>
             m.endpoints.filter((ep) => ep.providerId === p.id).map((ep) => ({ ...ep, model: m }))
@@ -780,14 +797,10 @@ export async function fetchDirectoryBySlug(slug: string) {
 
   // 1. Try finding Lab
   if (useDb) {
-    const lab = await prisma.lab.findUnique({
-      where: { slug: normSlug },
-      include: {
-        models: {
-          include: { endpoints: { include: { provider: true } } },
-        },
-      },
-    });
+    const lab = await getDb()
+      .orm.public.Lab.where((l) => l.slug.eq(normSlug))
+      .include("models", (m) => m.include("endpoints", (ep) => ep.include("provider")))
+      .first();
 
     if (lab) {
       let totalInputPrice = 0;
@@ -834,14 +847,10 @@ export async function fetchDirectoryBySlug(slug: string) {
     }
 
     // 2. Try finding Provider
-    const provider = await prisma.provider.findUnique({
-      where: { slug: normSlug },
-      include: {
-        endpoints: {
-          include: { model: { include: { lab: true } } },
-        },
-      },
-    });
+    const provider = await getDb()
+      .orm.public.Provider.where((p) => p.slug.eq(normSlug))
+      .include("endpoints", (ep) => ep.include("model", (mo) => mo.include("lab")))
+      .first();
 
     if (provider) {
       const latencies = provider.endpoints.map((ep) => ep.latencyMs).sort((a, b) => a - b);
@@ -971,15 +980,12 @@ export async function searchAll(query: string) {
   const q = query.trim();
 
   if (useDb) {
+    const orm = getDb().orm.public;
     if (!q) {
       const [trendingModels, topLabs, topProviders] = await Promise.all([
-        prisma.model.findMany({
-          orderBy: { usageDelta7d: "desc" },
-          take: 5,
-          include: { lab: true },
-        }),
-        prisma.lab.findMany({ take: 5 }),
-        prisma.provider.findMany({ take: 5 }),
+        orm.Model.include("lab").orderBy((m) => m.usageDelta7d.desc()).limit(5).all(),
+        orm.Lab.limit(5).all(),
+        orm.Provider.limit(5).all(),
       ]);
 
       return {
@@ -1008,36 +1014,24 @@ export async function searchAll(query: string) {
     }
 
     const [matchedModels, matchedLabs, matchedProviders] = await Promise.all([
-      prisma.model.findMany({
-        where: {
-          OR: [
-            { name: { contains: q, mode: "insensitive" } },
-            { slug: { contains: q, mode: "insensitive" } },
-            { description: { contains: q, mode: "insensitive" } },
-          ],
-        },
-        take: 5,
-        include: { lab: true },
-      }),
-      prisma.lab.findMany({
-        where: {
-          OR: [
-            { name: { contains: q, mode: "insensitive" } },
-            { slug: { contains: q, mode: "insensitive" } },
-            { headquarters: { contains: q, mode: "insensitive" } },
-          ],
-        },
-        take: 5,
-      }),
-      prisma.provider.findMany({
-        where: {
-          OR: [
-            { name: { contains: q, mode: "insensitive" } },
-            { slug: { contains: q, mode: "insensitive" } },
-          ],
-        },
-        take: 5,
-      }),
+      orm.Model.where((m) =>
+        or(m.name.ilike(`%${q}%`), m.slug.ilike(`%${q}%`), m.description.ilike(`%${q}%`))
+      )
+        .include("lab")
+        .limit(5)
+        .all(),
+      orm.Lab.where((l) =>
+        or(
+          l.name.ilike(`%${q}%`),
+          l.slug.ilike(`%${q}%`),
+          l.headquarters.ilike(`%${q}%`)
+        )
+      )
+        .limit(5)
+        .all(),
+      orm.Provider.where((p) => or(p.name.ilike(`%${q}%`), p.slug.ilike(`%${q}%`)))
+        .limit(5)
+        .all(),
     ]);
 
     return {
@@ -1162,29 +1156,24 @@ export async function fetchMarketPulse() {
   const useDb = await isPrismaReady();
 
   if (useDb) {
+    const orm = getDb().orm.public;
     const [modelCount, providerCount, labCount] = await Promise.all([
-      prisma.model.count(),
-      prisma.provider.count(),
-      prisma.lab.count(),
+      orm.Model.aggregate((aggregate) => ({ count: aggregate.count() })).then((r) => r.count),
+      orm.Provider.aggregate((aggregate) => ({ count: aggregate.count() })).then((r) => r.count),
+      orm.Lab.aggregate((aggregate) => ({ count: aggregate.count() })).then((r) => r.count),
     ]);
 
-    const trendingRaw = await prisma.model.findMany({
-      orderBy: { usageDelta7d: "desc" },
-      take: 5,
-      include: {
-        lab: true,
-        endpoints: true,
-      },
-    });
+    const trendingRaw = await orm.Model.include("lab")
+      .include("endpoints")
+      .orderBy((m) => m.usageDelta7d.desc())
+      .limit(5)
+      .all();
 
-    const recentRaw = await prisma.model.findMany({
-      orderBy: { releaseDate: "desc" },
-      take: 5,
-      include: {
-        lab: true,
-        endpoints: true,
-      },
-    });
+    const recentRaw = await orm.Model.include("lab")
+      .include("endpoints")
+      .orderBy((m) => m.releaseDate.desc())
+      .limit(5)
+      .all();
 
     const paretoResult = await fetchPareto({ category: "ALL" });
     const paretoFrontier = paretoResult.points
