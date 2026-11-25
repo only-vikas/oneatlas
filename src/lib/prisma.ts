@@ -1,34 +1,18 @@
-import "dotenv/config";
-import { Pool } from "pg";
-import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "@/generated/prisma";
+import type { PostgresClient } from "@prisma/orm-postgres/runtime";
+import service from "../../service.mjs";
+import type { Contract } from "../prisma/contract";
 
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined;
-  pgPool: Pool | undefined;
-};
+// The typed Prisma ORM 8 client over the emitted contract at
+// src/prisma/contract.json. The service declaration is JavaScript (.mjs), so
+// the client's contract type parameter is restored here.
+export type OneAtlasClient = PostgresClient<Contract>;
 
-const connectionString = process.env.DATABASE_URL;
-
-const pool = globalForPrisma.pgPool ?? new Pool({ connectionString });
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.pgPool = pool;
+// On Compute and under `prisma dev` the app gets its database through the
+// service declaration, never from DATABASE_URL. `service.load()` caches its
+// result, so calling this once per request is safe. It must be called from
+// request-time code (route handlers, pages, actions) and never at module
+// scope: `next build` imports every route module without the runtime
+// environment.
+export function getDb(): OneAtlasClient {
+  return service.load().db.client as unknown as OneAtlasClient;
 }
-
-const adapter = new PrismaPg(pool);
-
-export const prisma =
-  globalForPrisma.prisma ??
-  new PrismaClient({
-    adapter,
-    log:
-      process.env.NODE_ENV === "development"
-        ? ["query", "error", "warn"]
-        : ["error"],
-  });
-
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
-}
-
-export default prisma;
