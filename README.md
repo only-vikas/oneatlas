@@ -32,6 +32,14 @@ Every data point in OneAtlas is dynamically backed by a **Neon Serverless Postgr
 | **Hosting & CI/CD** | **Render Cloud Platform** with isolated TypeScript production builds and automatic branch deployments |
 
 ---
+### Application Stack
+
+| Area | Technologies |
+| :--- | :--- |
+| **Frontend** | Next.js, React, TypeScript, Tailwind CSS |
+| **Backend & API** | Node.js, TypeScript, Next.js API Routes |
+| **Database** | PostgreSQL, Prisma ORM |
+| **Deployment** | Render |
 
 ## 📸 Complete Visual Walkthrough & Core Features
 
